@@ -19,11 +19,11 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('description');
             $table->string('brand');
             $table->string('model');
-            $table->string('serial');
+            $table->string('serial')->unique();
 
             $table->softDeletes();
             $table->timestamps();

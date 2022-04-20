@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -33,3 +34,20 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+
+/* Route::get('test', function () {
+
+    $permissions = collect(config('permission_rules'));
+
+    $final = [];
+    foreach ($permissions as $key => $permission) {
+        $collect = collect($permission);
+        $plucked = $collect->pluck('permission', 'display_name');
+        $final[$key] = $plucked->all();
+    }
+
+    $collect = collect($final);
+
+    dd($final, $collect->flatten()->toArray());
+}); */
