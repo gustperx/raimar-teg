@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreComputerEquipmentMovementRequest;
-use App\Http\Requests\UpdateComputerEquipmentMovementRequest;
+use App\Http\Requests\ComputerEquipmentMovement\StoreComputerEquipmentMovementRequest;
+use App\Http\Requests\ComputerEquipmentMovement\UpdateComputerEquipmentMovementRequest;
 use App\Models\ComputerEquipmentMovement;
 
 class ComputerEquipmentMovementController extends Controller

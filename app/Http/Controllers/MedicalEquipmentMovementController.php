@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMedicalEquipmentMovementRequest;
-use App\Http\Requests\UpdateMedicalEquipmentMovementRequest;
+use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest;
+use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest;
 use App\Models\MedicalEquipmentMovement;
 
 class MedicalEquipmentMovementController extends Controller

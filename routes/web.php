@@ -1,28 +1,18 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Arr;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\MedicalEquipmentController;
+use App\Http\Controllers\ComputerEquipmentController;
+use App\Http\Controllers\MedicalEquipmentMovementController;
+use App\Http\Controllers\ComputerEquipmentMovementController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect('login');
 });
 
 Route::middleware([
@@ -35,6 +25,16 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+    Route::resource('statuses',   StatusController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('departmens', DepartmentController::class);
+    Route::resource('medical-equipments',  MedicalEquipmentController::class);
+    Route::resource('computer-equipments', ComputerEquipmentController::class);
+    Route::resource('medical-equipments-movements',  MedicalEquipmentMovementController::class);
+    Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
+});
 
 /* Route::get('test', function () {
 

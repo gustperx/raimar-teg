@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMedicalEquipmentRequest;
-use App\Http\Requests\UpdateMedicalEquipmentRequest;
+use App\Http\Requests\MedicalEquipment\StoreMedicalEquipmentRequest;
+use App\Http\Requests\MedicalEquipment\UpdateMedicalEquipmentRequest;
 use App\Models\MedicalEquipment;
 
 class MedicalEquipmentController extends Controller
