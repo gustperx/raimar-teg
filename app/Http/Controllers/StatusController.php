@@ -68,7 +68,7 @@ class StatusController extends Controller
 
         Status::create($request->all());
 
-        $request->session()->flash('success', 'Estado creado satisfactoriamente!');
+        $request->session()->flash('success', 'Estado creado satisfactoriamente');
         return redirect()->route('statuses.index');
     }
 
@@ -112,7 +112,7 @@ class StatusController extends Controller
 
         $status->update($request->all());
 
-        $request->session()->flash('success', 'Estado actualizado satisfactoriamente!');
+        $request->session()->flash('success', 'Estado actualizado satisfactoriamente');
         return redirect()->route('statuses.index');
     }
 
@@ -122,8 +122,13 @@ class StatusController extends Controller
      * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy(Request $request, Status $status)
     {
-        //
+        $this->authorize('delete', $status);
+
+        $status->delete();
+
+        $request->session()->flash('info', 'Estado eliminado satisfactoriamente');
+        return redirect()->route('statuses.index');
     }
 }
