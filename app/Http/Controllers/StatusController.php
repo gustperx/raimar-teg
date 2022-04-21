@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Status\StoreStatusRequest;
 use App\Http\Requests\Status\UpdateStatusRequest;
 use App\Models\Status;
+use Inertia\Inertia;
 
 class StatusController extends Controller
 {
@@ -15,7 +16,24 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Statuses/Index', [
+            'statuses' => Status::all()->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'edit_url' => route('statuses.edit', $item),
+                    'can' => [
+                        'show' => auth()->user()->can('view', $item),
+                        'edit' => auth()->user()->can('update', $item),
+                        'delete' => auth()->user()->can('delete', $item),
+                    ]
+                ];
+            }),
+            'create_url' => route('statuses.create'),
+            'can' => [
+                'create' => auth()->user()->can('create', Status::class),
+            ],
+        ]);
     }
 
     /**
@@ -25,7 +43,7 @@ class StatusController extends Controller
      */
     public function create()
     {
-        //
+        dd('hola bro');
     }
 
     /**
