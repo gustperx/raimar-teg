@@ -1,12 +1,11 @@
 <script setup>
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 
-import { useSearch } from "@/Composables/useSearch.js";
-
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import List from "./List.vue";
+
+import CustomSearch from "@/Components/Search.vue";
+import CustomList from "./List.vue";
 
 const props = defineProps({
   statuses: {
@@ -30,7 +29,7 @@ const formSearch = useForm({
   search: props.filters.search,
 });
 
-const { resetSearch } = useSearch(formSearch, route("statuses.index"));
+const urlSearch = route("statuses.index");
 </script>
 
 <template>
@@ -44,28 +43,14 @@ const { resetSearch } = useSearch(formSearch, route("statuses.index"));
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-row justify-between pb-2">
-          <div class="flex">
-            <JetInput
-              id="search"
-              v-model="formSearch.search"
-              type="text"
-              class="inline w-full"
-              placeholder="Buscar..."
-              autocomplete="off"
-            />
-            <button class="ml-4 text-bold text-gray-600" @click="resetSearch">
-              Restablecer
-            </button>
-          </div>
-          <div>
-            <JetButton type="button" v-if="can.create">
-              <Link :href="create_url">Nuevo estado</Link>
-            </JetButton>
-          </div>
+          <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
+          <JetButton type="button" v-if="can.create">
+            <Link :href="create_url">Nuevo estado</Link>
+          </JetButton>
         </div>
 
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <List :statuses="statuses" />
+          <CustomList :statuses="statuses" />
         </div>
       </div>
     </div>
