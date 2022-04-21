@@ -1,13 +1,12 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/inertia-vue3";
-import TableList from "@/Components/TableList.vue";
-import ButtonBlue from "@/Components/ButtonBlue.vue";
-import ButtonRed from "@/Components/ButtonRed.vue";
 import { ref } from "vue";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
+
+import CustomTableList from "@/Components/TableList.vue";
+import CustomModalDelete from "@/Components/ModalDelete.vue";
 
 defineProps({
   statuses: {
@@ -21,14 +20,7 @@ const form = useForm({
   itemId: "",
 });
 
-const confirmDeletion = (itemId) => {
-  isOpenModal.value = true;
-  form.itemId = itemId;
-};
-
 const deleteItem = () => {
-  console.log(form.itemId);
-
   form.delete(route("statuses.destroy", [form.itemId]), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
@@ -40,10 +32,15 @@ const closeModal = () => {
   isOpenModal.value = false;
   form.reset();
 };
+
+const confirmDeletion = (itemId) => {
+  isOpenModal.value = true;
+  form.itemId = itemId;
+};
 </script>
 
 <template>
-  <TableList>
+  <CustomTableList>
     <template #header>
       <tr class="bg-gray-600">
         <th class="text-left text-white p-4 font-bold">ID</th>
@@ -62,12 +59,9 @@ const closeModal = () => {
         <td class="p-4">{{ name }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
-            <ButtonBlue v-if="can.edit">
+            <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
-            </ButtonBlue>
-            <!-- <ButtonRed v-if="can.delete">
-              <Link href="dell">Eliminar</Link>
-            </ButtonRed> -->
+            </JetPrimaryButton>
             <JetDangerButton @click="confirmDeletion(id)">
               Eliminar
             </JetDangerButton>
@@ -75,29 +69,12 @@ const closeModal = () => {
         </td>
       </tr>
     </template>
-  </TableList>
+  </CustomTableList>
 
-  <JetDialogModal :show="isOpenModal" @close="closeModal">
-    <template #title> Eliminación suave </template>
-
-    <template #content>
-      Esta acción moverá el elemento a la "papelera de reciclaje" el elemento no
-      se eliminará de inmediato, pero solo podrá eliminarlo definitivamente o
-      recuperarlo, accediendo a la acción de restauración de esta lista de
-      elementos.
-    </template>
-
-    <template #footer>
-      <JetSecondaryButton @click="closeModal"> Cancelar </JetSecondaryButton>
-
-      <JetDangerButton
-        class="ml-3"
-        :class="{ 'opacity-25': form.processing }"
-        :disabled="form.processing"
-        @click="deleteItem"
-      >
-        Confirmar
-      </JetDangerButton>
-    </template>
-  </JetDialogModal>
+  <!-- Delete Confirmation Modal -->
+  <CustomModalDelete
+    :isOpenModal="isOpenModal"
+    @onConfirm="deleteItem"
+    @onCancel="closeModal"
+  />
 </template>
