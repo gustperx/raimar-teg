@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Status\StoreStatusRequest;
 use App\Http\Requests\Status\UpdateStatusRequest;
 use App\Models\Status;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class StatusController extends Controller
@@ -14,21 +15,26 @@ class StatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('Statuses/Index', [
-            'statuses' => Status::all()->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'name' => $item->name,
-                    'edit_url' => route('statuses.edit', $item),
-                    'can' => [
-                        'show' => auth()->user()->can('view', $item),
-                        'edit' => auth()->user()->can('update', $item),
-                        'delete' => auth()->user()->can('delete', $item),
-                    ]
-                ];
-            }),
+            'filters' => $request->all('search'),
+            'statuses' => Status::orderBy('id', 'desc')
+                ->filter($request->only('search'))
+                //->paginate()
+                //->withQueryString()
+                ->paginate()->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'edit_url' => route('statuses.edit', $item),
+                        'can' => [
+                            'show' => auth()->user()->can('view', $item),
+                            'edit' => auth()->user()->can('update', $item),
+                            'delete' => auth()->user()->can('delete', $item),
+                        ]
+                    ];
+                }),
             'create_url' => route('statuses.create'),
             'can' => [
                 'create' => auth()->user()->can('create', Status::class),
@@ -43,7 +49,11 @@ class StatusController extends Controller
      */
     public function create()
     {
-        dd('hola bro');
+        $this->authorize('create', Status::class);
+
+        return Inertia::render('Statuses/Add', [
+            'return_url' => route('statuses.index')
+        ]);
     }
 
     /**
@@ -54,7 +64,12 @@ class StatusController extends Controller
      */
     public function store(StoreStatusRequest $request)
     {
-        //
+        $this->authorize('create', Status::class);
+
+        Status::create($request->all());
+
+        $request->session()->flash('success', 'Estado creado satisfactoriamente!');
+        return redirect()->route('statuses.index');
     }
 
     /**
@@ -76,7 +91,12 @@ class StatusController extends Controller
      */
     public function edit(Status $status)
     {
-        //
+        $this->authorize('update', $status);
+
+        return Inertia::render('Statuses/Edit', [
+            'return_url' => route('statuses.index'),
+            'status' => $status
+        ]);
     }
 
     /**
@@ -88,7 +108,12 @@ class StatusController extends Controller
      */
     public function update(UpdateStatusRequest $request, Status $status)
     {
-        //
+        $this->authorize('update', $status);
+
+        $status->update($request->all());
+
+        $request->session()->flash('success', 'Estado actualizado satisfactoriamente!');
+        return redirect()->route('statuses.index');
     }
 
     /**

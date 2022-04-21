@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Status;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateStatusRequest extends FormRequest
@@ -24,7 +25,19 @@ class UpdateStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:191', Rule::unique('statuses')->ignore($this->status)],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
         ];
     }
 }

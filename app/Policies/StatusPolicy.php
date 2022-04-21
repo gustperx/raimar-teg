@@ -18,7 +18,7 @@ class StatusPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('technical:status-read') || $user->isAdministrator();
+        return $user->can('technical:status-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class StatusPolicy
      */
     public function view(User $user, Status $status)
     {
-        return $user->can('technical:status-read') || $user->isAdministrator();
+        return $user->can('technical:status-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class StatusPolicy
      */
     public function create(User $user)
     {
-        return $user->can('technical:status-create') || $user->isAdministrator();
+        return $user->can('technical:status-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class StatusPolicy
      */
     public function update(User $user, Status $status)
     {
-        return $user->can('technical:status-update') || $user->isAdministrator();
+        return $user->can('technical:status-update');
     }
 
     /**
@@ -65,7 +65,7 @@ class StatusPolicy
      */
     public function delete(User $user, Status $status)
     {
-        return $user->can('technical:status-delete') || $user->isAdministrator();
+        return $user->can('technical:status-delete');
     }
 
     /**
