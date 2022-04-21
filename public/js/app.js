@@ -25420,12 +25420,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
-/* harmony import */ var _Jetstream_DangerButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/DangerButton.vue */ "./resources/js/Jetstream/DangerButton.vue");
-/* harmony import */ var _Jetstream_PrimaryButton_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/PrimaryButton.vue */ "./resources/js/Jetstream/PrimaryButton.vue");
-/* harmony import */ var _Components_TableList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/TableList.vue */ "./resources/js/Components/TableList.vue");
-/* harmony import */ var _Components_ModalDelete_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/ModalDelete.vue */ "./resources/js/Components/ModalDelete.vue");
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _Jetstream_DangerButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/DangerButton.vue */ "./resources/js/Jetstream/DangerButton.vue");
+/* harmony import */ var _Jetstream_PrimaryButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/PrimaryButton.vue */ "./resources/js/Jetstream/PrimaryButton.vue");
+/* harmony import */ var _Components_TableList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/TableList.vue */ "./resources/js/Components/TableList.vue");
+/* harmony import */ var _Components_ModalDelete_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/ModalDelete.vue */ "./resources/js/Components/ModalDelete.vue");
+/* harmony import */ var _Composables_useDeleteModal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Composables/useDeleteModal.js */ "./resources/js/Composables/useDeleteModal.js");
 
 
 
@@ -25442,46 +25442,26 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var isOpenModal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
-      itemId: ""
-    });
+    var routeText = "statuses.destroy";
 
-    var deleteItem = function deleteItem() {
-      form["delete"](route("statuses.destroy", [form.itemId]), {
-        preserveScroll: true,
-        onSuccess: function onSuccess() {
-          return closeModal();
-        },
-        onFinish: function onFinish() {
-          return form.reset();
-        }
-      });
-    };
-
-    var closeModal = function closeModal() {
-      isOpenModal.value = false;
-      form.reset();
-    };
-
-    var confirmDeletion = function confirmDeletion(itemId) {
-      isOpenModal.value = true;
-      form.itemId = itemId;
-    };
+    var _useDeleteModal = (0,_Composables_useDeleteModal_js__WEBPACK_IMPORTED_MODULE_5__.useDeleteModal)(routeText),
+        isOpenModal = _useDeleteModal.isOpenModal,
+        deleteItem = _useDeleteModal.deleteItem,
+        closeModal = _useDeleteModal.closeModal,
+        confirmDeletion = _useDeleteModal.confirmDeletion;
 
     var __returned__ = {
+      routeText: routeText,
       isOpenModal: isOpenModal,
-      form: form,
       deleteItem: deleteItem,
       closeModal: closeModal,
       confirmDeletion: confirmDeletion,
-      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
-      useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm,
-      JetDangerButton: _Jetstream_DangerButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      JetPrimaryButton: _Jetstream_PrimaryButton_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      CustomTableList: _Components_TableList_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      CustomModalDelete: _Components_ModalDelete_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+      Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+      JetDangerButton: _Jetstream_DangerButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      JetPrimaryButton: _Jetstream_PrimaryButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      CustomTableList: _Components_TableList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      CustomModalDelete: _Components_ModalDelete_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      useDeleteModal: _Composables_useDeleteModal_js__WEBPACK_IMPORTED_MODULE_5__.useDeleteModal
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -30596,7 +30576,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onOnCancel: $setup.closeModal
   }, null, 8
   /* PROPS */
-  , ["isOpenModal"])], 64
+  , ["isOpenModal", "onOnConfirm", "onOnCancel"])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -30739,6 +30719,59 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* STABLE_FRAGMENT */
   );
 }
+
+/***/ }),
+
+/***/ "./resources/js/Composables/useDeleteModal.js":
+/*!****************************************************!*\
+  !*** ./resources/js/Composables/useDeleteModal.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useDeleteModal": () => (/* binding */ useDeleteModal)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+
+
+var useDeleteModal = function useDeleteModal(routeText) {
+  var isOpenModal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+  var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
+    itemId: ""
+  });
+
+  var deleteItem = function deleteItem() {
+    form["delete"](route(routeText, [form.itemId]), {
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        return closeModal();
+      },
+      onFinish: function onFinish() {
+        return form.reset();
+      }
+    });
+  };
+
+  var closeModal = function closeModal() {
+    isOpenModal.value = false;
+    form.reset();
+  };
+
+  var confirmDeletion = function confirmDeletion(itemId) {
+    isOpenModal.value = true;
+    form.itemId = itemId;
+  };
+
+  return {
+    isOpenModal: isOpenModal,
+    deleteItem: deleteItem,
+    closeModal: closeModal,
+    confirmDeletion: confirmDeletion
+  };
+};
 
 /***/ }),
 

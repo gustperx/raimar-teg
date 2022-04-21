@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from "vue";
-import { Link, useForm } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
+import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
   statuses: {
@@ -15,28 +15,10 @@ defineProps({
   },
 });
 
-const isOpenModal = ref(false);
-const form = useForm({
-  itemId: "",
-});
+const routeText = "statuses.destroy";
 
-const deleteItem = () => {
-  form.delete(route("statuses.destroy", [form.itemId]), {
-    preserveScroll: true,
-    onSuccess: () => closeModal(),
-    onFinish: () => form.reset(),
-  });
-};
-
-const closeModal = () => {
-  isOpenModal.value = false;
-  form.reset();
-};
-
-const confirmDeletion = (itemId) => {
-  isOpenModal.value = true;
-  form.itemId = itemId;
-};
+const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
+  useDeleteModal(routeText);
 </script>
 
 <template>
