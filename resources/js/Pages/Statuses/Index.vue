@@ -33,7 +33,7 @@ const urlSearch = route("statuses.index");
 </script>
 
 <template>
-  <AppLayout title="Statuses">
+  <AppLayout title="Lista de estados">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Estados de equipos
