@@ -27,15 +27,28 @@ Route::middleware([
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
+    // Statuses
     Route::get('statuses/trash', [StatusController::class, 'trash'])->name('statuses.trash');
     Route::post('statuses/trash/restore/{status}', [StatusController::class, 'restore'])->name('statuses.trash_restore');
     Route::delete('statuses/trash/delete/{status}', [StatusController::class, 'trashDestroy'])->name('statuses.trash_destroy');
     Route::resource('statuses',   StatusController::class);
+
+    // Categories
     Route::resource('categories', CategoryController::class);
+
+    // Departments
     Route::resource('departmens', DepartmentController::class);
+
+    // MedicalEquipaments
     Route::resource('medical-equipments',  MedicalEquipmentController::class);
+
+    // ComputerEquipments
     Route::resource('computer-equipments', ComputerEquipmentController::class);
+
+    // MedicalEquipamentMovements
     Route::resource('medical-equipments-movements',  MedicalEquipmentMovementController::class);
+
+    // ComputerEquipmentMovements
     Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
 });
 

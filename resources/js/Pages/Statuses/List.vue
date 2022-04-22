@@ -33,7 +33,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
 
     <template #body>
       <tr
-        v-for="{ id, name, edit_url, can } in statuses"
+        v-for="{ id, name, show_url, edit_url, can } in statuses"
         :key="id"
         class="border-b hover:bg-gray-50"
       >
@@ -41,6 +41,9 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">{{ name }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
+            <JetPrimaryButton v-if="can.show" class="mr-2">
+              <Link :href="show_url">Detalle</Link>
+            </JetPrimaryButton>
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
             </JetPrimaryButton>

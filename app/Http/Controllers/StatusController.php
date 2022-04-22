@@ -26,6 +26,7 @@ class StatusController extends Controller
                     'id' => $item->id,
                     'name' => $item->name,
                     'edit_url' => route('statuses.edit', $item),
+                    'show_url' => route('statuses.show', $item),
                     'can' => [
                         'show' => auth()->user()->can('view', $item),
                         'edit' => auth()->user()->can('update', $item),
@@ -86,7 +87,12 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        //
+        $this->authorize('view', $status);
+
+        return Inertia::render('Statuses/Show', [
+            'return_url' => route('statuses.index'),
+            'status' => $status
+        ]);
     }
 
     /**
