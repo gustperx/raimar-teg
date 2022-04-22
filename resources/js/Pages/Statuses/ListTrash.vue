@@ -1,11 +1,10 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
-
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
+import CustomModalRestore from "@/Components/ModalRestore.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -15,10 +14,18 @@ defineProps({
   },
 });
 
-const routeText = "statuses.destroy";
+const routeTextForceDelete = "statuses.trash_destroy";
+const routeTextRestore = "statuses.trash_restore";
 
 const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
-  useDeleteModal(routeText);
+  useDeleteModal(routeTextForceDelete);
+
+const {
+  restoreItem,
+  confirmRestoration,
+  closeModal: closeModalRestore,
+  isOpenModal: isOpenModalRestore,
+} = useDeleteModal(routeTextRestore);
 </script>
 
 <template>
@@ -33,7 +40,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
 
     <template #body>
       <tr
-        v-for="{ id, name, edit_url, can } in statuses"
+        v-for="{ id, name, can } in statuses"
         :key="id"
         class="border-b hover:bg-gray-50"
       >
@@ -41,11 +48,18 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">{{ name }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
-            <JetPrimaryButton v-if="can.edit" class="mr-2">
-              <Link :href="edit_url">Editar</Link>
+            <JetPrimaryButton
+              v-if="can.restore"
+              @click="confirmRestoration(id)"
+              class="mr-2"
+            >
+              Restaurar
             </JetPrimaryButton>
-            <JetDangerButton v-if="can.delete" @click="confirmDeletion(id)">
-              Eliminar
+            <JetDangerButton
+              v-if="can.forceDelete"
+              @click="confirmDeletion(id)"
+            >
+              Forzar eliminación
             </JetDangerButton>
           </div>
         </td>
@@ -56,7 +70,15 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
   <!-- Delete Confirmation Modal -->
   <CustomModalDelete
     :isOpenModal="isOpenModal"
+    forceDelte
     @onConfirm="deleteItem"
     @onCancel="closeModal"
+  />
+
+  <!-- Restore Confirmation Modal -->
+  <CustomModalRestore
+    :isOpenModal="isOpenModalRestore"
+    @onConfirm="restoreItem"
+    @onCancel="closeModalRestore"
   />
 </template>

@@ -27,6 +27,9 @@ Route::middleware([
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
+    Route::get('statuses/trash', [StatusController::class, 'trash'])->name('statuses.trash');
+    Route::post('statuses/trash/restore/{status}', [StatusController::class, 'restore'])->name('statuses.trash_restore');
+    Route::delete('statuses/trash/delete/{status}', [StatusController::class, 'trashDestroy'])->name('statuses.trash_destroy');
     Route::resource('statuses',   StatusController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('departmens', DepartmentController::class);

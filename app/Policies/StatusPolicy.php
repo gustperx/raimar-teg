@@ -69,6 +69,17 @@ class StatusPolicy
     }
 
     /**
+     * Determine whether the user can restore any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('technical:status-delete');
+    }
+
+    /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user

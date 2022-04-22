@@ -15,6 +15,14 @@ export const useDeleteModal = (routeText) => {
         });
     };
 
+    const restoreItem = () => {
+        form.post(route(routeText, [form.itemId]), {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+            onFinish: () => form.reset(),
+        });
+    };
+
     const closeModal = () => {
         isOpenModal.value = false;
         form.reset();
@@ -28,7 +36,9 @@ export const useDeleteModal = (routeText) => {
     return {
         isOpenModal,
         deleteItem,
+        restoreItem,
         closeModal,
         confirmDeletion,
+        confirmRestoration: (itemId) => confirmDeletion(itemId),
     };
 };

@@ -37,9 +37,13 @@ class StatusController extends Controller
         return Inertia::render('Statuses/Index', [
             'filters' => $request->all('search'),
             'statuses' => $items,
-            'create_url' => route('statuses.create'),
+            'urls' => [
+                'create_url' => route('statuses.create'),
+                'restore_url' => route('statuses.trash'),
+            ],
             'can' => [
                 'create' => auth()->user()->can('create', Status::class),
+                'restore' => auth()->user()->can('restoreAny', Status::class),
             ],
         ]);
     }
@@ -132,5 +136,75 @@ class StatusController extends Controller
 
         $request->session()->flash('info', 'Estado eliminado satisfactoriamente');
         return redirect()->route('statuses.index');
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trash(Request $request)
+    {
+        $this->authorize('restoreAny', Status::class);
+
+        $items = Status::onlyTrashed()->orderBy('id', 'desc')
+            ->filter($request->only('search'))
+            ->paginate(10)->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'can' => [
+                        'restore' => auth()->user()->can('restore', $item),
+                        'forceDelete' => auth()->user()->can('forceDelete', $item),
+                    ]
+                ];
+            });
+
+        return Inertia::render('Statuses/Trash', [
+            'filters' => $request->all('search'),
+            'statuses' => $items,
+            'urls' => [
+                'return_url' => route('statuses.index'),
+            ]
+        ]);
+    }
+
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Models\Status  $status
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request, $status_id)
+    {
+        $status = Status::onlyTrashed()->find($status_id);
+
+        $this->authorize('restore', $status);
+
+        $status->restore();
+
+        $request->session()->flash('success', 'Estado restaurado definitivamente');
+        return redirect()->route('statuses.trash');
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Status  $status
+     * @return \Illuminate\Http\Response
+     */
+    public function trashDestroy(Request $request, $status_id)
+    {
+        $status = Status::onlyTrashed()->find($status_id);
+
+        $this->authorize('forceDelete', $status);
+
+        $status->forceDelete();
+
+        $request->session()->flash('warn', 'Estado eliminado definitivamente');
+        return redirect()->route('statuses.trash');
     }
 }
