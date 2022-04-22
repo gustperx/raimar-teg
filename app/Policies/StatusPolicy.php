@@ -77,7 +77,7 @@ class StatusPolicy
      */
     public function restore(User $user, Status $status)
     {
-        //
+        return $user->can('technical:status-delete');
     }
 
     /**
@@ -89,6 +89,6 @@ class StatusPolicy
      */
     public function forceDelete(User $user, Status $status)
     {
-        //
+        return $user->can('technical:status-delete');
     }
 }

@@ -5,11 +5,12 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
 
 import CustomSearch from "@/Components/Search.vue";
+import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./List.vue";
 
 const props = defineProps({
   statuses: {
-    type: Array,
+    type: Object,
     required: true,
   },
   create_url: {
@@ -50,7 +51,13 @@ const urlSearch = route("statuses.index");
         </div>
 
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <CustomList :statuses="statuses" />
+          <CustomList :statuses="statuses.data" />
+        </div>
+
+        <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg mt-4">
+          <div class="flex items-center justify-center">
+            <CustomPagination :links="statuses.links" class="py-2" />
+          </div>
         </div>
       </div>
     </div>

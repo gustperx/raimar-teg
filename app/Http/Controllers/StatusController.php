@@ -17,24 +17,26 @@ class StatusController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Status::class);
+
+        $items = Status::orderBy('id', 'desc')
+            ->filter($request->only('search'))
+            ->paginate(10)->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'edit_url' => route('statuses.edit', $item),
+                    'can' => [
+                        'show' => auth()->user()->can('view', $item),
+                        'edit' => auth()->user()->can('update', $item),
+                        'delete' => auth()->user()->can('delete', $item),
+                    ]
+                ];
+            });
+
         return Inertia::render('Statuses/Index', [
             'filters' => $request->all('search'),
-            'statuses' => Status::orderBy('id', 'desc')
-                ->filter($request->only('search'))
-                //->paginate()
-                //->withQueryString()
-                ->paginate()->map(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                        'edit_url' => route('statuses.edit', $item),
-                        'can' => [
-                            'show' => auth()->user()->can('view', $item),
-                            'edit' => auth()->user()->can('update', $item),
-                            'delete' => auth()->user()->can('delete', $item),
-                        ]
-                    ];
-                }),
+            'statuses' => $items,
             'create_url' => route('statuses.create'),
             'can' => [
                 'create' => auth()->user()->can('create', Status::class),
