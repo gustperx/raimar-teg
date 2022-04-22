@@ -91,7 +91,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Show', [
             'return_url' => route('statuses.index'),
-            'status' => $status
+            'status' => $status->only('id', 'name')
         ]);
     }
 
@@ -107,7 +107,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Edit', [
             'return_url' => route('statuses.index'),
-            'status' => $status
+            'status' => $status->only('id', 'name')
         ]);
     }
 

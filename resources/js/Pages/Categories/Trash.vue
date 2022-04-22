@@ -6,7 +6,7 @@ import JetButton from "@/Jetstream/Button.vue";
 
 import CustomSearch from "@/Components/Search.vue";
 import CustomPagination from "@/Components/Pagination.vue";
-import CustomList from "./List.vue";
+import CustomList from "./ListTrash.vue";
 
 const props = defineProps({
   items: {
@@ -14,10 +14,6 @@ const props = defineProps({
     required: true,
   },
   urls: {
-    type: Object,
-    required: true,
-  },
-  can: {
     type: Object,
     required: true,
   },
@@ -30,14 +26,14 @@ const formSearch = useForm({
   search: props.filters.search,
 });
 
-const urlSearch = route("statuses.index");
+const urlSearch = route("categories.trash");
 </script>
 
 <template>
-  <AppLayout title="Lista de estados">
+  <AppLayout title="Lista de categoría en papelera de reciclaje">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Estados de equipos
+        Categorías en papelera de reciclaje
       </h2>
     </template>
 
@@ -46,11 +42,8 @@ const urlSearch = route("statuses.index");
         <div class="flex flex-row justify-between pb-2">
           <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
           <div>
-            <JetButton type="button" v-if="can.restore" class="mr-2">
-              <Link :href="urls.restore_url">Elementos eliminados</Link>
-            </JetButton>
-            <JetButton type="button" v-if="can.create">
-              <Link :href="urls.create_url">Nuevo elemento</Link>
+            <JetButton type="button">
+              <Link :href="urls.return_url">Regresar</Link>
             </JetButton>
           </div>
         </div>

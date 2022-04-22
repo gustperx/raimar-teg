@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -24,7 +25,21 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:191', Rule::unique('categories')->ignore($this->category)],
+            'parent_id' => ['required', 'numeric', 'max:191', 'exists:categories'],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'parent_id' => 'Categoría principal',
         ];
     }
 }

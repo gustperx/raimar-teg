@@ -18,7 +18,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('manager:categories-read');
+        return $user->can('technical:categories-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category)
     {
-        return $user->can('manager:categories-read');
+        return $user->can('technical:categories-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryPolicy
      */
     public function create(User $user)
     {
-        return $user->can('manager:categories-create');
+        return $user->can('technical:categories-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        return $user->can('manager:categories-update');
+        return $user->can('technical:categories-update');
     }
 
     /**
@@ -69,7 +69,7 @@ class CategoryPolicy
             return false;
         }
 
-        return $user->can('manager:categories-delete');
+        return $user->can('technical:categories-delete');
     }
 
     /**
@@ -80,7 +80,7 @@ class CategoryPolicy
      */
     public function restoreAny(User $user)
     {
-        return $user->can('manager:categories-restore');
+        return $user->can('technical:categories-restore');
     }
 
     /**
@@ -92,7 +92,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category)
     {
-        return $user->can('manager:categories-restore');
+        return $user->can('technical:categories-restore');
     }
 
     /**
@@ -104,6 +104,6 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category)
     {
-        return $user->can('manager:categories-force-delete');
+        return $user->can('technical:categories-force-delete');
     }
 }

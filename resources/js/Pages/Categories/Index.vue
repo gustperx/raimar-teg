@@ -30,14 +30,14 @@ const formSearch = useForm({
   search: props.filters.search,
 });
 
-const urlSearch = route("statuses.index");
+const urlSearch = route("categories.index");
 </script>
 
 <template>
-  <AppLayout title="Lista de estados">
+  <AppLayout title="Categoría de equipos">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Estados de equipos
+        Categoría de equipos
       </h2>
     </template>
 

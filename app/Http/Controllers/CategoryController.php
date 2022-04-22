@@ -19,12 +19,13 @@ class CategoryController extends Controller
     {
         $this->authorize('viewAny', Category::class);
 
-        $items = Category::orderBy('id', 'desc')
+        $items = Category::with('parent')->orderBy('id', 'desc')
             ->filter($request->only('search'))
-            ->paginate(10)->through(function ($item) {
+            ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
+                    'principal' => $item->parent->name ?? null,
                     'edit_url' => route('categories.edit', $item),
                     'show_url' => route('categories.show', $item),
                     'can' => [
@@ -56,7 +57,18 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Category::class);
+
+        $principals = Category::select('id', 'name')
+            ->where('id', '<=', '2')->get()
+            ->map(function ($item) {
+                return ['value' => $item->id, 'label' => $item->name];
+            })->toArray();
+
+        return Inertia::render('Categories/Add', [
+            'principals' => $principals,
+            'return_url' => route('categories.index')
+        ]);
     }
 
     /**
@@ -67,7 +79,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $this->authorize('create', Category::class);
+
+        Category::create($request->all());
+
+        $request->session()->flash('success', 'Categoría creada satisfactoriamente');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -78,7 +95,19 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $this->authorize('view', $category);
+
+        $category = Category::with('parent')->where('id', $category->id)->first();
+        $category = [
+            'id' => $category->id,
+            'name' => $category->name,
+            'principal' => $category->parent->name ?? null
+        ];
+
+        return Inertia::render('Categories/Show', [
+            'return_url' => route('categories.index'),
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -89,7 +118,19 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $this->authorize('update', $category);
+
+        $principals = Category::select('id', 'name')
+            ->where('id', '<=', '2')->get()
+            ->map(function ($item) {
+                return ['value' => $item->id, 'label' => $item->name];
+            })->toArray();
+
+        return Inertia::render('Categories/Edit', [
+            'return_url' => route('categories.index'),
+            'category' => $category->only('id', 'name', 'parent_id'),
+            'principals' => $principals,
+        ]);
     }
 
     /**
@@ -101,7 +142,12 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $this->authorize('update', $category);
+
+        $category->update($request->all());
+
+        $request->session()->flash('success', 'Categoría actualizada satisfactoriamente');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -110,8 +156,83 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        $this->authorize('delete', $category);
+
+        $category->delete();
+
+        $request->session()->flash('info', 'Categoría eliminada satisfactoriamente');
+        return redirect()->route('categories.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trash(Request $request)
+    {
+        $this->authorize('restoreAny', Category::class);
+
+        $items = Category::with('parent')->onlyTrashed()->orderBy('id', 'desc')
+            ->filter($request->only('search'))
+            ->paginate()->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'principal' => $item->parent->name ?? null,
+                    'can' => [
+                        'restore' => auth()->user()->can('restore', $item),
+                        'forceDelete' => auth()->user()->can('forceDelete', $item),
+                    ]
+                ];
+            });
+
+        return Inertia::render('Categories/Trash', [
+            'filters' => $request->all('search'),
+            'items' => $items,
+            'urls' => [
+                'return_url' => route('categories.index'),
+            ]
+        ]);
+    }
+
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request, $category_id)
+    {
+        $category = Category::onlyTrashed()->find($category_id);
+
+        $this->authorize('restore', $category);
+
+        $category->restore();
+
+        $request->session()->flash('success', 'Categoría restaurada definitivamente');
+        return redirect()->route('categories.trash');
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function trashDestroy(Request $request, $category_id)
+    {
+        $category = Category::onlyTrashed()->find($category_id);
+
+        $this->authorize('forceDelete', $category);
+
+        $category->forceDelete();
+
+        $request->session()->flash('warn', 'Categoría eliminada definitivamente');
+        return redirect()->route('categories.trash');
     }
 }

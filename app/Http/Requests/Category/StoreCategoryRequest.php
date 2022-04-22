@@ -24,7 +24,21 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:191', 'unique:categories'],
+            'parent_id' => ['required', 'numeric', 'max:191', 'exists:categories'],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'parent_id' => 'Categoría principal',
         ];
     }
 }
