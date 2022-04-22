@@ -18,7 +18,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('manager:categories-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category)
     {
-        //
+        return $user->can('manager:categories-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('manager:categories-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        //
+        return $user->can('manager:categories-update');
     }
 
     /**
@@ -65,7 +65,22 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category)
     {
-        //
+        if (in_array($category->id, [1, 2])) {
+            return false;
+        }
+
+        return $user->can('manager:categories-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('manager:categories-restore');
     }
 
     /**
@@ -77,7 +92,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category)
     {
-        //
+        return $user->can('manager:categories-restore');
     }
 
     /**
@@ -89,6 +104,6 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category)
     {
-        //
+        return $user->can('manager:categories-force-delete');
     }
 }

@@ -8,7 +8,7 @@ import CustomModalRestore from "@/Components/ModalRestore.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
-  statuses: {
+  items: {
     type: Array,
     required: true,
   },
@@ -40,7 +40,7 @@ const {
 
     <template #body>
       <tr
-        v-for="{ id, name, can } in statuses"
+        v-for="{ id, name, can } in items"
         :key="id"
         class="border-b hover:bg-gray-50"
       >

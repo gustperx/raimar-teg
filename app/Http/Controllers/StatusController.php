@@ -37,7 +37,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Index', [
             'filters' => $request->all('search'),
-            'statuses' => $items,
+            'items' => $items,
             'urls' => [
                 'create_url' => route('statuses.create'),
                 'restore_url' => route('statuses.trash'),
@@ -169,7 +169,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Trash', [
             'filters' => $request->all('search'),
-            'statuses' => $items,
+            'items' => $items,
             'urls' => [
                 'return_url' => route('statuses.index'),
             ]

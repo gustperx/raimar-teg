@@ -9,7 +9,7 @@ import CustomModalDelete from "@/Components/ModalDelete.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
-  statuses: {
+  items: {
     type: Array,
     required: true,
   },
@@ -33,7 +33,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
 
     <template #body>
       <tr
-        v-for="{ id, name, show_url, edit_url, can } in statuses"
+        v-for="{ id, name, show_url, edit_url, can } in items"
         :key="id"
         class="border-b hover:bg-gray-50"
       >

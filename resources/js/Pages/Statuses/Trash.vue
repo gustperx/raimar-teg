@@ -9,7 +9,7 @@ import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./ListTrash.vue";
 
 const props = defineProps({
-  statuses: {
+  items: {
     type: Object,
     required: true,
   },
@@ -49,12 +49,12 @@ const urlSearch = route("statuses.trash");
         </div>
 
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <CustomList :statuses="statuses.data" />
+          <CustomList :items="items.data" />
         </div>
 
         <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg mt-4">
           <div class="flex items-center justify-center">
-            <CustomPagination :links="statuses.links" class="py-2" />
+            <CustomPagination :links="items.links" class="py-2" />
           </div>
         </div>
       </div>

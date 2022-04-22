@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -13,9 +15,38 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->authorize('viewAny', Category::class);
+
+        $items = Category::orderBy('id', 'desc')
+            ->filter($request->only('search'))
+            ->paginate(10)->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'edit_url' => route('categories.edit', $item),
+                    'show_url' => route('categories.show', $item),
+                    'can' => [
+                        'show' => auth()->user()->can('view', $item),
+                        'edit' => auth()->user()->can('update', $item),
+                        'delete' => auth()->user()->can('delete', $item),
+                    ]
+                ];
+            });
+
+        return Inertia::render('Categories/Index', [
+            'filters' => $request->all('search'),
+            'items' => $items,
+            'urls' => [
+                'create_url' => route('categories.create'),
+                'restore_url' => route('categories.trash'),
+            ],
+            'can' => [
+                'create' => auth()->user()->can('create', Category::class),
+                'restore' => auth()->user()->can('restoreAny', Category::class),
+            ],
+        ]);
     }
 
     /**

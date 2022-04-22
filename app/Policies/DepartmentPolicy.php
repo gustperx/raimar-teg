@@ -18,7 +18,7 @@ class DepartmentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('manager:department-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class DepartmentPolicy
      */
     public function view(User $user, Department $department)
     {
-        //
+        return $user->can('manager:department-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class DepartmentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('manager:department-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department)
     {
-        //
+        return $user->can('manager:department-update');
     }
 
     /**
@@ -65,7 +65,22 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department)
     {
-        //
+        if (in_array($department->id, [1, 2])) {
+            return false;
+        }
+
+        return $user->can('manager:department-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('manager:department-restore');
     }
 
     /**
@@ -77,7 +92,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department)
     {
-        //
+        return $user->can('manager:department-restore');
     }
 
     /**
@@ -89,6 +104,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department)
     {
-        //
+        return $user->can('manager:department-force-delete');
     }
 }

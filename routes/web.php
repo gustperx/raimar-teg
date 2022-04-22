@@ -34,9 +34,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('statuses',   StatusController::class);
 
     // Categories
+    Route::get('categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');
+    Route::post('categories/trash/restore/{category}', [CategoryController::class, 'restore'])->name('categories.trash_restore');
+    Route::delete('categories/trash/delete/{category}', [CategoryController::class, 'trashDestroy'])->name('categories.trash_destroy');
     Route::resource('categories', CategoryController::class);
 
     // Departments
+    Route::get('departmens/trash', [DepartmentController::class, 'trash'])->name('departmens.trash');
+    Route::post('departmens/trash/restore/{departmen}', [DepartmentController::class, 'restore'])->name('departmens.trash_restore');
+    Route::delete('departmens/trash/delete/{departmen}', [DepartmentController::class, 'trashDestroy'])->name('departmens.trash_destroy');
     Route::resource('departmens', DepartmentController::class);
 
     // MedicalEquipaments
