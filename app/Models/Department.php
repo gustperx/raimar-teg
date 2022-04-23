@@ -25,4 +25,9 @@ class Department extends Model
             });
         });
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Department::class, $this->parent_id);
+    }
 }

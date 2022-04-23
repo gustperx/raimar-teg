@@ -24,7 +24,21 @@ class StoreDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:191', 'unique:departments'],
+            'parent_id' => ['required', 'numeric', 'max:191', 'exists:departments'],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'parent_id' => 'Departamento principal',
         ];
     }
 }

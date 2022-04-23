@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Department;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateDepartmentRequest extends FormRequest
 {
@@ -24,7 +25,21 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:191', Rule::unique('departments')->ignore($this->department)],
+            'parent_id' => ['required', 'numeric', 'max:191', 'exists:departments'],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'parent_id' => 'Departamento principal',
         ];
     }
 }
