@@ -27,8 +27,8 @@ defineProps({
 
     <template #description>
       Los departamentos permiten hacer seguimiento de los distintos equipos
-      informáticos / médicos en y organizar de manera sistemática la ubicación
-      de estos equipos y traquear sus rotaciones.
+      informáticos / médicos y organizar de manera sistemática la ubicación de
+      estos equipos y traquear sus rotaciones.
       <hr class="my-2" />
       También es posible crear sub-departamentos con ayuda del campo
       <span class="text-purple-700 font-semibold">departamento principal</span>

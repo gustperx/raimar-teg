@@ -25,8 +25,8 @@ class UpdateMedicalEquipmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => ['required', 'numeric', 'max:191', 'exists:categories'],
-            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses'],
+            'category_id' => ['required', 'numeric', 'max:191', 'exists:categories,id'],
+            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
             'code' => ['required', 'string', 'max:191', Rule::unique('medical_equipments')->ignore($this->medical_equipment)],
             'serial' => ['required', 'string', 'max:191', Rule::unique('medical_equipments')->ignore($this->medical_equipment)],
             'description' => ['required', 'string', 'max:191'],

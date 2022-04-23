@@ -191,7 +191,7 @@ class StatusController extends Controller
 
         $status->restore();
 
-        $request->session()->flash('success', 'Estado restaurado definitivamente');
+        $request->session()->flash('success', 'Estado restaurado satisfactoriamente');
         return redirect()->route('statuses.trash');
     }
 

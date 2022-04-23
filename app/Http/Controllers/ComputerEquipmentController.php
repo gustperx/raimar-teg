@@ -252,7 +252,7 @@ class ComputerEquipmentController extends Controller
 
         $computerEquipment->restore();
 
-        $request->session()->flash('success', 'Equipo de cómputo restaurado definitivamente');
+        $request->session()->flash('success', 'Equipo de cómputo restaurado satisfactoriamente');
         return redirect()->route('computer-equipments.trash');
     }
 

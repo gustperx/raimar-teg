@@ -213,7 +213,7 @@ class CategoryController extends Controller
 
         $category->restore();
 
-        $request->session()->flash('success', 'Categoría restaurada definitivamente');
+        $request->session()->flash('success', 'Categoría restaurada satisfactoriamente');
         return redirect()->route('categories.trash');
     }
 

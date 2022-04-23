@@ -212,7 +212,7 @@ class DepartmentController extends Controller
 
         $department->restore();
 
-        $request->session()->flash('success', 'Departamento restaurado definitivamente');
+        $request->session()->flash('success', 'Departamento restaurado satisfactoriamente');
         return redirect()->route('departments.trash');
     }
 

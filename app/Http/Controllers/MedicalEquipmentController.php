@@ -252,7 +252,7 @@ class MedicalEquipmentController extends Controller
 
         $medicalEquipment->restore();
 
-        $request->session()->flash('success', 'Equipo medicó restaurado definitivamente');
+        $request->session()->flash('success', 'Equipo medicó restaurado satisfactoriamente');
         return redirect()->route('medical-equipments.trash');
     }
 
