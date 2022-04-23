@@ -18,7 +18,7 @@ class MedicalEquipmentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('technical:medicalEquipments-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class MedicalEquipmentPolicy
      */
     public function view(User $user, MedicalEquipment $medicalEquipment)
     {
-        //
+        return $user->can('technical:medicalEquipments-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class MedicalEquipmentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('technical:medicalEquipments-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class MedicalEquipmentPolicy
      */
     public function update(User $user, MedicalEquipment $medicalEquipment)
     {
-        //
+        return $user->can('technical:medicalEquipments-update');
     }
 
     /**
@@ -65,7 +65,18 @@ class MedicalEquipmentPolicy
      */
     public function delete(User $user, MedicalEquipment $medicalEquipment)
     {
-        //
+        return $user->can('technical:medicalEquipments-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('technical:medicalEquipments-restore');
     }
 
     /**
@@ -77,7 +88,7 @@ class MedicalEquipmentPolicy
      */
     public function restore(User $user, MedicalEquipment $medicalEquipment)
     {
-        //
+        return $user->can('technical:medicalEquipments-restore');
     }
 
     /**
@@ -89,6 +100,6 @@ class MedicalEquipmentPolicy
      */
     public function forceDelete(User $user, MedicalEquipment $medicalEquipment)
     {
-        //
+        return $user->can('technical:medicalEquipments-force-delete');
     }
 }

@@ -18,7 +18,7 @@ class ComputerEquipmentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('technical:computerEquipments-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class ComputerEquipmentPolicy
      */
     public function view(User $user, ComputerEquipment $computerEquipment)
     {
-        //
+        return $user->can('technical:computerEquipments-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class ComputerEquipmentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('technical:computerEquipments-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class ComputerEquipmentPolicy
      */
     public function update(User $user, ComputerEquipment $computerEquipment)
     {
-        //
+        return $user->can('technical:computerEquipments-update');
     }
 
     /**
@@ -65,7 +65,18 @@ class ComputerEquipmentPolicy
      */
     public function delete(User $user, ComputerEquipment $computerEquipment)
     {
-        //
+        return $user->can('technical:computerEquipments-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('technical:computerEquipments-restore');
     }
 
     /**
@@ -77,7 +88,7 @@ class ComputerEquipmentPolicy
      */
     public function restore(User $user, ComputerEquipment $computerEquipment)
     {
-        //
+        return $user->can('technical:computerEquipments-restore');
     }
 
     /**
@@ -89,6 +100,6 @@ class ComputerEquipmentPolicy
      */
     public function forceDelete(User $user, ComputerEquipment $computerEquipment)
     {
-        //
+        return $user->can('technical:computerEquipments-force-delete');
     }
 }

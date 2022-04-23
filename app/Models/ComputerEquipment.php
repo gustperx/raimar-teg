@@ -31,4 +31,23 @@ class ComputerEquipment extends Model
         'model',
         'serial',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('description', 'like', '%' . $search . '%');
+            });
+        });
+    }
 }
