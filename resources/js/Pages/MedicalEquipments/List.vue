@@ -38,6 +38,8 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         v-for="{
           id,
           description,
+          code,
+          serial,
           category,
           status,
           show_url,
@@ -49,7 +51,13 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
       >
         <td class="p-4">{{ id }}</td>
         <td class="p-4">{{ category }}</td>
-        <td class="p-4">{{ description }}</td>
+        <td class="p-4">
+          <ul class="text-sm">
+            <li>{{ description }}</li>
+            <li><span class="font-semibold">Código:</span> {{ code }}</li>
+            <li><span class="font-semibold">Serial:</span> {{ serial }}</li>
+          </ul>
+        </td>
         <td class="p-4">{{ status }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
