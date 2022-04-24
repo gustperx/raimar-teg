@@ -46,7 +46,10 @@ class MedicalEquipment extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('description', 'like', '%' . $search . '%');
+                $query
+                    ->where('description', 'like', '%' . $search . '%')
+                    ->orWhere('code', 'like', '%' . $search . '%')
+                    ->orWhere('serial', 'like', '%' . $search . '%');
             });
         });
     }

@@ -67,7 +67,7 @@ class ComputerEquipmentController extends Controller
         $this->authorize('create', ComputerEquipment::class);
 
         $categories = Category::select('id', 'name')
-            ->where('parent_id', '2')->get()
+            ->where('parent_id', '1')->get()
             ->map(function ($item) {
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
@@ -140,7 +140,7 @@ class ComputerEquipmentController extends Controller
         $this->authorize('update', $computerEquipment);
 
         $categories = Category::select('id', 'name')
-            ->where('parent_id', '2')->get()
+            ->where('parent_id', '1')->get()
             ->map(function ($item) {
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
