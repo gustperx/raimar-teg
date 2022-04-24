@@ -79,10 +79,10 @@ class MedicalEquipmentMovementController extends Controller
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
 
-        $equipments = MedicalEquipment::select('id', 'name')
+        $equipments = MedicalEquipment::select('id', 'description')
             ->where('status_id', '1')->get()
             ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
+                return ['value' => $item->id, 'label' => $item->description];
             })->toArray();
 
         $users = User::select('id', 'name')
@@ -93,7 +93,6 @@ class MedicalEquipmentMovementController extends Controller
 
         $departments = Department::select('id', 'name')
             ->where('parent_id', '2')->get()
-            ->get()
             ->map(function ($item) {
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
@@ -178,10 +177,10 @@ class MedicalEquipmentMovementController extends Controller
     {
         $this->authorize('update', $medicalEquipmentMovement);
 
-        $equipments = MedicalEquipment::select('id', 'name')
+        $equipments = MedicalEquipment::select('id', 'description')
             ->where('status_id', '1')->get()
             ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
+                return ['value' => $item->id, 'label' => $item->description];
             })->toArray();
 
         $users = User::select('id', 'name')
@@ -192,7 +191,6 @@ class MedicalEquipmentMovementController extends Controller
 
         $departments = Department::select('id', 'name')
             ->where('parent_id', '2')->get()
-            ->get()
             ->map(function ($item) {
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
