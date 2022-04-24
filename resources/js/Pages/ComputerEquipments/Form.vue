@@ -39,7 +39,11 @@ defineProps({
     <template #form>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="category_id" value="Categoría" />
-        <Multiselect v-model="form.category_id" :options="categories" />
+        <Multiselect
+          v-model="form.category_id"
+          :options="categories"
+          :searchable="true"
+        />
         <JetInputError :message="form.errors.category_id" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
@@ -99,7 +103,11 @@ defineProps({
       </div>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="status_id" value="Estatus" />
-        <Multiselect v-model="form.status_id" :options="statuses" />
+        <Multiselect
+          v-model="form.status_id"
+          :options="statuses"
+          :searchable="true"
+        />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
       </div>
     </template>
