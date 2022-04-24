@@ -31,6 +31,8 @@ const props = defineProps({
   },
 });
 
+const dateArr = props.medicalEquipmentMovement.transfer_date.split("/");
+
 const form = useForm({
   previous_department_id: props.medicalEquipmentMovement.previous_department_id,
   current_department_id: props.medicalEquipmentMovement.current_department_id,
@@ -39,11 +41,20 @@ const form = useForm({
   user_assigned_id: props.medicalEquipmentMovement.user_assigned_id,
   equipment_id: props.medicalEquipmentMovement.equipment_id,
   status_id: props.medicalEquipmentMovement.status_id,
-  transfer_date: props.medicalEquipmentMovement.transfer_date,
+  //transfer_date: props.medicalEquipmentMovement.transfer_date,
+  transfer_date: null,
+  transfer_date_fake: new Date(dateArr[2], dateArr[1] - 1, dateArr[0]),
   incidence: props.medicalEquipmentMovement.incidence,
 });
 
 const handleUpdate = () => {
+  const dateOriginal = form.transfer_date_fake;
+  const formatDate = `${dateOriginal.getFullYear()}-${
+    dateOriginal.getMonth() + 1
+  }-${dateOriginal.getDate()}`;
+
+  form.transfer_date = formatDate;
+
   form.put(
     route("medical-equipments-movements.update", [
       props.medicalEquipmentMovement.id,
@@ -52,11 +63,7 @@ const handleUpdate = () => {
       errorBag: "handleUpdate",
       preserveScroll: true,
       onSuccess: () => form.reset(),
-      onError: () => {
-        if (form.errors.name) {
-          form.reset("name");
-        }
-      },
+      onError: () => {},
     }
   );
 };

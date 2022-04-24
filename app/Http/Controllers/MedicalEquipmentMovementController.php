@@ -11,6 +11,7 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class MedicalEquipmentMovementController extends Controller
 {
@@ -134,8 +135,10 @@ class MedicalEquipmentMovementController extends Controller
      * @param  \App\Models\MedicalEquipmentMovement  $medicalEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function show(MedicalEquipmentMovement $medicalEquipmentMovement)
+    public function show($medicalEquipmentMovement_id)
     {
+        $medicalEquipmentMovement = MedicalEquipmentMovement::find($medicalEquipmentMovement_id);
+
         $this->authorize('view', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement = MedicalEquipmentMovement::with(
@@ -173,8 +176,10 @@ class MedicalEquipmentMovementController extends Controller
      * @param  \App\Models\MedicalEquipmentMovement  $medicalEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function edit(MedicalEquipmentMovement $medicalEquipmentMovement)
+    public function edit($medicalEquipmentMovement_id)
     {
+        $medicalEquipmentMovement = MedicalEquipmentMovement::find($medicalEquipmentMovement_id);
+
         $this->authorize('update', $medicalEquipmentMovement);
 
         $equipments = MedicalEquipment::select('id', 'description')
@@ -229,8 +234,10 @@ class MedicalEquipmentMovementController extends Controller
      * @param  \App\Models\MedicalEquipmentMovement  $medicalEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMedicalEquipmentMovementRequest $request, MedicalEquipmentMovement $medicalEquipmentMovement)
+    public function update(UpdateMedicalEquipmentMovementRequest $request, $medicalEquipmentMovement_id)
     {
+        $medicalEquipmentMovement = MedicalEquipmentMovement::find($medicalEquipmentMovement_id);
+
         $this->authorize('update', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement->update($request->all());
@@ -245,8 +252,10 @@ class MedicalEquipmentMovementController extends Controller
      * @param  \App\Models\MedicalEquipmentMovement  $medicalEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, MedicalEquipmentMovement $medicalEquipmentMovement)
+    public function destroy(Request $request, $medicalEquipmentMovement_id)
     {
+        $medicalEquipmentMovement = MedicalEquipmentMovement::find($medicalEquipmentMovement_id);
+
         $this->authorize('delete', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement->delete();

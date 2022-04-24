@@ -1,5 +1,7 @@
 <script setup>
 import Multiselect from "@vueform/multiselect";
+import Datepicker from "vue3-datepicker";
+import { es } from "date-fns/locale";
 
 import JetActionMessage from "@/Jetstream/ActionMessage.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -131,12 +133,10 @@ defineProps({
       <!-- Fecha de transferencia -->
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="transfer_date" value="Fecha de transferencia" />
-        <JetInput
-          id="transfer_date"
-          v-model="form.transfer_date"
-          type="date"
-          class="mt-1 block w-full"
-          autocomplete="off"
+        <Datepicker
+          v-model="form.transfer_date_fake"
+          :locale="es"
+          class="input mt-1 block w-full"
         />
         <JetInputError :message="form.errors.transfer_date" class="mt-2" />
       </div>

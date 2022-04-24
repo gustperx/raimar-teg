@@ -36,10 +36,18 @@ const form = useForm({
   equipment_id: null,
   status_id: null,
   transfer_date: null,
+  transfer_date_fake: new Date(),
   incidence: null,
 });
 
 const handleCreate = () => {
+  const dateOriginal = form.transfer_date_fake;
+  const formatDate = `${dateOriginal.getFullYear()}-${
+    dateOriginal.getMonth() + 1
+  }-${dateOriginal.getDate()}`;
+
+  form.transfer_date = formatDate;
+
   form.post(route("medical-equipments-movements.store"), {
     errorBag: "handleCreate",
     preserveScroll: true,
