@@ -18,7 +18,7 @@ class ComputerEquipmentMovementPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class ComputerEquipmentMovementPolicy
      */
     public function view(User $user, ComputerEquipmentMovement $computerEquipmentMovement)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class ComputerEquipmentMovementPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class ComputerEquipmentMovementPolicy
      */
     public function update(User $user, ComputerEquipmentMovement $computerEquipmentMovement)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-update');
     }
 
     /**
@@ -65,7 +65,18 @@ class ComputerEquipmentMovementPolicy
      */
     public function delete(User $user, ComputerEquipmentMovement $computerEquipmentMovement)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('technical:computerEquipmentMovements-restore');
     }
 
     /**
@@ -77,7 +88,7 @@ class ComputerEquipmentMovementPolicy
      */
     public function restore(User $user, ComputerEquipmentMovement $computerEquipmentMovement)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-restore');
     }
 
     /**
@@ -89,6 +100,6 @@ class ComputerEquipmentMovementPolicy
      */
     public function forceDelete(User $user, ComputerEquipmentMovement $computerEquipmentMovement)
     {
-        //
+        return $user->can('technical:computerEquipmentMovements-force-delete');
     }
 }

@@ -18,7 +18,7 @@ class MedicalEquipmentMovementPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-read');
     }
 
     /**
@@ -30,7 +30,7 @@ class MedicalEquipmentMovementPolicy
      */
     public function view(User $user, MedicalEquipmentMovement $medicalEquipmentMovement)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-read');
     }
 
     /**
@@ -41,7 +41,7 @@ class MedicalEquipmentMovementPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-create');
     }
 
     /**
@@ -53,7 +53,7 @@ class MedicalEquipmentMovementPolicy
      */
     public function update(User $user, MedicalEquipmentMovement $medicalEquipmentMovement)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-update');
     }
 
     /**
@@ -65,7 +65,18 @@ class MedicalEquipmentMovementPolicy
      */
     public function delete(User $user, MedicalEquipmentMovement $medicalEquipmentMovement)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-delete');
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user)
+    {
+        return $user->can('technical:medicalEquipmentMovements-restore');
     }
 
     /**
@@ -77,7 +88,7 @@ class MedicalEquipmentMovementPolicy
      */
     public function restore(User $user, MedicalEquipmentMovement $medicalEquipmentMovement)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-restore');
     }
 
     /**
@@ -89,6 +100,6 @@ class MedicalEquipmentMovementPolicy
      */
     public function forceDelete(User $user, MedicalEquipmentMovement $medicalEquipmentMovement)
     {
-        //
+        return $user->can('technical:medicalEquipmentMovements-force-delete');
     }
 }

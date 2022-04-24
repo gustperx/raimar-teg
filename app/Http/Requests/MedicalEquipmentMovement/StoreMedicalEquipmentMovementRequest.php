@@ -24,7 +24,35 @@ class StoreMedicalEquipmentMovementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'previous_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
+            'current_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
+            'user_movement_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
+            'user_responsible_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
+            'user_assigned_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
+            'equipment_id' => ['required', 'numeric', 'max:191', 'exists:medical_equipments,id'],
+            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
+            'transfer_date' => ['required', 'date', 'before:tomorrow'],
+            'incidence' => ['required', 'string', 'max:191'],
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'previous_department_id' => 'Departamento anterior',
+            'current_department_id' => 'Departamento destinó',
+            'user_movement_id' => 'Responsable movimiento',
+            'user_responsible_id' => 'Responsable departamento',
+            'user_assigned_id' => 'Responsable del equipo',
+            'equipment_id' => 'Equipo medicó',
+            'status_id' => 'Estatus del equipo',
+            'transfer_date' => 'Fecha de transferencia',
+            'incidence' => 'Incidencia',
         ];
     }
 }

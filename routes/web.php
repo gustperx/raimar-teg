@@ -58,9 +58,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('computer-equipments', ComputerEquipmentController::class);
 
     // MedicalEquipamentMovements
+    Route::get('medical-equipments-movements/trash', [MedicalEquipmentMovementController::class, 'trash'])->name('medical-equipments-movements.trash');
+    Route::post('medical-equipments-movements/trash/restore/{medical_equipments_movement}', [MedicalEquipmentMovementController::class, 'restore'])->name('medical-equipments-movements.trash_restore');
+    Route::delete('medical-equipments-movements/trash/delete/{medical_equipments_movement}', [MedicalEquipmentMovementController::class, 'trashDestroy'])->name('medical-equipments-movements.trash_destroy');
     Route::resource('medical-equipments-movements',  MedicalEquipmentMovementController::class);
 
     // ComputerEquipmentMovements
+    Route::get('computer-equipments-movements/trash', [ComputerEquipmentMovementController::class, 'trash'])->name('computer-equipments-movements.trash');
+    Route::post('computer-equipments-movements/trash/restore/{computer_equipments_movement}', [ComputerEquipmentMovementController::class, 'restore'])->name('computer-equipments-movements.trash_restore');
+    Route::delete('computer-equipments-movements/trash/delete/{computer_equipments_movement}', [ComputerEquipmentMovementController::class, 'trashDestroy'])->name('computer-equipments-movements.trash_destroy');
     Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
 });
 
