@@ -290,7 +290,10 @@ class MedicalEquipmentMovementController extends Controller
         )
             ->onlyTrashed()
             ->orderBy('id', 'desc')
-            ->filter($request->only('search'))
+            ->equipmentSearch($request->only('equipment_search'))
+            ->personalSearch($request->only('personal_search'))
+            ->departmentSearch($request->only('department_search'))
+            ->statusSearch($request->only('status_search'))
             ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -310,12 +313,24 @@ class MedicalEquipmentMovementController extends Controller
                 ];
             });
 
+        $usersTech = User::getDepartmentList($this->department_logistica);
+        $users = User::getDepartmentList(null, $this->department_medical);
+
         return Inertia::render('MedicalEquipmentMovements/Trash', [
-            'filters' => $request->all('search'),
+            'filters' => [
+                'equipment_search' => $request->only('equipment_search'),
+                'personal_search' => $request->only('personal_search'),
+                'department_search' => $request->only('department_search'),
+                'status_search' => $request->only('status_search'),
+            ],
             'items' => $items,
             'urls' => [
                 'return_url' => route('medical-equipments-movements.index'),
-            ]
+            ],
+            'equipmentsList' => MedicalEquipment::getEquipmentList(),
+            'personalList' => array_merge($usersTech, $users),
+            'statusesList' => Status::select('id', 'name')->get(),
+            'departmentsList' => Department::select('id', 'name')->where('parent_id', $this->department_medical)->get(),
         ]);
     }
 

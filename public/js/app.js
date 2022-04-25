@@ -27056,9 +27056,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Jetstream_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Button.vue */ "./resources/js/Jetstream/Button.vue");
-/* harmony import */ var _Components_Search_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Search.vue */ "./resources/js/Components/Search.vue");
-/* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
-/* harmony import */ var _ListTrash_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ListTrash.vue */ "./resources/js/Pages/MedicalEquipmentMovements/ListTrash.vue");
+/* harmony import */ var _Components_SearchGroupList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/SearchGroupList.vue */ "./resources/js/Components/SearchGroupList.vue");
+/* harmony import */ var _Components_SearchSimpleList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/SearchSimpleList.vue */ "./resources/js/Components/SearchSimpleList.vue");
+/* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+/* harmony import */ var _ListTrash_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ListTrash.vue */ "./resources/js/Pages/MedicalEquipmentMovements/ListTrash.vue");
+
 
 
 
@@ -27077,6 +27079,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     filters: {
       type: Object
+    },
+    equipmentsList: {
+      type: Array,
+      requered: true
+    },
+    personalList: {
+      type: Array,
+      requered: true
+    },
+    statusesList: {
+      type: Array,
+      requered: true
+    },
+    departmentsList: {
+      type: Array,
+      requered: true
     }
   },
   setup: function setup(__props, _ref) {
@@ -27084,20 +27102,33 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var props = __props;
     var formSearch = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
-      search: props.filters.search
+      equipment_search: props.filters.equipment_search.equipment_search,
+      personal_search: props.filters.personal_search.personal_search,
+      department_search: props.filters.department_search.department_search,
+      status_search: props.filters.status_search.status_search
     });
+
+    var formReset = function formReset() {
+      formSearch.equipment_search = null;
+      formSearch.personal_search = null;
+      formSearch.department_search = null;
+      formSearch.status_search = null;
+    };
+
     var urlSearch = route("medical-equipments-movements.trash");
     var __returned__ = {
       props: props,
       formSearch: formSearch,
+      formReset: formReset,
       urlSearch: urlSearch,
       Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
       useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm,
       AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       JetButton: _Jetstream_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      CustomSearch: _Components_Search_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      CustomPagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      CustomList: _ListTrash_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+      CustomSearchGroupList: _Components_SearchGroupList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      CustomSearchSimpleList: _Components_SearchSimpleList_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      CustomPagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      CustomList: _ListTrash_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -36744,12 +36775,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomSearch"], {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomSearchGroupList"], {
         formSearch: $setup.formSearch,
-        urlSearch: $setup.urlSearch
+        urlSearch: $setup.urlSearch,
+        groupList: $props.equipmentsList,
+        formSearchText: "equipment_search",
+        placeholderText: "Buscar por equipo"
       }, null, 8
       /* PROPS */
-      , ["formSearch", "urlSearch"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetButton"], {
+      , ["formSearch", "urlSearch", "groupList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomSearchGroupList"], {
+        formSearch: $setup.formSearch,
+        urlSearch: $setup.urlSearch,
+        groupList: $props.personalList,
+        formSearchText: "personal_search",
+        placeholderText: "Buscar por personal"
+      }, null, 8
+      /* PROPS */
+      , ["formSearch", "urlSearch", "groupList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomSearchSimpleList"], {
+        formSearch: $setup.formSearch,
+        urlSearch: $setup.urlSearch,
+        simpleList: $props.departmentsList,
+        formSearchText: "department_search",
+        placeholderText: "Buscar por departamento"
+      }, null, 8
+      /* PROPS */
+      , ["formSearch", "urlSearch", "simpleList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomSearchSimpleList"], {
+        formSearch: $setup.formSearch,
+        urlSearch: $setup.urlSearch,
+        simpleList: $props.statusesList,
+        formSearchText: "status_search",
+        placeholderText: "Buscar por estatus"
+      }, null, 8
+      /* PROPS */
+      , ["formSearch", "urlSearch", "simpleList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "class": "ml-4 font-semibold text-sm text-gray-600",
+        onClick: $setup.formReset
+      }, " Restablecer "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetButton"], {
         type: "button"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

@@ -4,7 +4,8 @@ import { Link, useForm } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
 
-import CustomSearch from "@/Components/Search.vue";
+import CustomSearchGroupList from "@/Components/SearchGroupList.vue";
+import CustomSearchSimpleList from "@/Components/SearchSimpleList.vue";
 import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./ListTrash.vue";
 
@@ -20,11 +21,37 @@ const props = defineProps({
   filters: {
     type: Object,
   },
+  equipmentsList: {
+    type: Array,
+    requered: true,
+  },
+  personalList: {
+    type: Array,
+    requered: true,
+  },
+  statusesList: {
+    type: Array,
+    requered: true,
+  },
+  departmentsList: {
+    type: Array,
+    requered: true,
+  },
 });
 
 const formSearch = useForm({
-  search: props.filters.search,
+  equipment_search: props.filters.equipment_search.equipment_search,
+  personal_search: props.filters.personal_search.personal_search,
+  department_search: props.filters.department_search.department_search,
+  status_search: props.filters.status_search.status_search,
 });
+
+const formReset = () => {
+  formSearch.equipment_search = null;
+  formSearch.personal_search = null;
+  formSearch.department_search = null;
+  formSearch.status_search = null;
+};
 
 const urlSearch = route("medical-equipments-movements.trash");
 </script>
@@ -40,7 +67,40 @@ const urlSearch = route("medical-equipments-movements.trash");
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-row justify-between pb-2">
-          <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
+          <CustomSearchGroupList
+            :formSearch="formSearch"
+            :urlSearch="urlSearch"
+            :groupList="equipmentsList"
+            formSearchText="equipment_search"
+            placeholderText="Buscar por equipo"
+          />
+          <CustomSearchGroupList
+            :formSearch="formSearch"
+            :urlSearch="urlSearch"
+            :groupList="personalList"
+            formSearchText="personal_search"
+            placeholderText="Buscar por personal"
+          />
+          <CustomSearchSimpleList
+            :formSearch="formSearch"
+            :urlSearch="urlSearch"
+            :simpleList="departmentsList"
+            formSearchText="department_search"
+            placeholderText="Buscar por departamento"
+          />
+          <CustomSearchSimpleList
+            :formSearch="formSearch"
+            :urlSearch="urlSearch"
+            :simpleList="statusesList"
+            formSearchText="status_search"
+            placeholderText="Buscar por estatus"
+          />
+          <button
+            class="ml-4 font-semibold text-sm text-gray-600"
+            @click="formReset"
+          >
+            Restablecer
+          </button>
           <div>
             <JetButton type="button">
               <Link :href="urls.return_url">Regresar</Link>
