@@ -4,7 +4,7 @@ import { Link, useForm } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
 
-import CustomSearch from "@/Components/Search.vue";
+import CustomSearchGroupList from "@/Components/SearchGroupList.vue";
 import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./List.vue";
 
@@ -24,10 +24,14 @@ const props = defineProps({
   filters: {
     type: Object,
   },
+  equipmentsList: {
+    type: Array,
+    requered: true,
+  },
 });
 
 const formSearch = useForm({
-  search: props.filters.search,
+  equipment_search: props.filters.equipment_search.equipment_search,
 });
 
 const urlSearch = route("medical-equipments-movements.index");
@@ -44,7 +48,13 @@ const urlSearch = route("medical-equipments-movements.index");
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-row justify-between pb-2">
-          <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
+          <CustomSearchGroupList
+            :formSearch="formSearch"
+            :urlSearch="urlSearch"
+            :groupList="equipmentsList"
+            formSearchText="equipment_search"
+            placeholderText="Buscar por equipo"
+          />
           <div>
             <JetButton type="button" v-if="can.restore" class="mr-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>

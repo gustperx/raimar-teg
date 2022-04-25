@@ -83,11 +83,11 @@ defineProps({
         <Multiselect
           v-model="form.equipment_id"
           :options="equipments"
-          group-values="equipments"
-          group-label="categories"
+          group-values="items"
+          group-label="label"
           :searchable="true"
-          track-by="code"
-          label="code"
+          track-by="name"
+          label="name"
         />
         <JetInputError :message="form.errors.equipment_id" class="mt-2" />
       </div>
@@ -112,7 +112,7 @@ defineProps({
           v-model="form.user_movement_id"
           :options="usersTech"
           group-values="items"
-          group-label="department"
+          group-label="label"
           :searchable="true"
           track-by="name"
           label="name"
@@ -130,7 +130,7 @@ defineProps({
           v-model="form.user_responsible_id"
           :options="users"
           group-values="items"
-          group-label="department"
+          group-label="label"
           :searchable="true"
           track-by="name"
           label="name"
@@ -148,7 +148,7 @@ defineProps({
           v-model="form.user_assigned_id"
           :options="users"
           group-values="items"
-          group-label="department"
+          group-label="label"
           :searchable="true"
           track-by="name"
           label="name"

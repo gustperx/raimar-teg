@@ -76,11 +76,11 @@ class MedicalEquipmentMovement extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeEquipmentSearch($query, array $filters)
     {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
+        $query->when($filters['equipment_search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('incidence', 'like', '%' . $search . '%');
+                $query->where('equipment_id', $search);
             });
         });
     }

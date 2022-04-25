@@ -73,12 +73,12 @@ class MedicalEquipment extends Model
 
                 $itemsF = [];
                 foreach ($items as $a) {
-                    $itemsF[] = ['id' => $a->id, 'code' => $a->code];
+                    $itemsF[] = ['id' => $a->id, 'name' => $a->code];
                 }
 
                 $final[] = [
-                    'categories' => $category->name,
-                    'equipments' => $itemsF
+                    'label' => $category->name,
+                    'items' => $itemsF
                 ];
             }
         }

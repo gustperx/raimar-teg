@@ -100,7 +100,7 @@ class User extends Authenticatable
                 }
 
                 $final[] = [
-                    'department' => $department->name,
+                    'label' => $department->name,
                     'items' => $itemsF
                 ];
             }

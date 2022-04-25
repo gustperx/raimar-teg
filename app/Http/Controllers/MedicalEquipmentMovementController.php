@@ -35,7 +35,7 @@ class MedicalEquipmentMovementController extends Controller
             'status'
         )
             ->orderBy('id', 'desc')
-            ->filter($request->only('search'))
+            ->equipmentSearch($request->only('equipment_search'))
             ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -59,7 +59,9 @@ class MedicalEquipmentMovementController extends Controller
             });
 
         return Inertia::render('MedicalEquipmentMovements/Index', [
-            'filters' => $request->all('search'),
+            'filters' => [
+                'equipment_search' => $request->all('equipment_search'),
+            ],
             'items' => $items,
             'urls' => [
                 'create_url' => route('medical-equipments-movements.create'),
@@ -69,6 +71,7 @@ class MedicalEquipmentMovementController extends Controller
                 'create' => auth()->user()->can('create', MedicalEquipmentMovement::class),
                 'restore' => auth()->user()->can('restoreAny', MedicalEquipmentMovement::class),
             ],
+            'equipmentsList' => MedicalEquipment::getEquipmentList()
         ]);
     }
 
@@ -188,6 +191,11 @@ class MedicalEquipmentMovementController extends Controller
         $equipments = MedicalEquipment::getEquipmentList();
         $departments = Department::select('id', 'name')->where('parent_id', $department_medical)->get();
 
+        $current_equipment = [
+            'id' => $medicalEquipmentMovement->equipment->id ?? null,
+            'name' => $medicalEquipmentMovement->equipment->code ?? null
+        ];
+
         return Inertia::render('MedicalEquipmentMovements/Edit', [
             'medicalEquipmentMovement' => $medicalEquipmentMovement->only(
                 'id',
@@ -201,7 +209,7 @@ class MedicalEquipmentMovementController extends Controller
                 'transfer_date',
                 'incidence',
             ),
-            'current_equipment' => $medicalEquipmentMovement->equipment->only('id', 'code'),
+            'current_equipment' => $current_equipment,
             'user_movement' => $medicalEquipmentMovement->userMovement->only('id', 'name'),
             'user_responsible' => $medicalEquipmentMovement->userResponsible->only('id', 'name'),
             'user_assigned' => $medicalEquipmentMovement->userAssigned->only('id', 'name'),
