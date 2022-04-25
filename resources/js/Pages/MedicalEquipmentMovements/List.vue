@@ -28,7 +28,8 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">ID</th>
         <th class="text-left text-white p-4 font-bold">Departamentos</th>
         <th class="text-left text-white p-4 font-bold">Equipo</th>
-        <th class="text-left text-white p-4 font-bold">Estatus</th>
+        <th class="text-left text-white p-4 font-bold">Personal</th>
+        <th class="text-left text-white p-4 font-bold">Fecha</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -57,12 +58,16 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">
           <ul class="text-sm">
             <li>
+              <span class="font-semibold">Actual:</span>
+              {{ current_department }}
+            </li>
+            <li>
               <span class="font-semibold">Anterior:</span>
               {{ previous_department }}
             </li>
             <li>
-              <span class="font-semibold">Actual:</span>
-              {{ current_department }}
+              <span class="font-semibold">Estatus:</span>
+              {{ status }}
             </li>
           </ul>
         </td>
@@ -73,7 +78,19 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
             <li><span class="font-semibold">Serial:</span> {{ serial }}</li>
           </ul>
         </td>
-        <td class="p-4">{{ status }}</td>
+        <td class="p-4">
+          <ul class="text-sm">
+            <li>
+              <span class="font-semibold">Traslado:</span> {{ user_movement }}
+            </li>
+            <li>
+              <span class="font-semibold">Responsable:</span>
+              {{ user_responsible }}
+            </li>
+            <li><span class="font-semibold">Uso:</span> {{ user_assigned }}</li>
+          </ul>
+        </td>
+        <td class="p-4">{{ transfer_date }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">
