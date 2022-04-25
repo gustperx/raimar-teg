@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest;
 use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest;
+use App\Models\Category;
 use App\Models\Department;
 use App\Models\MedicalEquipment;
 use App\Models\MedicalEquipmentMovement;
@@ -80,29 +81,10 @@ class MedicalEquipmentMovementController extends Controller
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
 
-        $equipments = MedicalEquipment::select('id', 'description')
-            ->where('status_id', '1')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->description];
-            })->toArray();
-
-        $users = User::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $departments = Department::select('id', 'name')
-            ->where('parent_id', '2')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $users = User::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('parent_id', '2')->get();
+        $statuses = Status::select('id', 'name')->get();
+        $equipments = MedicalEquipment::getEquipmentList();
 
         return Inertia::render('MedicalEquipmentMovements/Add', [
             'equipments' => $equipments,
@@ -178,33 +160,14 @@ class MedicalEquipmentMovementController extends Controller
      */
     public function edit($medicalEquipmentMovement_id)
     {
-        $medicalEquipmentMovement = MedicalEquipmentMovement::find($medicalEquipmentMovement_id);
+        $medicalEquipmentMovement = MedicalEquipmentMovement::with('equipment')->first($medicalEquipmentMovement_id);
 
         $this->authorize('update', $medicalEquipmentMovement);
 
-        $equipments = MedicalEquipment::select('id', 'description')
-            ->where('status_id', '1')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->description];
-            })->toArray();
-
-        $users = User::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $departments = Department::select('id', 'name')
-            ->where('parent_id', '2')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $users = User::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('parent_id', '2')->get();
+        $statuses = Status::select('id', 'name')->get();
+        $equipments = MedicalEquipment::getEquipmentList();
 
         return Inertia::render('MedicalEquipmentMovements/Edit', [
             'medicalEquipmentMovement' => $medicalEquipmentMovement->only(
@@ -219,6 +182,7 @@ class MedicalEquipmentMovementController extends Controller
                 'transfer_date',
                 'incidence',
             ),
+            'current_equipment' => $medicalEquipmentMovement->equipment->only('id', 'code'),
             'equipments' => $equipments,
             'statuses' => $statuses,
             'users' => $users,

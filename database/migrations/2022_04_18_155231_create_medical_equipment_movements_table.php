@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('user_movement_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_responsible_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_assigned_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('equipment_id')->constrained('computer_equipments')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('equipment_id')->constrained('medical_equipments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamp('transfer_date');
             $table->longText('incidence');

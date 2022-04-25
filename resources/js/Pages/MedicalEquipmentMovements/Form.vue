@@ -1,5 +1,7 @@
 <script setup>
-import Multiselect from "@vueform/multiselect";
+import Multiselect from "vue-multiselect";
+/* import Multiselect from "@vueform/multiselect"; */
+
 import Datepicker from "vue3-datepicker";
 import { es } from "date-fns/locale";
 
@@ -38,6 +40,7 @@ defineProps({
 
     <template #description>
       Registro de seguimiento de equipos por las instalaciones
+      <pre>{{ equipments }}</pre>
     </template>
 
     <template #form>
@@ -48,6 +51,8 @@ defineProps({
           v-model="form.previous_department_id"
           :options="departments"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError
           :message="form.errors.previous_department_id"
@@ -62,6 +67,8 @@ defineProps({
           v-model="form.current_department_id"
           :options="departments"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError
           :message="form.errors.current_department_id"
@@ -75,7 +82,11 @@ defineProps({
         <Multiselect
           v-model="form.equipment_id"
           :options="equipments"
+          group-values="equipments"
+          group-label="categories"
           :searchable="true"
+          track-by="code"
+          label="code"
         />
         <JetInputError :message="form.errors.equipment_id" class="mt-2" />
       </div>
@@ -87,6 +98,8 @@ defineProps({
           v-model="form.status_id"
           :options="statuses"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
       </div>
@@ -98,6 +111,8 @@ defineProps({
           v-model="form.user_movement_id"
           :options="users"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError :message="form.errors.user_movement_id" class="mt-2" />
       </div>
@@ -112,6 +127,8 @@ defineProps({
           v-model="form.user_responsible_id"
           :options="users"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError
           :message="form.errors.user_responsible_id"
@@ -126,6 +143,8 @@ defineProps({
           v-model="form.user_assigned_id"
           :options="users"
           :searchable="true"
+          track-by="name"
+          label="name"
         />
         <JetInputError :message="form.errors.user_assigned_id" class="mt-2" />
       </div>
@@ -170,4 +189,5 @@ defineProps({
   </JetFormSection>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<!-- <style src="@vueform/multiselect/themes/default.css"></style> -->

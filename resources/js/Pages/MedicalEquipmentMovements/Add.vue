@@ -47,6 +47,13 @@ const handleCreate = () => {
   }-${dateOriginal.getDate()}`;
 
   form.transfer_date = formatDate;
+  form.previous_department_id = form.previous_department_id.id || null;
+  form.current_department_id = form.current_department_id.id || null;
+  form.user_movement_id = form.user_movement_id.id || null;
+  form.user_responsible_id = form.user_responsible_id.id || null;
+  form.user_assigned_id = form.user_assigned_id.id || null;
+  form.equipment_id = form.equipment_id.id || null;
+  form.status_id = form.status_id.id || null;
 
   form.post(route("medical-equipments-movements.store"), {
     errorBag: "handleCreate",

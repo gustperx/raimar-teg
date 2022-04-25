@@ -53,4 +53,36 @@ class MedicalEquipment extends Model
             });
         });
     }
+
+    public static function getEquipmentList()
+    {
+        $categories = Category::where('parent_id', '2')->get();
+
+        $equipments = MedicalEquipment::select('id', 'description', 'code', 'serial', 'category_id')
+            ->where('status_id', '1')->get();
+
+        $final = [];
+        foreach ($categories as $category) {
+            $filtered = $equipments->filter(function ($item) use ($category, $final) {
+                return $item->category_id == $category->id;
+            });
+
+            $items = collect($filtered->all());
+
+            if ($items->count() > 0) {
+
+                $itemsF = [];
+                foreach ($items as $a) {
+                    $itemsF[] = ['id' => $a->id, 'code' => $a->code];
+                }
+
+                $final[] = [
+                    'categories' => $category->name,
+                    'equipments' => $itemsF
+                ];
+            }
+        }
+
+        return $final;
+    }
 }
