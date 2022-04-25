@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest;
 use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest;
-use App\Models\Category;
 use App\Models\Department;
 use App\Models\MedicalEquipment;
 use App\Models\MedicalEquipmentMovement;
@@ -12,7 +11,6 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Carbon\Carbon;
 
 class MedicalEquipmentMovementController extends Controller
 {
@@ -21,6 +19,10 @@ class MedicalEquipmentMovementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $department_logistica = 3;
+    private $department_medical = 2;
+
     public function index(Request $request)
     {
         $this->authorize('viewAny', MedicalEquipmentMovement::class);
@@ -36,6 +38,9 @@ class MedicalEquipmentMovementController extends Controller
         )
             ->orderBy('id', 'desc')
             ->equipmentSearch($request->only('equipment_search'))
+            ->personalSearch($request->only('personal_search'))
+            ->departmentSearch($request->only('department_search'))
+            ->statusSearch($request->only('status_search'))
             ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -58,9 +63,15 @@ class MedicalEquipmentMovementController extends Controller
                 ];
             });
 
+        $usersTech = User::getDepartmentList($this->department_logistica);
+        $users = User::getDepartmentList(null, $this->department_medical);
+
         return Inertia::render('MedicalEquipmentMovements/Index', [
             'filters' => [
-                'equipment_search' => $request->all('equipment_search'),
+                'equipment_search' => $request->only('equipment_search'),
+                'personal_search' => $request->only('personal_search'),
+                'department_search' => $request->only('department_search'),
+                'status_search' => $request->only('status_search'),
             ],
             'items' => $items,
             'urls' => [
@@ -71,7 +82,10 @@ class MedicalEquipmentMovementController extends Controller
                 'create' => auth()->user()->can('create', MedicalEquipmentMovement::class),
                 'restore' => auth()->user()->can('restoreAny', MedicalEquipmentMovement::class),
             ],
-            'equipmentsList' => MedicalEquipment::getEquipmentList()
+            'equipmentsList' => MedicalEquipment::getEquipmentList(),
+            'personalList' => array_merge($usersTech, $users),
+            'statusesList' => Status::select('id', 'name')->get(),
+            'departmentsList' => Department::select('id', 'name')->where('parent_id', $this->department_medical)->get(),
         ]);
     }
 
@@ -84,15 +98,12 @@ class MedicalEquipmentMovementController extends Controller
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
 
-        $department_logistica = 3;
-        $department_medical = 2;
-
-        $usersTech = User::getDepartmentList($department_logistica);
-        $users = User::getDepartmentList(null, $department_medical);
+        $usersTech = User::getDepartmentList($this->department_logistica);
+        $users = User::getDepartmentList(null, $this->department_medical);
 
         $statuses = Status::select('id', 'name')->get();
         $equipments = MedicalEquipment::getEquipmentList();
-        $departments = Department::select('id', 'name')->where('parent_id', $department_medical)->get();
+        $departments = Department::select('id', 'name')->where('parent_id', $this->department_medical)->get();
 
         return Inertia::render('MedicalEquipmentMovements/Add', [
             'equipments' => $equipments,
@@ -181,15 +192,12 @@ class MedicalEquipmentMovementController extends Controller
 
         $this->authorize('update', $medicalEquipmentMovement);
 
-        $department_logistica = 3;
-        $department_medical = 2;
-
-        $usersTech = User::getDepartmentList($department_logistica);
-        $users = User::getDepartmentList(null, $department_medical);
+        $usersTech = User::getDepartmentList($this->department_logistica);
+        $users = User::getDepartmentList(null, $this->department_medical);
 
         $statuses = Status::select('id', 'name')->get();
         $equipments = MedicalEquipment::getEquipmentList();
-        $departments = Department::select('id', 'name')->where('parent_id', $department_medical)->get();
+        $departments = Department::select('id', 'name')->where('parent_id', $this->department_medical)->get();
 
         $current_equipment = [
             'id' => $medicalEquipmentMovement->equipment->id ?? null,

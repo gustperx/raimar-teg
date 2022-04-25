@@ -84,4 +84,37 @@ class MedicalEquipmentMovement extends Model
             });
         });
     }
+
+    public function scopePersonalSearch($query, array $filters)
+    {
+        $query->when($filters['personal_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('user_movement_id', $search)
+                    ->orWhere('user_responsible_id', $search)
+                    ->orWhere('user_assigned_id', $search);
+            });
+        });
+    }
+
+    public function scopeDepartmentSearch($query, array $filters)
+    {
+        $query->when($filters['department_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('previous_department_id', $search)
+                    ->orWhere('current_department_id', $search);
+            });
+        });
+    }
+
+    public function scopeStatusSearch($query, array $filters)
+    {
+        $query->when($filters['status_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('status_id', $search);
+            });
+        });
+    }
 }
