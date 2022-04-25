@@ -113,6 +113,9 @@ class MedicalEquipmentMovementController extends Controller
 
         MedicalEquipmentMovement::create($request->all());
 
+        $equipment = MedicalEquipment::find($request->input('equipment_id'));
+        $equipment->update(['status_id' => $request->input('status_id')]);
+
         $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
     }
@@ -225,6 +228,9 @@ class MedicalEquipmentMovementController extends Controller
         $this->authorize('update', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement->update($request->all());
+
+        $equipment = MedicalEquipment::find($request->input('equipment_id'));
+        $equipment->update(['status_id' => $request->input('status_id')]);
 
         $request->session()->flash('success', 'Trasladó de equipo actualizado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
