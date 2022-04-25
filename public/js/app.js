@@ -26358,16 +26358,18 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     var handleCreate = function handleCreate() {
+      var _form$previous_depart, _form$current_departm, _form$user_movement_i, _form$user_responsibl, _form$user_assigned_i, _form$equipment_id, _form$status_id;
+
       var dateOriginal = form.transfer_date_fake;
       var formatDate = "".concat(dateOriginal.getFullYear(), "-").concat(dateOriginal.getMonth() + 1, "-").concat(dateOriginal.getDate());
       form.transfer_date = formatDate;
-      form.previous_department_id = form.previous_department_id.id || null;
-      form.current_department_id = form.current_department_id.id || null;
-      form.user_movement_id = form.user_movement_id.id || null;
-      form.user_responsible_id = form.user_responsible_id.id || null;
-      form.user_assigned_id = form.user_assigned_id.id || null;
-      form.equipment_id = form.equipment_id.id || null;
-      form.status_id = form.status_id.id || null;
+      form.previous_department_id = ((_form$previous_depart = form.previous_department_id) === null || _form$previous_depart === void 0 ? void 0 : _form$previous_depart.id) || null;
+      form.current_department_id = ((_form$current_departm = form.current_department_id) === null || _form$current_departm === void 0 ? void 0 : _form$current_departm.id) || null;
+      form.user_movement_id = ((_form$user_movement_i = form.user_movement_id) === null || _form$user_movement_i === void 0 ? void 0 : _form$user_movement_i.id) || null;
+      form.user_responsible_id = ((_form$user_responsibl = form.user_responsible_id) === null || _form$user_responsibl === void 0 ? void 0 : _form$user_responsibl.id) || null;
+      form.user_assigned_id = ((_form$user_assigned_i = form.user_assigned_id) === null || _form$user_assigned_i === void 0 ? void 0 : _form$user_assigned_i.id) || null;
+      form.equipment_id = ((_form$equipment_id = form.equipment_id) === null || _form$equipment_id === void 0 ? void 0 : _form$equipment_id.id) || null;
+      form.status_id = ((_form$status_id = form.status_id) === null || _form$status_id === void 0 ? void 0 : _form$status_id.id) || null;
       form.post(route("medical-equipments-movements.store"), {
         errorBag: "handleCreate",
         preserveScroll: true,
@@ -26478,16 +26480,18 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     var handleUpdate = function handleUpdate() {
+      var _form$previous_depart, _form$current_departm, _form$user_movement_i, _form$user_responsibl, _form$user_assigned_i, _form$equipment_id, _form$status_id;
+
       var dateOriginal = form.transfer_date_fake;
       var formatDate = "".concat(dateOriginal.getFullYear(), "-").concat(dateOriginal.getMonth() + 1, "-").concat(dateOriginal.getDate());
       form.transfer_date = formatDate;
-      form.previous_department_id = form.previous_department_id.id || null;
-      form.current_department_id = form.current_department_id.id || null;
-      form.user_movement_id = form.user_movement_id.id || null;
-      form.user_responsible_id = form.user_responsible_id.id || null;
-      form.user_assigned_id = form.user_assigned_id.id || null;
-      form.equipment_id = form.equipment_id.id || null;
-      form.status_id = form.status_id.id || null;
+      form.previous_department_id = ((_form$previous_depart = form.previous_department_id) === null || _form$previous_depart === void 0 ? void 0 : _form$previous_depart.id) || null;
+      form.current_department_id = ((_form$current_departm = form.current_department_id) === null || _form$current_departm === void 0 ? void 0 : _form$current_departm.id) || null;
+      form.user_movement_id = ((_form$user_movement_i = form.user_movement_id) === null || _form$user_movement_i === void 0 ? void 0 : _form$user_movement_i.id) || null;
+      form.user_responsible_id = ((_form$user_responsibl = form.user_responsible_id) === null || _form$user_responsibl === void 0 ? void 0 : _form$user_responsibl.id) || null;
+      form.user_assigned_id = ((_form$user_assigned_i = form.user_assigned_id) === null || _form$user_assigned_i === void 0 ? void 0 : _form$user_assigned_i.id) || null;
+      form.equipment_id = ((_form$equipment_id = form.equipment_id) === null || _form$equipment_id === void 0 ? void 0 : _form$equipment_id.id) || null;
+      form.status_id = ((_form$status_id = form.status_id) === null || _form$status_id === void 0 ? void 0 : _form$status_id.id) || null;
       form.put(route("medical-equipments-movements.update", [props.medicalEquipmentMovement.id]), {
         errorBag: "handleUpdate",
         preserveScroll: true,

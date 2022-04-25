@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
 });
 
-Route::get('test', function () {
+/* Route::get('test', function () {
 
     $permissions = collect(config('permission_rules'));
 
@@ -84,4 +84,4 @@ Route::get('test', function () {
     $collect = collect($final);
 
     dd($final, $collect->flatten()->toArray());
-});
+}); */
