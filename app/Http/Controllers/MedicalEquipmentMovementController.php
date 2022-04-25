@@ -81,15 +81,21 @@ class MedicalEquipmentMovementController extends Controller
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
 
-        $users = User::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('parent_id', '2')->get();
+        $department_logistica = 3;
+        $department_medical = 2;
+
+        $usersTech = User::getDepartmentList($department_logistica);
+        $users = User::getDepartmentList(null, $department_medical);
+
         $statuses = Status::select('id', 'name')->get();
         $equipments = MedicalEquipment::getEquipmentList();
+        $departments = Department::select('id', 'name')->where('parent_id', $department_medical)->get();
 
         return Inertia::render('MedicalEquipmentMovements/Add', [
             'equipments' => $equipments,
             'statuses' => $statuses,
             'users' => $users,
+            'usersTech' => $usersTech,
             'departments' => $departments,
             'return_url' => route('medical-equipments-movements.index')
         ]);
@@ -160,14 +166,24 @@ class MedicalEquipmentMovementController extends Controller
      */
     public function edit($medicalEquipmentMovement_id)
     {
-        $medicalEquipmentMovement = MedicalEquipmentMovement::with('equipment')->find($medicalEquipmentMovement_id);
+        $medicalEquipmentMovement = MedicalEquipmentMovement::with(
+            'equipment',
+            'userMovement',
+            'userResponsible',
+            'userAssigned',
+        )->find($medicalEquipmentMovement_id);
 
         $this->authorize('update', $medicalEquipmentMovement);
 
-        $users = User::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('parent_id', '2')->get();
+        $department_logistica = 3;
+        $department_medical = 2;
+
+        $usersTech = User::getDepartmentList($department_logistica);
+        $users = User::getDepartmentList(null, $department_medical);
+
         $statuses = Status::select('id', 'name')->get();
         $equipments = MedicalEquipment::getEquipmentList();
+        $departments = Department::select('id', 'name')->where('parent_id', $department_medical)->get();
 
         return Inertia::render('MedicalEquipmentMovements/Edit', [
             'medicalEquipmentMovement' => $medicalEquipmentMovement->only(
@@ -183,9 +199,13 @@ class MedicalEquipmentMovementController extends Controller
                 'incidence',
             ),
             'current_equipment' => $medicalEquipmentMovement->equipment->only('id', 'code'),
+            'user_movement' => $medicalEquipmentMovement->userMovement->only('id', 'name'),
+            'user_responsible' => $medicalEquipmentMovement->userResponsible->only('id', 'name'),
+            'user_assigned' => $medicalEquipmentMovement->userAssigned->only('id', 'name'),
             'equipments' => $equipments,
             'statuses' => $statuses,
             'users' => $users,
+            'usersTech' => $usersTech,
             'departments' => $departments,
             'return_url' => route('medical-equipments-movements.index')
         ]);

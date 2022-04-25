@@ -26336,6 +26336,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
+    usersTech: {
+      type: Array,
+      required: true
+    },
     departments: {
       type: Array,
       required: true
@@ -26432,11 +26436,27 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
+    user_movement: {
+      type: Object,
+      required: true
+    },
+    user_responsible: {
+      type: Object,
+      required: true
+    },
+    user_assigned: {
+      type: Object,
+      required: true
+    },
     statuses: {
       type: Array,
       required: true
     },
     users: {
+      type: Array,
+      required: true
+    },
+    usersTech: {
       type: Array,
       required: true
     },
@@ -26461,18 +26481,12 @@ __webpack_require__.r(__webpack_exports__);
       current_department_id: props.departments.find(function (item) {
         return item.id === props.medicalEquipmentMovement.current_department_id;
       }),
-      user_movement_id: props.users.find(function (item) {
-        return item.id === props.medicalEquipmentMovement.user_movement_id;
-      }),
-      user_responsible_id: props.users.find(function (item) {
-        return item.id === props.medicalEquipmentMovement.user_responsible_id;
-      }),
-      user_assigned_id: props.users.find(function (item) {
-        return item.id === props.medicalEquipmentMovement.user_assigned_id;
-      }),
       status_id: props.statuses.find(function (item) {
         return item.id === props.medicalEquipmentMovement.status_id;
       }),
+      user_movement_id: props.user_movement,
+      user_responsible_id: props.user_responsible,
+      user_assigned_id: props.user_assigned,
       equipment_id: props.current_equipment,
       transfer_date: null,
       transfer_date_fake: new Date(dateArr[2], dateArr[1] - 1, dateArr[0]),
@@ -26544,8 +26558,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_Label_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/Label.vue */ "./resources/js/Jetstream/Label.vue");
 /* harmony import */ var _Jetstream_Button_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/Button.vue */ "./resources/js/Jetstream/Button.vue");
 
-/* import Multiselect from "@vueform/multiselect"; */
-
 
 
 
@@ -26566,6 +26578,9 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     users: {
+      required: true
+    },
+    usersTech: {
       required: true
     },
     departments: {
@@ -35293,10 +35308,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         equipments: $props.equipments,
         statuses: $props.statuses,
         users: $props.users,
-        departments: $props.departments
+        departments: $props.departments,
+        usersTech: $props.usersTech
       }, null, 8
       /* PROPS */
-      , ["form", "equipments", "statuses", "users", "departments"])])])];
+      , ["form", "equipments", "statuses", "users", "departments", "usersTech"])])])];
     }),
     _: 1
     /* STABLE */
@@ -35376,10 +35392,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         equipments: $props.equipments,
         statuses: $props.statuses,
         users: $props.users,
-        departments: $props.departments
+        departments: $props.departments,
+        usersTech: $props.usersTech
       }, null, 8
       /* PROPS */
-      , ["form", "equipments", "statuses", "users", "departments"])])])];
+      , ["form", "equipments", "statuses", "users", "departments", "usersTech"])])])];
     }),
     _: 1
     /* STABLE */
@@ -35536,7 +35553,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $props.form.user_movement_id = $event;
         }),
-        options: $props.users,
+        options: $props.usersTech,
+        "group-values": "items",
+        "group-label": "department",
         searchable: true,
         "track-by": "name",
         label: "name"
@@ -35556,6 +35575,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $props.form.user_responsible_id = $event;
         }),
         options: $props.users,
+        "group-values": "items",
+        "group-label": "department",
         searchable: true,
         "track-by": "name",
         label: "name"
@@ -35575,6 +35596,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $props.form.user_assigned_id = $event;
         }),
         options: $props.users,
+        "group-values": "items",
+        "group-label": "department",
         searchable: true,
         "track-by": "name",
         label: "name"

@@ -21,6 +21,10 @@ defineProps({
     type: Array,
     required: true,
   },
+  usersTech: {
+    type: Array,
+    required: true,
+  },
   departments: {
     type: Array,
     required: true,
@@ -90,6 +94,7 @@ const handleCreate = () => {
           :statuses="statuses"
           :users="users"
           :departments="departments"
+          :usersTech="usersTech"
         />
       </div>
     </div>

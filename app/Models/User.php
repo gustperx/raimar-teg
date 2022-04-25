@@ -72,4 +72,40 @@ class User extends Authenticatable
         return $this->id == 1;
     }
 
+    public static function getDepartmentList($department_id = false, $parent_id = false)
+    {
+        if (!empty($department_id && is_numeric($department_id))) {
+            $departments = Department::whereNotNull('parent_id')->where('id', $department_id)->get();
+        } elseif (!empty($parent_id && is_numeric($parent_id))) {
+            $departments = Department::where('parent_id', $parent_id)->get();
+        } else {
+            $departments = Department::whereNotNull('parent_id')->get();
+        }
+
+        $users = User::select('id', 'name', 'department_id')->get();
+
+        $final = [];
+        foreach ($departments as $department) {
+            $filtered = $users->filter(function ($item) use ($department) {
+                return $item->department_id == $department->id;
+            });
+
+            $items = collect($filtered->all());
+
+            if ($items->count() > 0) {
+
+                $itemsF = [];
+                foreach ($items as $a) {
+                    $itemsF[] = ['id' => $a->id, 'name' => $a->name];
+                }
+
+                $final[] = [
+                    'department' => $department->name,
+                    'items' => $itemsF
+                ];
+            }
+        }
+
+        return $final;
+    }
 }

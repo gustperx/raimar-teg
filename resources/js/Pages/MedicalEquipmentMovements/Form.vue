@@ -1,6 +1,5 @@
 <script setup>
 import Multiselect from "vue-multiselect";
-/* import Multiselect from "@vueform/multiselect"; */
 
 import Datepicker from "vue3-datepicker";
 import { es } from "date-fns/locale";
@@ -23,6 +22,9 @@ defineProps({
     required: true,
   },
   users: {
+    required: true,
+  },
+  usersTech: {
     required: true,
   },
   departments: {
@@ -108,7 +110,9 @@ defineProps({
         <JetLabel for="user_movement_id" value="Técnico" />
         <Multiselect
           v-model="form.user_movement_id"
-          :options="users"
+          :options="usersTech"
+          group-values="items"
+          group-label="department"
           :searchable="true"
           track-by="name"
           label="name"
@@ -125,6 +129,8 @@ defineProps({
         <Multiselect
           v-model="form.user_responsible_id"
           :options="users"
+          group-values="items"
+          group-label="department"
           :searchable="true"
           track-by="name"
           label="name"
@@ -141,6 +147,8 @@ defineProps({
         <Multiselect
           v-model="form.user_assigned_id"
           :options="users"
+          group-values="items"
+          group-label="department"
           :searchable="true"
           track-by="name"
           label="name"
@@ -189,4 +197,3 @@ defineProps({
 </template>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
-<!-- <style src="@vueform/multiselect/themes/default.css"></style> -->
