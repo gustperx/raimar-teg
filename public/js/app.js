@@ -26453,15 +26453,25 @@ __webpack_require__.r(__webpack_exports__);
     var props = __props;
     var dateArr = props.medicalEquipmentMovement.transfer_date.split("/");
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
-      previous_department_id: props.medicalEquipmentMovement.previous_department_id,
-      current_department_id: props.medicalEquipmentMovement.current_department_id,
-      user_movement_id: props.medicalEquipmentMovement.user_movement_id,
-      user_responsible_id: props.medicalEquipmentMovement.user_responsible_id,
-      user_assigned_id: props.medicalEquipmentMovement.user_assigned_id,
-      //equipment_id: props.medicalEquipmentMovement.equipment_id,
+      previous_department_id: props.departments.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.previous_department_id;
+      }),
+      current_department_id: props.departments.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.current_department_id;
+      }),
+      user_movement_id: props.users.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.user_movement_id;
+      }),
+      user_responsible_id: props.users.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.user_responsible_id;
+      }),
+      user_assigned_id: props.users.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.user_assigned_id;
+      }),
+      status_id: props.statuses.find(function (item) {
+        return item.id === props.medicalEquipmentMovement.status_id;
+      }),
       equipment_id: props.current_equipment,
-      status_id: props.medicalEquipmentMovement.status_id,
-      //transfer_date: props.medicalEquipmentMovement.transfer_date,
       transfer_date: null,
       transfer_date_fake: new Date(dateArr[2], dateArr[1] - 1, dateArr[0]),
       incidence: props.medicalEquipmentMovement.incidence
@@ -26471,6 +26481,13 @@ __webpack_require__.r(__webpack_exports__);
       var dateOriginal = form.transfer_date_fake;
       var formatDate = "".concat(dateOriginal.getFullYear(), "-").concat(dateOriginal.getMonth() + 1, "-").concat(dateOriginal.getDate());
       form.transfer_date = formatDate;
+      form.previous_department_id = form.previous_department_id.id || null;
+      form.current_department_id = form.current_department_id.id || null;
+      form.user_movement_id = form.user_movement_id.id || null;
+      form.user_responsible_id = form.user_responsible_id.id || null;
+      form.user_assigned_id = form.user_assigned_id.id || null;
+      form.equipment_id = form.equipment_id.id || null;
+      form.status_id = form.status_id.id || null;
       form.put(route("medical-equipments-movements.update", [props.medicalEquipmentMovement.id]), {
         errorBag: "handleUpdate",
         preserveScroll: true,
@@ -35426,9 +35443,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     description: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("pre", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.equipments), 1
-      /* TEXT */
-      )];
+      return [_hoisted_2];
     }),
     form: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Departamento anterior "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {

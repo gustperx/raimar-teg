@@ -40,7 +40,6 @@ defineProps({
 
     <template #description>
       Registro de seguimiento de equipos por las instalaciones
-      <pre>{{ equipments }}</pre>
     </template>
 
     <template #form>

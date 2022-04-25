@@ -160,7 +160,7 @@ class MedicalEquipmentMovementController extends Controller
      */
     public function edit($medicalEquipmentMovement_id)
     {
-        $medicalEquipmentMovement = MedicalEquipmentMovement::with('equipment')->first($medicalEquipmentMovement_id);
+        $medicalEquipmentMovement = MedicalEquipmentMovement::with('equipment')->find($medicalEquipmentMovement_id);
 
         $this->authorize('update', $medicalEquipmentMovement);
 

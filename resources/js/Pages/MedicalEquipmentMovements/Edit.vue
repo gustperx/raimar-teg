@@ -38,15 +38,25 @@ const props = defineProps({
 const dateArr = props.medicalEquipmentMovement.transfer_date.split("/");
 
 const form = useForm({
-  previous_department_id: props.medicalEquipmentMovement.previous_department_id,
-  current_department_id: props.medicalEquipmentMovement.current_department_id,
-  user_movement_id: props.medicalEquipmentMovement.user_movement_id,
-  user_responsible_id: props.medicalEquipmentMovement.user_responsible_id,
-  user_assigned_id: props.medicalEquipmentMovement.user_assigned_id,
-  //equipment_id: props.medicalEquipmentMovement.equipment_id,
+  previous_department_id: props.departments.find(
+    (item) => item.id === props.medicalEquipmentMovement.previous_department_id
+  ),
+  current_department_id: props.departments.find(
+    (item) => item.id === props.medicalEquipmentMovement.current_department_id
+  ),
+  user_movement_id: props.users.find(
+    (item) => item.id === props.medicalEquipmentMovement.user_movement_id
+  ),
+  user_responsible_id: props.users.find(
+    (item) => item.id === props.medicalEquipmentMovement.user_responsible_id
+  ),
+  user_assigned_id: props.users.find(
+    (item) => item.id === props.medicalEquipmentMovement.user_assigned_id
+  ),
+  status_id: props.statuses.find(
+    (item) => item.id === props.medicalEquipmentMovement.status_id
+  ),
   equipment_id: props.current_equipment,
-  status_id: props.medicalEquipmentMovement.status_id,
-  //transfer_date: props.medicalEquipmentMovement.transfer_date,
   transfer_date: null,
   transfer_date_fake: new Date(dateArr[2], dateArr[1] - 1, dateArr[0]),
   incidence: props.medicalEquipmentMovement.incidence,
@@ -59,6 +69,13 @@ const handleUpdate = () => {
   }-${dateOriginal.getDate()}`;
 
   form.transfer_date = formatDate;
+  form.previous_department_id = form.previous_department_id.id || null;
+  form.current_department_id = form.current_department_id.id || null;
+  form.user_movement_id = form.user_movement_id.id || null;
+  form.user_responsible_id = form.user_responsible_id.id || null;
+  form.user_assigned_id = form.user_assigned_id.id || null;
+  form.equipment_id = form.equipment_id.id || null;
+  form.status_id = form.status_id.id || null;
 
   form.put(
     route("medical-equipments-movements.update", [
