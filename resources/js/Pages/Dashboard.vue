@@ -1,11 +1,13 @@
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
-
 import AppLayout from "@/Layouts/AppLayout.vue";
-import Welcome from "@/Jetstream/Welcome.vue";
+import MainMenu from "../Components/MainMenu.vue";
 
-const permissions = computed(() => usePage().props.value.auth.user_permissions);
+defineProps({
+  menu: {
+    type: Array,
+    requred: true,
+  },
+});
 </script>
 
 <template>
@@ -18,12 +20,7 @@ const permissions = computed(() => usePage().props.value.auth.user_permissions);
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <!-- <Welcome /> -->
-          <pre>
-            {{ permissions }}
-          </pre>
-        </div>
+        <MainMenu :menu="menu" />
       </div>
     </div>
   </AppLayout>

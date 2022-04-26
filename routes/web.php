@@ -7,9 +7,8 @@ use App\Http\Controllers\MedicalEquipmentController;
 use App\Http\Controllers\ComputerEquipmentController;
 use App\Http\Controllers\MedicalEquipmentMovementController;
 use App\Http\Controllers\ComputerEquipmentMovementController;
-
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect('login');
@@ -20,12 +19,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Statuses
     Route::get('statuses/trash', [StatusController::class, 'trash'])->name('statuses.trash');
