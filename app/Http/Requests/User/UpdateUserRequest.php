@@ -29,6 +29,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:191', Rule::unique('email')->ignore($this->user)],
             'dni' => ['required', 'string', 'max:191', Rule::unique('dni')->ignore($this->user)],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
+            'allow_login' => ['required', 'boolean'],
             'password' => $this->passwordRules(),
         ];
     }
@@ -45,6 +46,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'Correo electrónico',
             'dni' => 'Documento de identidad',
             'department_id' => 'Departamento',
+            'allow_login' => 'Permitir iniciar sesión',
             'password' => 'Contraseña',
         ];
     }

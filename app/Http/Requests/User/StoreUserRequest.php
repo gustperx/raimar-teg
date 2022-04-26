@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\User;
 
-use App\Actions\Fortify\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
 {
-    use PasswordValidationRules;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'dni' => ['required', 'string', 'max:191', 'unique:users'],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments'],
-            'password' => $this->passwordRules(),
+            'allow_login' => ['required', 'boolean'],
         ];
     }
 
@@ -47,6 +45,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'Correo electrónico',
             'dni' => 'Documento de identidad',
             'department_id' => 'Departamento',
+            'allow_login' => 'Permitir iniciar sesión',
             'password' => 'Contraseña',
         ];
     }

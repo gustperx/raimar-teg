@@ -66,10 +66,22 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-
-    public function isAdministrator()
+    public function department()
     {
-        return $this->id == 1;
+        return $this->belongsTo(Department::class, $this->department_id);
+    }
+
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('dni', 'like', '%' . $search . '%');
+            });
+        });
     }
 
     public static function getDepartmentList($department_id = false, $parent_id = false)
