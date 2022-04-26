@@ -29939,7 +29939,7 @@ var _hoisted_1 = {
   "class": "p-4"
 };
 var _hoisted_2 = {
-  "class": "flex justify-center items-center h-40 bg-gray-700 rounded-lg shadow-md cursor-pointer"
+  "class": "flex justify-center items-center h-48 bg-gray-700 rounded-lg shadow-md cursor-pointer"
 };
 var _hoisted_3 = {
   "class": "flex flex-col"
@@ -29948,7 +29948,7 @@ var _hoisted_4 = {
   "class": "text-center py-4 text-6xl text-orange-400"
 };
 var _hoisted_5 = {
-  "class": "text-lg font-semibold text-white"
+  "class": "text-lg font-semibold text-white text-center"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Link"], {
