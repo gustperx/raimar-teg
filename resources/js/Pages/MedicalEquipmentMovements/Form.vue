@@ -54,6 +54,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Departamento anterior"
         />
         <JetInputError
           :message="form.errors.previous_department_id"
@@ -63,13 +64,14 @@ defineProps({
 
       <!-- Departamento a destino -->
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="current_department_id" value="Departamento a destino" />
+        <JetLabel for="current_department_id" value="Departamento destino" />
         <Multiselect
           v-model="form.current_department_id"
           :options="departments"
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Departamento destino"
         />
         <JetInputError
           :message="form.errors.current_department_id"
@@ -88,6 +90,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Equipo medicó"
         />
         <JetInputError :message="form.errors.equipment_id" class="mt-2" />
       </div>
@@ -101,6 +104,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Estado actual"
         />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
       </div>
@@ -116,6 +120,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Técnico"
         />
         <JetInputError :message="form.errors.user_movement_id" class="mt-2" />
       </div>
@@ -134,6 +139,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Responsable de departamento"
         />
         <JetInputError
           :message="form.errors.user_responsible_id"
@@ -152,6 +158,7 @@ defineProps({
           :searchable="true"
           track-by="name"
           label="name"
+          placeholder="Responsable del equipo"
         />
         <JetInputError :message="form.errors.user_assigned_id" class="mt-2" />
       </div>

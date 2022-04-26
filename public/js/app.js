@@ -37803,7 +37803,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $props.departments,
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Departamento anterior"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37813,7 +37814,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Departamento a destino "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "current_department_id",
-        value: "Departamento a destino"
+        value: "Departamento destino"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Multiselect"], {
         modelValue: $props.form.current_department_id,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -37822,7 +37823,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $props.departments,
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Departamento destino"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37843,7 +37845,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "group-label": "label",
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Equipo medicó"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37862,7 +37865,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $props.statuses,
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Estado actual"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37883,7 +37887,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "group-label": "label",
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Técnico"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37904,7 +37909,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "group-label": "label",
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Responsable de departamento"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -37925,7 +37931,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "group-label": "label",
         searchable: true,
         "track-by": "name",
-        label: "name"
+        label: "name",
+        placeholder: "Responsable del equipo"
       }, null, 8
       /* PROPS */
       , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
