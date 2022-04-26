@@ -8,6 +8,7 @@ use App\Http\Controllers\ComputerEquipmentController;
 use App\Http\Controllers\MedicalEquipmentMovementController;
 use App\Http\Controllers\ComputerEquipmentMovementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,12 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Statuses
+    Route::get('users/trash', [UserController::class, 'trash'])->name('users.trash');
+    Route::post('users/trash/restore/{status}', [UserController::class, 'restore'])->name('users.trash_restore');
+    Route::delete('users/trash/delete/{status}', [UserController::class, 'trashDestroy'])->name('users.trash_destroy');
+    Route::resource('users',   UserController::class);
 
     // Statuses
     Route::get('statuses/trash', [StatusController::class, 'trash'])->name('statuses.trash');

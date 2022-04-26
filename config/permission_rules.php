@@ -2,11 +2,11 @@
 
 return [
 
-    'administrator' => [
+    /* 'administrator' => [
         ['display_name' => 'Acceso administrador', 'permission' => 'administrator:administrator'],
         ['display_name' => 'Acceso gerencia', 'permission' => 'administrator:manager'],
         ['display_name' => 'Acceso técnico', 'permission' => 'administrator:technical'],
-    ],
+    ], */
 
     'usuarios' => [
         ['display_name' => 'Leer', 'permission' => 'manager:user-read'],
@@ -15,7 +15,6 @@ return [
         ['display_name' => 'Eliminación suave', 'permission' => 'manager:user-delete'],
         ['display_name' => 'Restaurar', 'permission' => 'manager:user-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'manager:user-force-delete'],
-        ['display_name' => 'Restaurar', 'permission' => 'manager:user-restore'],
     ],
 
     'Departamentos' => [
@@ -28,14 +27,14 @@ return [
         ['display_name' => 'Lider departamento', 'permission' => 'manager:department-leader'],
     ],
 
-    'Personal' => [
+    /* 'Personal' => [
         ['display_name' => 'Leer', 'permission' => 'manager:staff-read'],
         ['display_name' => 'Crear', 'permission' => 'manager:staff-create'],
         ['display_name' => 'Actualizar', 'permission' => 'manager:staff-update'],
         ['display_name' => 'Eliminación suave', 'permission' => 'manager:staff-delete'],
         ['display_name' => 'Restaurar', 'permission' => 'manager:staff-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'manager:staff-force-delete'],
-    ],
+    ], */
 
     'Estados' => [
         ['display_name' => 'Leer', 'permission' => 'technical:status-read'],

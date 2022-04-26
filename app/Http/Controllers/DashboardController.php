@@ -10,6 +10,7 @@ use App\Models\MedicalEquipment;
 use App\Models\ComputerEquipment;
 use App\Models\MedicalEquipmentMovement;
 use App\Models\ComputerEquipmentMovement;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +19,12 @@ class DashboardController extends Controller
     public function index()
     {
         $menu = [
+            [
+                'name' => 'Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('users.index'),
+                'access' => auth()->user()->can('viewAny', User::class)
+            ],
             [
                 'name' => 'Categorías',
                 'icon' => 'fa-solid fa-book',
