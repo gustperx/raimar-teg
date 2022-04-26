@@ -68,8 +68,14 @@ class UserController extends Controller
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
 
+        $allowLogin = [
+            ['value' => 0, 'label' => 'No'],
+            ['value' => 1, 'label' => 'Si'],
+        ];
+
         return Inertia::render('Users/Add', [
             'departments' => $departments,
+            'allowLoginList' => $allowLogin,
             'return_url' => route('users.index')
         ]);
     }
@@ -84,7 +90,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $data = $request->only('name', 'email', 'dni', 'user_id', 'allow_login');
+        $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login');
         $data['password'] = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
 
         User::create($data);
@@ -134,9 +140,15 @@ class UserController extends Controller
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
 
+        $allowLogin = [
+            ['value' => 0, 'label' => 'No'],
+            ['value' => 1, 'label' => 'Si'],
+        ];
+
         return Inertia::render('Users/Edit', [
             'return_url' => route('users.index'),
             'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id'),
+            'allowLoginList' => $allowLogin,
             'departments' => $departments,
         ]);
     }

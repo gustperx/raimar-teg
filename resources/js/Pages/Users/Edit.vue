@@ -13,6 +13,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  allowLoginList: {
+    type: Array,
+    required: true,
+  },
   return_url: {
     type: String,
     required: true,
@@ -60,6 +64,7 @@ const handleUpdate = () => {
           :actionSubmit="handleUpdate"
           :form="form"
           :departments="departments"
+          :allowLoginList="allowLoginList"
         />
       </div>
     </div>

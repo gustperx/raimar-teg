@@ -29699,6 +29699,10 @@ __webpack_require__.r(__webpack_exports__);
     departments: {
       type: Array,
       required: true
+    },
+    allowLoginList: {
+      type: Array,
+      required: true
     }
   },
   setup: function setup(__props, _ref) {
@@ -29708,7 +29712,7 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       email: null,
       dni: null,
-      allow_login: null,
+      allow_login: 0,
       department_id: 4
     });
 
@@ -29768,6 +29772,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     departments: {
+      type: Array,
+      required: true
+    },
+    allowLoginList: {
       type: Array,
       required: true
     },
@@ -29852,6 +29860,9 @@ __webpack_require__.r(__webpack_exports__);
     departments: {
       required: true
     },
+    allowLoginList: {
+      required: true
+    },
     form: {
       required: true
     }
@@ -29859,9 +29870,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var allowLoginList = ["No", "Si"];
     var __returned__ = {
-      allowLoginList: allowLoginList,
       Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_0__["default"],
       JetActionMessage: _Jetstream_ActionMessage_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       JetFormSection: _Jetstream_FormSection_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -42582,10 +42591,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomForm"], {
         actionSubmit: $setup.handleCreate,
         form: $setup.form,
-        departments: $props.departments
+        departments: $props.departments,
+        allowLoginList: $props.allowLoginList
       }, null, 8
       /* PROPS */
-      , ["form", "departments"])])])];
+      , ["form", "departments", "allowLoginList"])])])];
     }),
     _: 1
     /* STABLE */
@@ -42662,10 +42672,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomForm"], {
         actionSubmit: $setup.handleUpdate,
         form: $setup.form,
-        departments: $props.departments
+        departments: $props.departments,
+        allowLoginList: $props.allowLoginList
       }, null, 8
       /* PROPS */
-      , ["form", "departments"])])])];
+      , ["form", "departments", "allowLoginList"])])])];
     }),
     _: 1
     /* STABLE */
@@ -42805,10 +42816,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $props.form.allow_login = $event;
         }),
-        options: $setup.allowLoginList
+        options: $props.allowLoginList
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
+      , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
         message: $props.form.errors.allow_login,
         "class": "mt-2"
       }, null, 8
@@ -43376,6 +43387,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "bg-gray-100",
             title: "Departamento",
             value: $props.user.department
+          }, null, 8
+          /* PROPS */
+          , ["value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CustomDetailsTableItem"], {
+            "class": "bg-white",
+            title: "Permitir iniciar sesión",
+            value: $props.user.allow_login
           }, null, 8
           /* PROPS */
           , ["value"])];

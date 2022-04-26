@@ -26,11 +26,10 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:191'],
-            'email' => ['required', 'string', 'email', 'max:191', Rule::unique('email')->ignore($this->user)],
-            'dni' => ['required', 'string', 'max:191', Rule::unique('dni')->ignore($this->user)],
+            'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')->ignore($this->user)],
+            'dni' => ['required', 'string', 'max:191', Rule::unique('users')->ignore($this->user)],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
-            'password' => $this->passwordRules(),
         ];
     }
 

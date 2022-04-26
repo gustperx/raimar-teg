@@ -15,12 +15,13 @@ defineProps({
   departments: {
     required: true,
   },
+  allowLoginList: {
+    required: true,
+  },
   form: {
     required: true,
   },
 });
-
-const allowLoginList = ["No", "Si"];
 </script>
 
 <template>

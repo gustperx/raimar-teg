@@ -65,6 +65,11 @@ defineProps({
               title="Departamento"
               :value="user.department"
             />
+            <CustomDetailsTableItem
+              class="bg-white"
+              title="Permitir iniciar sesión"
+              :value="user.allow_login"
+            />
           </template>
         </CustomDetailsTable>
       </div>

@@ -28,7 +28,7 @@ class StoreUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'dni' => ['required', 'string', 'max:191', 'unique:users'],
-            'department_id' => ['required', 'numeric', 'max:191', 'exists:departments'],
+            'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
         ];
     }

@@ -13,13 +13,17 @@ defineProps({
     type: Array,
     required: true,
   },
+  allowLoginList: {
+    type: Array,
+    required: true,
+  },
 });
 
 const form = useForm({
   name: null,
   email: null,
   dni: null,
-  allow_login: null,
+  allow_login: 0,
   department_id: 4,
 });
 
@@ -56,6 +60,7 @@ const handleCreate = () => {
           :actionSubmit="handleCreate"
           :form="form"
           :departments="departments"
+          :allowLoginList="allowLoginList"
         />
       </div>
     </div>
