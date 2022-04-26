@@ -58,7 +58,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           </ul>
         </td>
         <td class="p-4">{{ department }}</td>
-        <td class="p-4">{{ allow_login }}</td>
+        <td class="p-4">{{ allow_login ? "Si" : "No" }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

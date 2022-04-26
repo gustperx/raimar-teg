@@ -5,7 +5,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import CustomDetailsTable from "@/Components/DetailsTable.vue";
 import CustomDetailsTableItem from "@/Components/DetailsTableItem.vue";
 
-defineProps({
+const props = defineProps({
   user: {
     type: Object,
     required: true,
@@ -15,6 +15,8 @@ defineProps({
     required: true,
   },
 });
+
+const allowText = props.user.allow_login ? "Si" : "No";
 </script>
 
 <template>
@@ -68,7 +70,7 @@ defineProps({
             <CustomDetailsTableItem
               class="bg-white"
               title="Permitir iniciar sesión"
-              :value="user.allow_login"
+              :value="allowText"
             />
           </template>
         </CustomDetailsTable>
