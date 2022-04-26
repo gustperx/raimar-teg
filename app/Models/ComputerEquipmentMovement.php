@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Carbon;
 
 class ComputerEquipmentMovement extends Model
 {
@@ -26,6 +28,18 @@ class ComputerEquipmentMovement extends Model
         'transfer_date',
         'incidence',
     ];
+
+    /**
+     * Get the user's first name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function transferDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('d/m/Y'),
+        );
+    }
 
     public function previousDepartment()
     {
@@ -62,11 +76,44 @@ class ComputerEquipmentMovement extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeEquipmentSearch($query, array $filters)
     {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
+        $query->when($filters['equipment_search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('incidence', 'like', '%' . $search . '%');
+                $query->where('equipment_id', $search);
+            });
+        });
+    }
+
+    public function scopePersonalSearch($query, array $filters)
+    {
+        $query->when($filters['personal_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('user_movement_id', $search)
+                    ->orWhere('user_responsible_id', $search)
+                    ->orWhere('user_assigned_id', $search);
+            });
+        });
+    }
+
+    public function scopeDepartmentSearch($query, array $filters)
+    {
+        $query->when($filters['department_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('previous_department_id', $search)
+                    ->orWhere('current_department_id', $search);
+            });
+        });
+    }
+
+    public function scopeStatusSearch($query, array $filters)
+    {
+        $query->when($filters['status_search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('status_id', $search);
             });
         });
     }
