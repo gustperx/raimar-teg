@@ -58,7 +58,7 @@ class ComputerEquipment extends Model
     {
         $categories = Category::where('parent_id', '1')->get();
 
-        $equipments = MedicalEquipment::select('id', 'description', 'code', 'serial', 'category_id')
+        $equipments = ComputerEquipment::select('id', 'description', 'code', 'serial', 'category_id')
             ->where('status_id', '1')->get();
 
         $final = [];

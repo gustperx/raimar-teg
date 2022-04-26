@@ -83,7 +83,7 @@ class ComputerEquipmentMovementController extends Controller
             'equipmentsList' => ComputerEquipment::getEquipmentList(),
             'personalList' => array_merge($usersTech, $users),
             'statusesList' => Status::select('id', 'name')->get(),
-            'departmentsList' => Department::select('id', 'name')->get(),
+            'departmentsList' => Department::select('id', 'name')->whereNotNull('parent_id')->get(),
         ]);
     }
 
@@ -101,7 +101,7 @@ class ComputerEquipmentMovementController extends Controller
             'statuses' => Status::select('id', 'name')->get(),
             'users' => User::getDepartmentList(),
             'usersTech' => User::getDepartmentList($this->department_informatica),
-            'departments' => Department::select('id', 'name')->get(),
+            'departments' => Department::select('id', 'name')->whereNotNull('parent_id')->get(),
             'return_url' => route('computer-equipments-movements.index')
         ]);
     }
@@ -131,7 +131,7 @@ class ComputerEquipmentMovementController extends Controller
      * @param  \App\Models\ComputerEquipmentMovement  $computerEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function show(ComputerEquipmentMovement $computerEquipmentMovement_id)
+    public function show($computerEquipmentMovement_id)
     {
         $computerEquipmentMovement = ComputerEquipmentMovement::find($computerEquipmentMovement_id);
 
@@ -172,7 +172,7 @@ class ComputerEquipmentMovementController extends Controller
      * @param  \App\Models\ComputerEquipmentMovement  $computerEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function edit(ComputerEquipmentMovement $computerEquipmentMovement_id)
+    public function edit($computerEquipmentMovement_id)
     {
         $computerEquipmentMovement = ComputerEquipmentMovement::with(
             'equipment',
@@ -209,7 +209,7 @@ class ComputerEquipmentMovementController extends Controller
             'statuses' => Status::select('id', 'name')->get(),
             'users' => User::getDepartmentList(),
             'usersTech' => User::getDepartmentList($this->department_informatica),
-            'departments' => Department::select('id', 'name')->get(),
+            'departments' => Department::select('id', 'name')->whereNotNull('parent_id')->get(),
             'return_url' => route('computer-equipments-movements.index')
         ]);
     }
@@ -221,7 +221,7 @@ class ComputerEquipmentMovementController extends Controller
      * @param  \App\Models\ComputerEquipmentMovement  $computerEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateComputerEquipmentMovementRequest $request, ComputerEquipmentMovement $computerEquipmentMovement_id)
+    public function update(UpdateComputerEquipmentMovementRequest $request, $computerEquipmentMovement_id)
     {
         $computerEquipmentMovement = ComputerEquipmentMovement::find($computerEquipmentMovement_id);
 
@@ -242,7 +242,7 @@ class ComputerEquipmentMovementController extends Controller
      * @param  \App\Models\ComputerEquipmentMovement  $computerEquipmentMovement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, ComputerEquipmentMovement $computerEquipmentMovement_id)
+    public function destroy(Request $request, $computerEquipmentMovement_id)
     {
         $computerEquipmentMovement = ComputerEquipmentMovement::find($computerEquipmentMovement_id);
 
@@ -314,7 +314,7 @@ class ComputerEquipmentMovementController extends Controller
             'equipmentsList' => ComputerEquipment::getEquipmentList(),
             'personalList' => array_merge($usersTech, $users),
             'statusesList' => Status::select('id', 'name')->get(),
-            'departmentsList' => Department::select('id', 'name')->get(),
+            'departmentsList' => Department::select('id', 'name')->whereNotNull('parent_id')->get(),
         ]);
     }
 
