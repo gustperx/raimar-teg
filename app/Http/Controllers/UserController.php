@@ -136,7 +136,7 @@ class UserController extends Controller
 
         return Inertia::render('Users/Edit', [
             'return_url' => route('users.index'),
-            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'user_id'),
+            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id'),
             'departments' => $departments,
         ]);
     }
