@@ -44,9 +44,9 @@ class HandleInertiaRequests extends Middleware
                 'warn' => fn () => $request->session()->get('warn')
             ],
             // Share user permissions global
-            'auth.user_permissions' => fn () => $request->user()
+            /* 'auth.user_permissions' => fn () => $request->user()
                 ? $request->user()->getPermissionNames()
-                : null,
+                : null, */
         ]);
     }
 }

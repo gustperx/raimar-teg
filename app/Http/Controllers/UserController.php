@@ -185,12 +185,11 @@ class UserController extends Controller
             $permissions[$key] = $plucked->all();
         }
 
-        //dd($permissions);
-
         return Inertia::render('Users/Permission', [
             'return_url' => route('users.index'),
             'user' => $user->only('id', 'name', 'dni'),
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'current_permissions' => $user->getPermissionNames()->toArray()
         ]);
     }
 

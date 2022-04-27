@@ -30179,6 +30179,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
+    current_permissions: {
+      type: Array,
+      required: true
+    },
     return_url: {
       type: String,
       required: true
@@ -30189,7 +30193,7 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var props = __props;
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
-      permissions: []
+      permissions: props.current_permissions
     });
 
     var handleUpdate = function handleUpdate() {

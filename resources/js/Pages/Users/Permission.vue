@@ -13,6 +13,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  current_permissions: {
+    type: Array,
+    required: true,
+  },
   return_url: {
     type: String,
     required: true,
@@ -20,7 +24,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-  permissions: [],
+  permissions: props.current_permissions,
 });
 
 const handleUpdate = () => {
