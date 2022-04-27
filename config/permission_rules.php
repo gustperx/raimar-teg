@@ -8,7 +8,7 @@ return [
         ['display_name' => 'Acceso técnico', 'permission' => 'administrator:technical'],
     ], */
 
-    'usuarios' => [
+    'Usuarios' => [
         ['display_name' => 'Leer', 'permission' => 'manager:user-read'],
         ['display_name' => 'Crear', 'permission' => 'manager:user-create'],
         ['display_name' => 'Actualizar', 'permission' => 'manager:user-update'],

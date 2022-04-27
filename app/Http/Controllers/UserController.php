@@ -170,6 +170,40 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
+
+    public function permission(User $user)
+    {
+        $this->authorize('update', $user);
+
+        $data = collect(config('permission_rules'));
+
+        $permissions = [];
+        foreach ($data as $key => $permission) {
+            $collect = collect($permission);
+            $plucked = $collect->pluck('permission', 'display_name');
+            $permissions[$key] = $plucked->all();
+        }
+
+        //dd($permissions);
+
+        return Inertia::render('Users/Permission', [
+            'return_url' => route('users.index'),
+            'user' => $user->only('id', 'name', 'dni'),
+            'permissions' => $permissions
+        ]);
+    }
+
+    public function permissionStore(UpdateUserRequest $request, User $user)
+    {
+        $this->authorize('update', $user);
+
+        dd($request->all());
+        //$user->update($request->all());
+
+        $request->session()->flash('success', 'Usuario actualizado satisfactoriamente');
+        return redirect()->route('users.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

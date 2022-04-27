@@ -22,10 +22,15 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Statuses
+    // Users
+    // Trash
     Route::get('users/trash', [UserController::class, 'trash'])->name('users.trash');
-    Route::post('users/trash/restore/{status}', [UserController::class, 'restore'])->name('users.trash_restore');
-    Route::delete('users/trash/delete/{status}', [UserController::class, 'trashDestroy'])->name('users.trash_destroy');
+    Route::post('users/trash/restore/{user}', [UserController::class, 'restore'])->name('users.trash_restore');
+    Route::delete('users/trash/delete/{user}', [UserController::class, 'trashDestroy'])->name('users.trash_destroy');
+    // Permission
+    Route::get('users/permission/{user}', [UserController::class, 'permission'])->name('users.permission');
+    Route::post('users/permisssion/store/{user}', [UserController::class, 'permissionStore'])->name('users.permission_store');
+    // Regular
     Route::resource('users',   UserController::class);
 
     // Statuses
@@ -70,19 +75,3 @@ Route::middleware([
     Route::delete('computer-equipments-movements/trash/delete/{computer_equipments_movement}', [ComputerEquipmentMovementController::class, 'trashDestroy'])->name('computer-equipments-movements.trash_destroy');
     Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
 });
-
-/* Route::get('test', function () {
-
-    $permissions = collect(config('permission_rules'));
-
-    $final = [];
-    foreach ($permissions as $key => $permission) {
-        $collect = collect($permission);
-        $plucked = $collect->pluck('permission', 'display_name');
-        $final[$key] = $plucked->all();
-    }
-
-    $collect = collect($final);
-
-    dd($final, $collect->flatten()->toArray());
-}); */
