@@ -26639,7 +26639,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     menu: {
       type: Array,
-      requred: true
+      required: true
     }
   },
   setup: function setup(__props, _ref) {

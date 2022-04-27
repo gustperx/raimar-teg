@@ -5,7 +5,7 @@ import MainMenu from "../Components/MainMenu.vue";
 defineProps({
   menu: {
     type: Array,
-    requred: true,
+    required: true,
   },
 });
 </script>
