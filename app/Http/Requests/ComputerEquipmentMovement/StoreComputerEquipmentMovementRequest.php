@@ -49,7 +49,7 @@ class StoreComputerEquipmentMovementRequest extends FormRequest
             'user_movement_id' => 'Responsable movimiento',
             'user_responsible_id' => 'Responsable departamento',
             'user_assigned_id' => 'Responsable del equipo',
-            'equipment_id' => 'Equipo medicó',
+            'equipment_id' => 'Equipo de computo',
             'status_id' => 'Estatus del equipo',
             'transfer_date' => 'Fecha de transferencia',
             'incidence' => 'Incidencia',
