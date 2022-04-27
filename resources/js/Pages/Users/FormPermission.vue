@@ -50,7 +50,9 @@ defineProps({
           </div>
         </div>
       </div>
-      <JetInputError :message="form.errors.permissions" class="mt-2" />
+      <div class="col-span-6 sm:col-span-4">
+        <JetInputError :message="form.errors.permissions" class="mt-2" />
+      </div>
     </template>
 
     <template #actions>

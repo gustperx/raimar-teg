@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\PermissionUserRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Department;
@@ -193,14 +194,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function permissionStore(UpdateUserRequest $request, User $user)
+    public function permissionStore(PermissionUserRequest $request, User $user)
     {
         $this->authorize('update', $user);
 
-        dd($request->all());
-        //$user->update($request->all());
+        $user->syncPermissions($request->input('permissions'));
 
-        $request->session()->flash('success', 'Usuario actualizado satisfactoriamente');
+        $request->session()->flash('success', 'Permisos de usuario actualizado satisfactoriamente');
         return redirect()->route('users.index');
     }
 
