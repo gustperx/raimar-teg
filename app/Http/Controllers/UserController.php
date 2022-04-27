@@ -32,10 +32,12 @@ class UserController extends Controller
                     'allow_login' => $item->allow_login,
                     'department' => $item->department->name ?? null,
                     'edit_url' => route('users.edit', $item),
+                    'permission_url' => route('users.permission', $item),
                     'show_url' => route('users.show', $item),
                     'can' => [
                         'show' => auth()->user()->can('view', $item),
                         'edit' => auth()->user()->can('update', $item),
+                        'permission' => auth()->user()->can('update', $item),
                         'delete' => auth()->user()->can('delete', $item),
                     ]
                 ];

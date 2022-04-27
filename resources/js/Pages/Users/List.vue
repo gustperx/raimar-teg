@@ -44,6 +44,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           department,
           show_url,
           edit_url,
+          permission_url,
           can,
         } in items"
         :key="id"
@@ -66,6 +67,9 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
             </JetPrimaryButton>
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
+            </JetPrimaryButton>
+            <JetPrimaryButton v-if="can.permission" class="mr-2">
+              <Link :href="permission_url">Permisos</Link>
             </JetPrimaryButton>
             <JetDangerButton v-if="can.delete" @click="confirmDeletion(id)">
               Eliminar
