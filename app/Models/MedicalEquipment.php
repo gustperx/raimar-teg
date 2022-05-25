@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 
 class MedicalEquipment extends Model
 {
@@ -32,6 +34,36 @@ class MedicalEquipment extends Model
         'serial',
     ];
 
+
+    /**
+     * Get the user's first name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function code(): Attribute
+    {
+        $lastId = 1;
+        $prefix = "CCMED";
+        $query = MedicalEquipment::withTrashed()->latest()->first();
+        if (!empty($query)) {
+            $lastId = $query->id + 1;
+        }
+
+        $codeId = empty($this->id) ? $lastId : $this->id;
+
+        $preZero = "";
+        if (Str::length($lastId) == 1) {
+            $preZero = "00";
+        } else if (Str::length($lastId) == 2) {
+            $preZero = "0";
+        }
+
+        return Attribute::make(
+            set: fn ($value, $attributes) => $prefix . $preZero . $codeId,
+        );
+    }
+
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -58,8 +90,7 @@ class MedicalEquipment extends Model
     {
         $categories = Category::where('parent_id', '2')->get();
 
-        $equipments = MedicalEquipment::select('id', 'description', 'code', 'serial', 'category_id')
-            ->where('status_id', '1')->get();
+        $equipments = MedicalEquipment::where('status_id', '1')->get();
 
         $final = [];
         foreach ($categories as $category) {
@@ -73,7 +104,7 @@ class MedicalEquipment extends Model
 
                 $itemsF = [];
                 foreach ($items as $a) {
-                    $itemsF[] = ['id' => $a->id, 'name' => $a->code];
+                    $itemsF[] = ['id' => $a->id, 'name' => "{$a->code} - {$a->brand} - {$a->model}"];
                 }
 
                 $final[] = [

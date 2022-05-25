@@ -25,8 +25,8 @@ class StoreComputerEquipmentRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'numeric', 'max:191', 'exists:categories,id'],
-            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
-            'code' => ['required', 'string', 'max:191', 'unique:computer_equipments'],
+            'status_id' => ['nullable', 'numeric', 'max:191', 'exists:statuses,id'],
+            'code' => ['nullable', 'string', 'max:191', 'unique:computer_equipments'],
             'serial' => ['required', 'string', 'max:191', 'unique:computer_equipments'],
             'description' => ['required', 'string', 'max:191'],
             'brand' => ['required', 'string', 'max:191'],

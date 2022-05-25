@@ -95,7 +95,10 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('create', ComputerEquipment::class);
 
-        ComputerEquipment::create($request->all());
+        $data = $request->all();
+        $data['status_id'] = 1; // active
+
+        ComputerEquipment::create($data);
 
         $request->session()->flash('success', 'Equipo de cómputo creado satisfactoriamente');
         return redirect()->route('computer-equipments.index');

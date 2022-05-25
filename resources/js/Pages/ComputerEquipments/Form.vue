@@ -79,7 +79,7 @@ defineProps({
         />
         <JetInputError :message="form.errors.model" class="mt-2" />
       </div>
-      <div class="col-span-6 sm:col-span-4">
+      <!-- <div class="col-span-6 sm:col-span-4">
         <JetLabel for="code" value="Código" />
         <JetInput
           id="code"
@@ -89,7 +89,7 @@ defineProps({
           autocomplete="off"
         />
         <JetInputError :message="form.errors.code" class="mt-2" />
-      </div>
+      </div> -->
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="serial" value="Serial" />
         <JetInput
@@ -101,7 +101,7 @@ defineProps({
         />
         <JetInputError :message="form.errors.serial" class="mt-2" />
       </div>
-      <div class="col-span-6 sm:col-span-4">
+      <!-- <div class="col-span-6 sm:col-span-4">
         <JetLabel for="status_id" value="Estatus" />
         <Multiselect
           v-model="form.status_id"
@@ -109,7 +109,7 @@ defineProps({
           :searchable="true"
         />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
-      </div>
+      </div> -->
     </template>
 
     <template #actions>

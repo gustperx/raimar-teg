@@ -95,7 +95,10 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('create', MedicalEquipment::class);
 
-        MedicalEquipment::create($request->all());
+        $data = $request->all();
+        $data['status_id'] = 1; // active
+
+        MedicalEquipment::create($data);
 
         $request->session()->flash('success', 'Equipo medicó creado satisfactoriamente');
         return redirect()->route('medical-equipments.index');

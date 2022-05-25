@@ -26,8 +26,8 @@ class UpdateComputerEquipmentRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'numeric', 'max:191', 'exists:categories,id'],
-            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
-            'code' => ['required', 'string', 'max:191', Rule::unique('computer_equipments')->ignore($this->computer_equipment)],
+            'status_id' => ['nullable', 'numeric', 'max:191', 'exists:statuses,id'],
+            'code' => ['nullable', 'string', 'max:191', Rule::unique('computer_equipments')->ignore($this->computer_equipment)],
             'serial' => ['required', 'string', 'max:191', Rule::unique('computer_equipments')->ignore($this->computer_equipment)],
             'description' => ['required', 'string', 'max:191'],
             'brand' => ['required', 'string', 'max:191'],
