@@ -76,9 +76,19 @@ class UserController extends Controller
             ['value' => 1, 'label' => 'Si'],
         ];
 
+        $data = collect(config('permission_rules'));
+
+        $permissions = [];
+        foreach ($data as $key => $permission) {
+            $collect = collect($permission);
+            $plucked = $collect->pluck('permission', 'display_name');
+            $permissions[$key] = $plucked->all();
+        }
+
         return Inertia::render('Users/Add', [
             'departments' => $departments,
             'allowLoginList' => $allowLogin,
+            'permissions' => $permissions,
             'return_url' => route('users.index')
         ]);
     }
@@ -96,7 +106,11 @@ class UserController extends Controller
         $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login');
         $data['password'] = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
 
-        User::create($data);
+        $user = User::create($data);
+
+        if ($request->has('permissions')) {
+            $user->syncPermissions($request->input('permissions'));
+        }
 
         $request->session()->flash('success', 'Usuario creado satisfactoriamente');
         return redirect()->route('users.index');

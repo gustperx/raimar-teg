@@ -15,6 +15,9 @@ defineProps({
   departments: {
     required: true,
   },
+  permissions: {
+    required: false,
+  },
   allowLoginList: {
     required: true,
   },
@@ -74,6 +77,36 @@ defineProps({
         <Multiselect v-model="form.allow_login" :options="allowLoginList" />
         <JetInputError :message="form.errors.allow_login" class="mt-2" />
       </div>
+
+      <div v-if="permissions" class="col-span-6 sm:col-span-4">
+        <span class="text-lg text-semibold my-4">Permisos</span>
+        <div v-for="(list, name) in permissions" :key="name">
+          <div>
+            <h3 class="font-semibold">{{ name }}</h3>
+            <hr class="py-2" />
+          </div>
+          <div class="grid grid-cols-2 gap-2 my-1">
+            <div v-for="(permission, tag) in list" :key="permission" class="">
+              <input
+                type="checkbox"
+                :id="permission"
+                :value="permission"
+                v-model="form.permissions"
+              />
+              <label
+                :for="permission"
+                class="font-medium text-sm text-gray-700 pl-2"
+              >
+                {{ tag }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+          <JetInputError :message="form.errors.permissions" class="mt-2" />
+        </div>
+      </div>
+
     </template>
 
     <template #actions>

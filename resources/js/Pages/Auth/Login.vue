@@ -7,6 +7,7 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
+import AuthName from "../../Components/AuthName.vue";
 
 defineProps({
   canResetPassword: Boolean,
@@ -37,6 +38,8 @@ const submit = () => {
   <JetAuthenticationCard>
     <template #logo>
       <JetAuthenticationCardLogo />
+
+      <AuthName />
     </template>
 
     <JetValidationErrors class="mb-4" />
@@ -78,13 +81,13 @@ const submit = () => {
             </div> -->
 
       <div class="flex items-center justify-end mt-4">
-        <!-- <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900"
-                >
-                    ¿Ha olvidado su contraseña?
-                </Link> -->
+        <Link
+          v-if="canResetPassword"
+          :href="route('password.request')"
+          class="underline text-sm text-gray-600 hover:text-gray-900"
+        >
+          ¿Ha olvidado su contraseña?
+        </Link>
 
         <JetButton
           class="ml-4"
