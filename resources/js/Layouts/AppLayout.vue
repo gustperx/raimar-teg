@@ -58,7 +58,7 @@ const logout = () => {
                   :href="route('dashboard')"
                   :active="route().current('dashboard')"
                 >
-                  Inicio
+                  Clinica Calicanto
                 </JetNavLink>
               </div>
             </div>
@@ -281,7 +281,7 @@ const logout = () => {
               :href="route('dashboard')"
               :active="route().current('dashboard')"
             >
-              Inicio
+              Clinica Calicanto
             </JetResponsiveNavLink>
           </div>
 

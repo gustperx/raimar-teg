@@ -26,19 +26,19 @@ class DashboardController extends Controller
                 'access' => auth()->user()->can('viewAny', User::class)
             ],
             [
-                'name' => 'Categorías',
+                'name' => 'Categorías de equipos',
                 'icon' => 'fa-solid fa-book',
                 'url' => route('categories.index'),
                 'access' => auth()->user()->can('viewAny', Category::class)
             ],
             [
-                'name' => 'Departamentos',
+                'name' => 'Departamentos y Unidades',
                 'icon' => 'fa-solid fa-building',
                 'url' => route('departments.index'),
                 'access' => auth()->user()->can('viewAny', Department::class)
             ],
             [
-                'name' => 'Estados del sistema',
+                'name' => 'Estados de equipos',
                 'icon' => 'fa-solid fa-stethoscope',
                 'url' => route('statuses.index'),
                 'access' => auth()->user()->can('viewAny', Status::class)
