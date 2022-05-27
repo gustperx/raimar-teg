@@ -7,6 +7,8 @@ use App\Http\Controllers\MedicalEquipmentController;
 use App\Http\Controllers\ComputerEquipmentController;
 use App\Http\Controllers\MedicalEquipmentMovementController;
 use App\Http\Controllers\ComputerEquipmentMovementController;
+use App\Http\Controllers\MedicalMaintenanceController;
+use App\Http\Controllers\ComputerMaintenanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -74,4 +76,7 @@ Route::middleware([
     Route::post('computer-equipments-movements/trash/restore/{computer_equipments_movement}', [ComputerEquipmentMovementController::class, 'restore'])->name('computer-equipments-movements.trash_restore');
     Route::delete('computer-equipments-movements/trash/delete/{computer_equipments_movement}', [ComputerEquipmentMovementController::class, 'trashDestroy'])->name('computer-equipments-movements.trash_destroy');
     Route::resource('computer-equipments-movements', ComputerEquipmentMovementController::class);
+
+    Route::resource('medical-maintenance', MedicalMaintenanceController::class);
+    Route::resource('computer-maintenance', ComputerMaintenanceController::class);
 });

@@ -67,6 +67,19 @@ class DashboardController extends Controller
                 'url' => route('computer-equipments-movements.index'),
                 'access' => auth()->user()->can('viewAny', ComputerEquipmentMovement::class)
             ],
+
+            [
+                'name' => 'Mantenimiento Equipos médicos',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('medical-maintenance.index'),
+                'access' => auth()->user()->can('maintenance', MedicalEquipment::class)
+            ],
+            [
+                'name' => 'Mantenimiento Equipos informáticos',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('computer-maintenance.index'),
+                'access' => auth()->user()->can('maintenance', ComputerEquipment::class)
+            ],
         ];
 
         return Inertia::render('Dashboard', [

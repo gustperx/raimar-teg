@@ -16,15 +16,13 @@ class StatusSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            'Operativo',
-            'Mantenimiento',
-            'Fuera de servicio',
+            ['name' => 'Operativo', 'color' => '#80df0c']
+            ['name' => 'Mantenimiento', 'color' => '#e4d211']
+            ['name' => 'Fuera de servicio', 'color' => '#e40c0c']
         ];
 
         foreach ($statuses as $status) {
-            Status::create([
-                'name' => $status
-            ]);
+            Status::create($status);
         }
     }
 }

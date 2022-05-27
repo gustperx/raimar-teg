@@ -102,4 +102,15 @@ class ComputerEquipmentPolicy
     {
         return $user->can('technical:computerEquipments-force-delete');
     }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function maintenance(User $user)
+    {
+        return $user->can('technical:computerEquipments-maintenance');
+    }
 }

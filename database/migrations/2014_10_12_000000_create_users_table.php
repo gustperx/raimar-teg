@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('dni')->unique();
+            $table->string('dni_type')->nullable();
             $table->boolean('allow_login');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
