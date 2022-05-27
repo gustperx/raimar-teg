@@ -7,6 +7,7 @@ import CustomDetailsTableItem from "@/Components/DetailsTableItem.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import StatusColor from "@/Components/StatusColor.vue";
+import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
 
 defineProps({
   category: {
@@ -88,11 +89,11 @@ defineProps({
                 >
                   <td class="p-4">{{ equipment.id }}</td>
                   <td class="p-4">
-                    <ul class="text-sm">
-                      <li>{{ equipment.description }}</li>
-                      <li><span class="font-semibold">Código:</span> {{ equipment.code }}</li>
-                      <li><span class="font-semibold">Serial:</span> {{ equipment.serial }}</li>
-                    </ul>
+                    <DescriptionEquipment 
+                      :text="equipment.description" 
+                      :code="equipment.code" 
+                      :serial="equipment.serial" 
+                    />
                   </td>
                   <td class="p-4">{{ equipment.department.name }}</td>
                   <td class="p-4">

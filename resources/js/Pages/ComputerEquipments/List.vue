@@ -7,6 +7,7 @@ import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
 import StatusColor from "@/Components/StatusColor.vue";
+import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -56,11 +57,11 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">{{ id }}</td>
         <td class="p-4">{{ category }}</td>
         <td class="p-4">
-          <ul class="text-sm">
-            <li>{{ description }}</li>
-            <li><span class="font-semibold">Código:</span> {{ code }}</li>
-            <li><span class="font-semibold">Serial:</span> {{ serial }}</li>
-          </ul>
+          <DescriptionEquipment 
+            :text="description" 
+            :code="code" 
+            :serial="serial" 
+          />
         </td>
         <td class="p-4">{{ department }}</td>
         <td class="p-4">
