@@ -15,7 +15,7 @@ class Status extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'color'];
 
 
     public function scopeFilter($query, array $filters)

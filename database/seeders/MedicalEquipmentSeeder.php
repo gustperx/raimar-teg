@@ -15,7 +15,7 @@ class MedicalEquipmentSeeder extends Seeder
      */
     public function run()
     {
-        MedicalEquipment::create([
+        /* MedicalEquipment::create([
             'category_id' => '27',
             'status_id' => '1',
             'code' => 'CCINF1000',
@@ -23,6 +23,6 @@ class MedicalEquipmentSeeder extends Seeder
             'brand' => 'Marca 1',
             'model' => 'Modelo 2',
             'serial' => 'PPP1234568',
-        ]);
+        ]); */
     }
 }

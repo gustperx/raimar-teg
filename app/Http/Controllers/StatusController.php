@@ -25,6 +25,7 @@ class StatusController extends Controller
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
+                    'color' => $item->color,
                     'edit_url' => route('statuses.edit', $item),
                     'show_url' => route('statuses.show', $item),
                     'can' => [
@@ -91,7 +92,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Show', [
             'return_url' => route('statuses.index'),
-            'status' => $status->only('id', 'name')
+            'status' => $status->only('id', 'name', 'color')
         ]);
     }
 
@@ -107,7 +108,7 @@ class StatusController extends Controller
 
         return Inertia::render('Statuses/Edit', [
             'return_url' => route('statuses.index'),
-            'status' => $status->only('id', 'name')
+            'status' => $status->only('id', 'name', 'color')
         ]);
     }
 
@@ -160,6 +161,7 @@ class StatusController extends Controller
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
+                    'color' => $item->color,
                     'can' => [
                         'restore' => auth()->user()->can('restore', $item),
                         'forceDelete' => auth()->user()->can('forceDelete', $item),

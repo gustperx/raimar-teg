@@ -6,6 +6,7 @@ import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
+import StatusColor from "@/Components/StatusColor.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -28,6 +29,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">ID</th>
         <th class="text-left text-white p-4 font-bold">Categoría</th>
         <th class="text-left text-white p-4 font-bold">Descripción</th>
+        <th class="text-left text-white p-4 font-bold">Departamento</th>
         <th class="text-left text-white p-4 font-bold">Estatus</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
@@ -42,6 +44,8 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           serial,
           category,
           status,
+          status_color,
+          department,
           show_url,
           edit_url,
           can,
@@ -58,7 +62,10 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
             <li><span class="font-semibold">Serial:</span> {{ serial }}</li>
           </ul>
         </td>
-        <td class="p-4">{{ status }}</td>
+        <td class="p-4">{{ department }}</td>
+        <td class="p-4">
+          <StatusColor :color="status_color" :text="status" />
+        </td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

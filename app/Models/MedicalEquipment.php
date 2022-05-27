@@ -27,6 +27,7 @@ class MedicalEquipment extends Model
     protected $fillable = [
         'category_id',
         'status_id',
+        'department_id',
         'code',
         'description',
         'brand',
@@ -63,6 +64,10 @@ class MedicalEquipment extends Model
         );
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
     public function category()
     {

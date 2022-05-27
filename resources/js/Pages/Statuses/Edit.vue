@@ -17,6 +17,7 @@ const props = defineProps({
 
 const form = useForm({
   name: props.status.name,
+  color: props.status.color,
 });
 
 const editStatus = () => {
@@ -24,11 +25,7 @@ const editStatus = () => {
     errorBag: "editStatus",
     preserveScroll: true,
     onSuccess: () => form.reset(),
-    onError: () => {
-      if (form.errors.name) {
-        form.reset("name");
-      }
-    },
+    onError: () => {},
   });
 };
 </script>

@@ -27,6 +27,7 @@ class ComputerEquipment extends Model
     protected $fillable = [
         'category_id',
         'status_id',
+        'department_id',
         'code',
         'description',
         'brand',
@@ -72,6 +73,11 @@ class ComputerEquipment extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function scopeFilter($query, array $filters)

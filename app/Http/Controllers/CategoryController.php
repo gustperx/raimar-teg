@@ -19,12 +19,29 @@ class CategoryController extends Controller
     {
         $this->authorize('viewAny', Category::class);
 
-        $items = Category::with('parent')->orderBy('id', 'desc')
+        $items = Category::with('parent', 'computerEquipments' , 'medicalEquipments')->orderBy('id', 'desc')
             ->filter($request->only('search'))
             ->paginate()->through(function ($item) {
+
+                $amount = 0;
+                if (!empty($item->parent_id)) {
+                    switch ($item->parent_id) {
+                        case 1:
+                            $amount = empty($item->computerEquipments) ? 0 : count($item->computerEquipments);
+                            break;
+                        case 2:
+                            $amount = empty($item->medicalEquipments) ? 0 : count($item->medicalEquipments);
+                            break;
+                        default:
+                            $amount = 0;
+                            break;
+                    }
+                }
+
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
+                    'amount' => $amount,
                     'principal' => $item->parent->name ?? null,
                     'edit_url' => route('categories.edit', $item),
                     'show_url' => route('categories.show', $item),
@@ -97,7 +114,21 @@ class CategoryController extends Controller
     {
         $this->authorize('view', $category);
 
-        $category = Category::with('parent')->where('id', $category->id)->first();
+        $category = Category::with('parent', 'computerEquipments', 'medicalEquipments')->where('id', $category->id)->first();
+        if (!empty($category->parent_id)) {
+            switch ($category->parent_id) {
+                case 1:
+                    $equipments = $category->computerEquipments()->with('status', 'department')->get()->toArray();
+                    break;
+                case 2:
+                    $equipments = $category->medicalEquipments()->with('status', 'department')->get()->toArray();
+                    break;
+                default:
+                    $equipments = [];
+                    break;
+            }
+        }
+
         $category = [
             'id' => $category->id,
             'name' => $category->name,
@@ -107,6 +138,7 @@ class CategoryController extends Controller
         return Inertia::render('Categories/Show', [
             'return_url' => route('categories.index'),
             'category' => $category,
+            'equipments' => $equipments,
         ]);
     }
 

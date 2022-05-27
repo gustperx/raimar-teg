@@ -28,19 +28,21 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">ID</th>
         <th class="text-left text-white p-4 font-bold">Principal</th>
         <th class="text-left text-white p-4 font-bold">Nombre</th>
+        <th class="text-left text-white p-4 font-bold">Cantidad</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
 
     <template #body>
       <tr
-        v-for="{ id, name, principal, show_url, edit_url, can } in items"
+        v-for="{ id, name, amount, principal, show_url, edit_url, can } in items"
         :key="id"
         class="border-b hover:bg-gray-50"
       >
         <td class="p-4">{{ id }}</td>
         <td class="p-4">{{ principal }}</td>
         <td class="p-4">{{ name }}</td>
+        <td class="p-4">{{ amount }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

@@ -30,4 +30,14 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, $this->parent_id);
     }
+
+    public function computerEquipments()
+    {
+        return $this->hasMany(ComputerEquipment::class);
+    }
+
+    public function medicalEquipments()
+    {
+        return $this->hasMany(MedicalEquipment::class);
+    }
 }

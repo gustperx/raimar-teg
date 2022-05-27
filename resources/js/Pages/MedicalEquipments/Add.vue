@@ -17,6 +17,10 @@ defineProps({
     type: Array,
     required: true,
   },
+  departments: {
+    type: Array,
+    required: true,
+  },
 });
 
 const form = useForm({
@@ -27,9 +31,15 @@ const form = useForm({
   serial: null,
   category_id: null,
   status_id: null,
+  department_id: null,
 });
 
 const handleCreate = () => {
+
+  form.department_id = form.department_id?.id || null;
+  form.category_id = form.category_id?.id || null;
+  form.status_id = form.status_id?.id || null;
+
   form.post(route("medical-equipments.store"), {
     errorBag: "handleCreate",
     preserveScroll: true,
@@ -63,6 +73,7 @@ const handleCreate = () => {
           :form="form"
           :categories="categories"
           :statuses="statuses"
+          :departments="departments"
         />
       </div>
     </div>

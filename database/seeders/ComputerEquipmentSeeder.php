@@ -15,7 +15,7 @@ class ComputerEquipmentSeeder extends Seeder
      */
     public function run()
     {
-        ComputerEquipment::create([
+        /* ComputerEquipment::create([
             'category_id' => '3',
             'status_id' => '1',
             'code' => 'CCINF001',
@@ -33,6 +33,6 @@ class ComputerEquipmentSeeder extends Seeder
             'brand' => 'Microsoft',
             'model' => 'Keyboard 400',
             'serial' => 'ABC98765432',
-        ]);
+        ]); */
     }
 }

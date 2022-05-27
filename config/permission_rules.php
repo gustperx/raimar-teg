@@ -90,4 +90,12 @@ return [
         ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:medicalEquipmentMovements-force-delete'],
     ],
 
+    'Mantenimiento' => [
+        ['display_name' => 'Leer', 'permission' => 'technical:maintenance-read'],
+        ['display_name' => 'Crear', 'permission' => 'technical:maintenance-create'],
+        ['display_name' => 'Actualizar', 'permission' => 'technical:maintenance-update'],
+        ['display_name' => 'Eliminación suave', 'permission' => 'technical:maintenance-delete'],
+        ['display_name' => 'Restaurar', 'permission' => 'technical:maintenance-restore'],
+        ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:maintenance-force-delete'],
+    ],
 ];

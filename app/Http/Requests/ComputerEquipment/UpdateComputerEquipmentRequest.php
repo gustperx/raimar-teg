@@ -25,6 +25,7 @@ class UpdateComputerEquipmentRequest extends FormRequest
     public function rules()
     {
         return [
+            'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'category_id' => ['required', 'numeric', 'max:191', 'exists:categories,id'],
             'status_id' => ['nullable', 'numeric', 'max:191', 'exists:statuses,id'],
             'code' => ['nullable', 'string', 'max:191', Rule::unique('computer_equipments')->ignore($this->computer_equipment)],

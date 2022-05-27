@@ -80,6 +80,11 @@ defineProps({
               title="Modelo"
               :value="computerEquipment.model"
             />
+            <CustomDetailsTableItem
+              class="bg-gray-100"
+              title="Departamento"
+              :value="computerEquipment.department"
+            />
           </template>
         </CustomDetailsTable>
       </div>

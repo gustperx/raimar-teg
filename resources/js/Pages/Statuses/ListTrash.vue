@@ -34,18 +34,24 @@ const {
       <tr class="bg-gray-600">
         <th class="text-left text-white p-4 font-bold">ID</th>
         <th class="text-left text-white p-4 font-bold">Nombre</th>
+        <th class="text-left text-white p-4 font-bold">Color</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
 
     <template #body>
       <tr
-        v-for="{ id, name, can } in items"
+        v-for="{ id, name, color, can } in items"
         :key="id"
         class="border-b hover:bg-gray-50"
       >
         <td class="p-4">{{ id }}</td>
         <td class="p-4">{{ name }}</td>
+        <td class="p-4">
+          <span>
+            <i class="fa-solid fa-circle" :style="`color: ${color}`"></i>
+          </span>
+        </td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton

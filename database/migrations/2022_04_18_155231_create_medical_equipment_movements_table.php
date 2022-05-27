@@ -16,13 +16,15 @@ return new class extends Migration
         Schema::create('medical_equipment_movements', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('previous_department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('current_department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('user_movement_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('user_responsible_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('user_assigned_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('equipment_id')->constrained('medical_equipments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            
+            $table->foreignId('previous_department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete()->nullable();
+            $table->foreignId('user_movement_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete()->nullable();
+            $table->foreignId('user_responsible_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete()->nullable();
+            
+            $table->text('user_assigned')->nullable();
             $table->timestamp('transfer_date');
             $table->longText('incidence');
 

@@ -38,6 +38,17 @@ defineProps({
         />
         <JetInputError :message="form.errors.name" class="mt-2" />
       </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="color" value="Color" />
+        <JetInput
+          id="color"
+          v-model="form.color"
+          type="color"
+          class="mt-1 block w-full"
+          autocomplete="off"
+        />
+        <JetInputError :message="form.errors.color" class="mt-2" />
+      </div>
     </template>
 
     <template #actions>

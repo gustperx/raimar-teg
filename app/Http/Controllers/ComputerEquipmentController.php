@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ComputerEquipment\StoreComputerEquipmentRequest;
 use App\Http\Requests\ComputerEquipment\UpdateComputerEquipmentRequest;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\ComputerEquipment;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('viewAny', ComputerEquipment::class);
 
-        $items = ComputerEquipment::with('category', 'status')->orderBy('id', 'desc')
+        $items = ComputerEquipment::with('category', 'status', 'department')->orderBy('id', 'desc')
             ->filter($request->only('search'))
             ->paginate()->through(function ($item) {
                 return [
@@ -33,6 +34,8 @@ class ComputerEquipmentController extends Controller
                     'serial' => $item->serial,
                     'category' => $item->category->name ?? null,
                     'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
+                    'department' => $item->department->name ?? null,
                     'edit_url' => route('computer-equipments.edit', $item),
                     'show_url' => route('computer-equipments.show', $item),
                     'can' => [
@@ -66,21 +69,14 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('create', ComputerEquipment::class);
 
-        $categories = Category::select('id', 'name')
-            ->where('parent_id', '1')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $categories = Category::select('id', 'name')->where('parent_id', 1)->get();
+        $statuses = Status::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('id', '>', 2)->get();
 
         return Inertia::render('ComputerEquipments/Add', [
             'categories' => $categories,
             'statuses' => $statuses,
+            'departments' => $departments,
             'return_url' => route('computer-equipments.index')
         ]);
     }
@@ -114,7 +110,7 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('view', $computerEquipment);
 
-        $computerEquipment = ComputerEquipment::with('category', 'status')->where('id', $computerEquipment->id)->first();
+        $computerEquipment = ComputerEquipment::with('category', 'status', 'department')->where('id', $computerEquipment->id)->first();
         $computerEquipment = [
             'id' => $computerEquipment->id,
             'description' => $computerEquipment->description,
@@ -124,6 +120,7 @@ class ComputerEquipmentController extends Controller
             'serial' => $computerEquipment->serial,
             'category' => $computerEquipment->category->name ?? null,
             'status' => $computerEquipment->status->name ?? null,
+            'department' => $computerEquipment->department->name ?? null,
         ];
 
         return Inertia::render('ComputerEquipments/Show', [
@@ -142,17 +139,9 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('update', $computerEquipment);
 
-        $categories = Category::select('id', 'name')
-            ->where('parent_id', '1')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $categories = Category::select('id', 'name')->where('parent_id', 1)->get();
+        $statuses = Status::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('id', '>', 2)->get();
 
         return Inertia::render('ComputerEquipments/Edit', [
             'computerEquipment' => $computerEquipment->only(
@@ -163,10 +152,12 @@ class ComputerEquipmentController extends Controller
                 'code',
                 'serial',
                 'category_id',
-                'status_id'
+                'status_id',
+                'department_id'
             ),
             'categories' => $categories,
             'statuses' => $statuses,
+            'departments' => $departments,
             'return_url' => route('computer-equipments.index')
         ]);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MedicalEquipment\StoreMedicalEquipmentRequest;
 use App\Http\Requests\MedicalEquipment\UpdateMedicalEquipmentRequest;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\MedicalEquipment;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('viewAny', MedicalEquipment::class);
 
-        $items = MedicalEquipment::with('category', 'status')->orderBy('id', 'desc')
+        $items = MedicalEquipment::with('category', 'status', 'department')->orderBy('id', 'desc')
             ->filter($request->only('search'))
             ->paginate()->through(function ($item) {
                 return [
@@ -33,6 +34,8 @@ class MedicalEquipmentController extends Controller
                     'serial' => $item->serial,
                     'category' => $item->category->name ?? null,
                     'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
+                    'department' => $item->department->name ?? null,
                     'edit_url' => route('medical-equipments.edit', $item),
                     'show_url' => route('medical-equipments.show', $item),
                     'can' => [
@@ -66,21 +69,14 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('create', MedicalEquipment::class);
 
-        $categories = Category::select('id', 'name')
-            ->where('parent_id', '2')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $categories = Category::select('id', 'name')->where('parent_id', '2')->get();
+        $statuses = Status::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('parent_id', 2)->get();
 
         return Inertia::render('MedicalEquipments/Add', [
             'categories' => $categories,
             'statuses' => $statuses,
+            'departments' => $departments,
             'return_url' => route('medical-equipments.index')
         ]);
     }
@@ -114,7 +110,7 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('view', $medicalEquipment);
 
-        $medicalEquipment = MedicalEquipment::with('category', 'status')->where('id', $medicalEquipment->id)->first();
+        $medicalEquipment = MedicalEquipment::with('category', 'status', 'department')->where('id', $medicalEquipment->id)->first();
         $medicalEquipment = [
             'id' => $medicalEquipment->id,
             'description' => $medicalEquipment->description,
@@ -124,6 +120,7 @@ class MedicalEquipmentController extends Controller
             'serial' => $medicalEquipment->serial,
             'category' => $medicalEquipment->category->name ?? null,
             'status' => $medicalEquipment->status->name ?? null,
+            'department' => $medicalEquipment->department->name ?? null,
         ];
 
         return Inertia::render('MedicalEquipments/Show', [
@@ -142,17 +139,9 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('update', $medicalEquipment);
 
-        $categories = Category::select('id', 'name')
-            ->where('parent_id', '2')->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
-
-        $statuses = Status::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return ['value' => $item->id, 'label' => $item->name];
-            })->toArray();
+        $categories = Category::select('id', 'name')->where('parent_id', '2')->get();
+        $statuses = Status::select('id', 'name')->get();
+        $departments = Department::select('id', 'name')->where('parent_id', 2)->get();
 
         return Inertia::render('MedicalEquipments/Edit', [
             'medicalEquipment' => $medicalEquipment->only(
@@ -163,10 +152,12 @@ class MedicalEquipmentController extends Controller
                 'code',
                 'serial',
                 'category_id',
-                'status_id'
+                'status_id',
+                'department_id'
             ),
             'categories' => $categories,
             'statuses' => $statuses,
+            'departments' => $departments,
             'return_url' => route('medical-equipments.index')
         ]);
     }

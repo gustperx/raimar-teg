@@ -50,6 +50,11 @@ defineProps({
               title="Nombre"
               :value="status.name"
             />
+            <CustomDetailsTableItem
+              class="bg-gray-100"
+              title="Color"
+              :value="status.color"
+            />
           </template>
         </CustomDetailsTable>
       </div>

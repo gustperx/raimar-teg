@@ -1,5 +1,5 @@
 <script setup>
-import Multiselect from "@vueform/multiselect";
+import Multiselect from "vue-multiselect";
 
 import JetActionMessage from "@/Jetstream/ActionMessage.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -16,6 +16,9 @@ defineProps({
     required: true,
   },
   statuses: {
+    required: true,
+  },
+  departments: {
     required: true,
   },
   form: {
@@ -43,6 +46,9 @@ defineProps({
           v-model="form.category_id"
           :options="categories"
           :searchable="true"
+          track-by="name"
+          label="name"
+          placeholder="Categorías"
         />
         <JetInputError :message="form.errors.category_id" class="mt-2" />
       </div>
@@ -110,6 +116,19 @@ defineProps({
         />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
       </div> -->
+
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="department_id" value="Departamento" />
+        <Multiselect
+          v-model="form.department_id"
+          :options="departments"
+          :searchable="true"
+          track-by="name"
+          label="name"
+          placeholder="Departamento"
+        />
+        <JetInputError :message="form.errors.department_id" class="mt-2" />
+      </div>
     </template>
 
     <template #actions>
@@ -127,4 +146,4 @@ defineProps({
   </JetFormSection>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>

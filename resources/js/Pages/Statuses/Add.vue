@@ -13,6 +13,7 @@ defineProps({
 
 const form = useForm({
   name: null,
+  color: null,
 });
 
 const createStatus = () => {
@@ -20,11 +21,7 @@ const createStatus = () => {
     errorBag: "createStatus",
     preserveScroll: true,
     onSuccess: () => form.reset(),
-    onError: () => {
-      if (form.errors.name) {
-        form.reset("name");
-      }
-    },
+    onError: () => {},
   });
 };
 </script>

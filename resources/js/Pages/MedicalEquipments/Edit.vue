@@ -17,6 +17,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  departments: {
+    type: Array,
+    required: true,
+  },
   return_url: {
     type: String,
     required: true,
@@ -29,20 +33,22 @@ const form = useForm({
   model: props.medicalEquipment.model,
   code: props.medicalEquipment.code,
   serial: props.medicalEquipment.serial,
-  category_id: props.medicalEquipment.category_id,
-  status_id: props.medicalEquipment.status_id,
+  category_id: props.categories.find(item => item.id === props.medicalEquipment.category_id),
+  status_id: props.statuses.find(item => item.id === props.medicalEquipment.status_id),
+  department_id: props.departments.find(item => item.id === props.medicalEquipment.department_id),
 });
 
 const handleUpdate = () => {
+
+  form.department_id = form.department_id?.id || null;
+  form.category_id = form.category_id?.id || null;
+  form.status_id = form.status_id?.id || null;
+
   form.put(route("medical-equipments.update", [props.medicalEquipment.id]), {
     errorBag: "handleUpdate",
     preserveScroll: true,
     onSuccess: () => form.reset(),
-    onError: () => {
-      if (form.errors.name) {
-        form.reset("name");
-      }
-    },
+    onError: () => {},
   });
 };
 </script>
@@ -71,6 +77,7 @@ const handleUpdate = () => {
           :form="form"
           :categories="categories"
           :statuses="statuses"
+          :departments="departments"
         />
       </div>
     </div>

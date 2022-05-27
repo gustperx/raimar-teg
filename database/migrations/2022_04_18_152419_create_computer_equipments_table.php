@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
+
             $table->string('code')->unique();
             $table->string('description');
             $table->string('brand');
