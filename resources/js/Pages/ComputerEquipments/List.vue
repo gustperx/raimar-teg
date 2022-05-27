@@ -8,6 +8,7 @@ import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
 import StatusColor from "@/Components/StatusColor.vue";
 import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
+import BarCode from "@/Components/BarCode.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -32,6 +33,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">Descripción</th>
         <th class="text-left text-white p-4 font-bold">Departamento</th>
         <th class="text-left text-white p-4 font-bold">Estatus</th>
+        <th class="text-left text-white p-4 font-bold">Código de barra</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -66,6 +68,9 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">{{ department }}</td>
         <td class="p-4">
           <StatusColor :color="status_color" :text="status" />
+        </td>
+        <td class="p-4">
+          <BarCode :code="code" />
         </td>
         <td>
           <div class="flex flex-col md:flex-row">

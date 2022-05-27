@@ -6,6 +6,7 @@ import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
 import CustomModalRestore from "@/Components/ModalRestore.vue";
 import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
+import BarCode from "@/Components/BarCode.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -37,6 +38,7 @@ const {
         <th class="text-left text-white p-4 font-bold">Categoría</th>
         <th class="text-left text-white p-4 font-bold">Descripción</th>
         <th class="text-left text-white p-4 font-bold">Estatus</th>
+        <th class="text-left text-white p-4 font-bold">Código de barra</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -65,6 +67,9 @@ const {
           />
         </td>
         <td class="p-4">{{ status }}</td>
+        <td class="p-4">
+          <BarCode :code="code" />
+        </td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton

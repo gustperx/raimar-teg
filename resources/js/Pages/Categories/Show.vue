@@ -7,6 +7,7 @@ import CustomDetailsTableItem from "@/Components/DetailsTableItem.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import StatusColor from "@/Components/StatusColor.vue";
+import BarCode from "@/Components/BarCode.vue";
 import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
 
 defineProps({
@@ -79,6 +80,7 @@ defineProps({
                   <th class="text-left text-white p-4 font-bold">Descripción</th>
                   <th class="text-left text-white p-4 font-bold">Departamento</th>
                   <th class="text-left text-white p-4 font-bold">Estatus</th>
+                  <th class="text-left text-white p-4 font-bold">Código de barra</th>
                 </tr>
               </template>
 
@@ -98,6 +100,9 @@ defineProps({
                   <td class="p-4">{{ equipment.department.name }}</td>
                   <td class="p-4">
                     <StatusColor :color="equipment.status.color" :text="equipment.status.name" />
+                  </td>
+                  <td class="p-4">
+                    <BarCode :code="equipment.code" />
                   </td>
                 </tr>
               </template>
