@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('user_assigned')->nullable();
             $table->timestamp('transfer_date');
             $table->longText('incidence');
+            $table->text('period')->nullable();
             
             $table->softDeletes();
             $table->timestamps();

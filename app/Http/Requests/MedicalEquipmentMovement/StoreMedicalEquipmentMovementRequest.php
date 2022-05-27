@@ -24,15 +24,16 @@ class StoreMedicalEquipmentMovementRequest extends FormRequest
     public function rules()
     {
         return [
-            'previous_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
+            /* 'previous_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'], */
             'current_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'user_movement_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
             'user_responsible_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
-            'user_assigned_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
+            'user_assigned' => ['required', 'string', 'max:191'],
             'equipment_id' => ['required', 'numeric', 'max:191', 'exists:medical_equipments,id'],
-            'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
+            /* 'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'], */
             'transfer_date' => ['required', 'date', 'before:tomorrow'],
             'incidence' => ['required', 'string', 'max:191'],
+            'period' => ['required', 'string', 'max:191'],
         ];
     }
 
@@ -48,7 +49,7 @@ class StoreMedicalEquipmentMovementRequest extends FormRequest
             'current_department_id' => 'Departamento destinó',
             'user_movement_id' => 'Responsable movimiento',
             'user_responsible_id' => 'Responsable departamento',
-            'user_assigned_id' => 'Responsable del equipo',
+            'user_assigned' => 'Responsable del equipo',
             'equipment_id' => 'Equipo medicó',
             'status_id' => 'Estatus del equipo',
             'transfer_date' => 'Fecha de transferencia',

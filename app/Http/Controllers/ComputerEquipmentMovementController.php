@@ -30,7 +30,6 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
@@ -46,9 +45,10 @@ class ComputerEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->userAssigned->name ?? null,
+                    'user_assigned' => $item->user_assigned ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
                     'edit_url' => route('computer-equipments-movements.edit', $item),
@@ -115,11 +115,19 @@ class ComputerEquipmentMovementController extends Controller
     public function store(StoreComputerEquipmentMovementRequest $request)
     {
         $this->authorize('create', ComputerEquipmentMovement::class);
-
-        ComputerEquipmentMovement::create($request->all());
-
+        
         $equipment = ComputerEquipment::find($request->input('equipment_id'));
-        $equipment->update(['status_id' => $request->input('status_id')]);
+
+        $data = $request->all();
+        $data['previous_department_id'] = $equipment->department_id;
+        $data['status_id'] = 1; // active
+
+        $movement = ComputerEquipmentMovement::create($data);
+
+        $equipment->update([
+            'status_id' => 1,
+            'department_id' => $data['current_department_id'],
+        ]);
 
         $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.index');
@@ -142,22 +150,38 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
             ->where('id', $computerEquipmentMovement->id)->first();
+
+        switch ($computerEquipmentMovement->period) {
+            case '1':
+                $period = "3 Dias";
+                break;
+            case '2':
+                $period = "1 Semana";
+                break;
+            case '3':
+                $period = "Indefinido";
+                break;
+            default:
+                $period = "3 Dias";
+                break;
+        }
+
         $computerEquipmentMovement = [
             'id' => $computerEquipmentMovement->id,
             'previous_department' => $computerEquipmentMovement->previousDepartment->name ?? null,
             'current_department' => $computerEquipmentMovement->currentDepartment->name ?? null,
             'user_movement' => $computerEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $computerEquipmentMovement->userResponsible->name ?? null,
-            'user_assigned' => $computerEquipmentMovement->userAssigned->name ?? null,
+            'user_assigned' => $computerEquipmentMovement->user_assigned ?? null,
             'equipment' => $computerEquipmentMovement->equipment->only('id', 'description', 'code', 'serial') ?? null,
             'status' => $computerEquipmentMovement->status->name ?? null,
             'transfer_date' => $computerEquipmentMovement->transfer_date,
             'incidence' => $computerEquipmentMovement->incidence,
+            'period' => $period,
         ];
 
         return Inertia::render('ComputerEquipmentMovements/Show', [
@@ -178,7 +202,6 @@ class ComputerEquipmentMovementController extends Controller
             'equipment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
         )->find($computerEquipmentMovement_id);
 
         $this->authorize('update', $computerEquipmentMovement);
@@ -195,16 +218,17 @@ class ComputerEquipmentMovementController extends Controller
                 'current_department_id',
                 'user_movement_id',
                 'user_responsible_id',
-                'user_assigned_id',
+                'user_assigned',
                 'equipment_id',
                 'status_id',
                 'transfer_date',
                 'incidence',
+                'period'
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $computerEquipmentMovement->userMovement->only('id', 'name'),
             'user_responsible' => $computerEquipmentMovement->userResponsible->only('id', 'name'),
-            'user_assigned' => $computerEquipmentMovement->userAssigned->only('id', 'name'),
+            /* 'user_assigned' => $computerEquipmentMovement->userAssigned->only('id', 'name'), */
             'equipments' => ComputerEquipment::getEquipmentList(),
             'statuses' => Status::select('id', 'name')->get(),
             'users' => User::getDepartmentList(),
@@ -227,10 +251,15 @@ class ComputerEquipmentMovementController extends Controller
 
         $this->authorize('update', $computerEquipmentMovement);
 
-        $computerEquipmentMovement->update($request->all());
-
         $equipment = ComputerEquipment::find($request->input('equipment_id'));
-        $equipment->update(['status_id' => $request->input('status_id')]);
+
+        $data = $request->all();
+
+        $computerEquipmentMovement->update($data);
+
+        $equipment->update([
+            'department_id' => $data['current_department_id'],
+        ]);
 
         $request->session()->flash('success', 'Trasladó de equipo actualizado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.index');
@@ -268,7 +297,6 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
@@ -285,7 +313,7 @@ class ComputerEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->userAssigned->name ?? null,
+                    'user_assigned' => $item->user_assigned ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'transfer_date' => $item->transfer_date,

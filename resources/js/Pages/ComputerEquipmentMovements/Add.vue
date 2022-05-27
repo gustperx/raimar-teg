@@ -32,16 +32,17 @@ defineProps({
 });
 
 const form = useForm({
-  previous_department_id: null,
+  /* previous_department_id: null, */
   current_department_id: null,
   user_movement_id: null,
   user_responsible_id: null,
-  user_assigned_id: null,
+  user_assigned: null,
   equipment_id: null,
-  status_id: null,
+  /* status_id: null, */
   transfer_date: null,
   transfer_date_fake: new Date(),
   incidence: null,
+  period: null
 });
 
 const handleCreate = () => {
@@ -51,13 +52,13 @@ const handleCreate = () => {
   }-${dateOriginal.getDate()}`;
 
   form.transfer_date = formatDate;
-  form.previous_department_id = form.previous_department_id?.id || null;
+  /* form.previous_department_id = form.previous_department_id?.id || null; */
   form.current_department_id = form.current_department_id?.id || null;
   form.user_movement_id = form.user_movement_id?.id || null;
   form.user_responsible_id = form.user_responsible_id?.id || null;
-  form.user_assigned_id = form.user_assigned_id?.id || null;
+  /* form.user_assigned_id = form.user_assigned_id?.id || null; */
   form.equipment_id = form.equipment_id?.id || null;
-  form.status_id = form.status_id?.id || null;
+  /* form.status_id = form.status_id?.id || null; */
 
   form.post(route("computer-equipments-movements.store"), {
     errorBag: "handleCreate",

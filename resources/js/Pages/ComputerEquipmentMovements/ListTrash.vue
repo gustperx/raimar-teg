@@ -5,6 +5,7 @@ import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
 import CustomModalRestore from "@/Components/ModalRestore.vue";
+import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
 
 defineProps({
@@ -77,11 +78,11 @@ const {
           </ul>
         </td>
         <td class="p-4">
-          <ul class="text-sm">
-            <li>{{ description }}</li>
-            <li><span class="font-semibold">Código:</span> {{ code }}</li>
-            <li><span class="font-semibold">Serial:</span> {{ serial }}</li>
-          </ul>
+          <DescriptionEquipment 
+            :text="description" 
+            :code="code" 
+            :serial="serial" 
+          />
         </td>
         <td class="p-4">
           <ul class="text-sm">

@@ -27,6 +27,7 @@ class MedicalEquipmentMovement extends Model
         'status_id',
         'transfer_date',
         'incidence',
+        'period',
     ];
 
     /**

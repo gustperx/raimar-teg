@@ -46,7 +46,7 @@ defineProps({
 
     <template #form>
       <!-- Departamento anterior -->
-      <div class="col-span-6 sm:col-span-4">
+      <!-- <div class="col-span-6 sm:col-span-4">
         <JetLabel for="previous_department_id" value="Departamento anterior" />
         <Multiselect
           v-model="form.previous_department_id"
@@ -60,7 +60,7 @@ defineProps({
           :message="form.errors.previous_department_id"
           class="mt-2"
         />
-      </div>
+      </div> -->
 
       <!-- Departamento a destino -->
       <div class="col-span-6 sm:col-span-4">
@@ -96,7 +96,7 @@ defineProps({
       </div>
 
       <!-- Estado -->
-      <div class="col-span-6 sm:col-span-4">
+      <!-- <div class="col-span-6 sm:col-span-4">
         <JetLabel for="status_id" value="Estado actual al momento de mover" />
         <Multiselect
           v-model="form.status_id"
@@ -107,7 +107,7 @@ defineProps({
           placeholder="Estado actual"
         />
         <JetInputError :message="form.errors.status_id" class="mt-2" />
-      </div>
+      </div> -->
 
       <!-- Técnico -->
       <div class="col-span-6 sm:col-span-4">
@@ -149,9 +149,9 @@ defineProps({
 
       <!-- Responsable del equipo -->
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="user_assigned_id" value="Responsable del equipo" />
-        <Multiselect
-          v-model="form.user_assigned_id"
+        <JetLabel for="user_assigned" value="Responsable del equipo" />
+        <!-- <Multiselect
+          v-model="form.user_assigned"
           :options="users"
           group-values="items"
           group-label="label"
@@ -159,8 +159,15 @@ defineProps({
           track-by="name"
           label="name"
           placeholder="Responsable del equipo"
+        /> -->
+        <JetInput
+          id="user_assigned"
+          v-model="form.user_assigned"
+          type="text"
+          class="mt-1 block w-full"
+          autocomplete="off"
         />
-        <JetInputError :message="form.errors.user_assigned_id" class="mt-2" />
+        <JetInputError :message="form.errors.user_assigned" class="mt-2" />
       </div>
 
       <!-- Fecha de transferencia -->
@@ -185,6 +192,20 @@ defineProps({
           autocomplete="off"
         />
         <JetInputError :message="form.errors.incidence" class="mt-2" />
+      </div>
+
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="period" value="Periodo" />
+        <select
+          id="period"
+          v-model="form.period"
+          class="mt-1 block w-full"
+        >
+          <option value="1">3 Dias</option>
+          <option value="2">1 Semana</option>
+          <option value="3">Indefinido</option>
+        </select>
+        <JetInputError :message="form.errors.period" class="mt-2" />
       </div>
     </template>
 

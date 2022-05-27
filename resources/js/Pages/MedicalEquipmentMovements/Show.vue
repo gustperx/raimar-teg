@@ -104,6 +104,11 @@ defineProps({
               title="Incidencia"
               :value="medicalEquipmentMovement.incidence"
             />
+            <CustomDetailsTableItem
+              class="bg-gray-100"
+              title="Periodo"
+              :value="medicalEquipmentMovement.period"
+            />
           </template>
         </CustomDetailsTable>
       </div>

@@ -27,6 +27,7 @@ class ComputerEquipmentMovement extends Model
         'status_id',
         'transfer_date',
         'incidence',
+        'period',
     ];
 
     /**

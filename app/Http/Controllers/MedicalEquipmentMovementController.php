@@ -32,7 +32,6 @@ class MedicalEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
@@ -48,9 +47,10 @@ class MedicalEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->userAssigned->name ?? null,
+                    'user_assigned' => $item->user_assigned ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
                     'edit_url' => route('medical-equipments-movements.edit', $item),
@@ -124,11 +124,19 @@ class MedicalEquipmentMovementController extends Controller
     public function store(StoreMedicalEquipmentMovementRequest $request)
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
-
-        MedicalEquipmentMovement::create($request->all());
-
+        
         $equipment = MedicalEquipment::find($request->input('equipment_id'));
-        $equipment->update(['status_id' => $request->input('status_id')]);
+
+        $data = $request->all();
+        $data['previous_department_id'] = $equipment->department_id;
+        $data['status_id'] = 1; // active
+
+        $movement = MedicalEquipmentMovement::create($data);
+
+        $equipment->update([
+            'status_id' => 1,
+            'department_id' => $data['current_department_id'],
+        ]);
 
         $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
@@ -151,22 +159,38 @@ class MedicalEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
             ->where('id', $medicalEquipmentMovement->id)->first();
+
+        switch ($medicalEquipmentMovement->period) {
+            case '1':
+                $period = "3 Dias";
+                break;
+            case '2':
+                $period = "1 Semana";
+                break;
+            case '3':
+                $period = "Indefinido";
+                break;
+            default:
+                $period = "3 Dias";
+                break;
+        }
+
         $medicalEquipmentMovement = [
             'id' => $medicalEquipmentMovement->id,
             'previous_department' => $medicalEquipmentMovement->previousDepartment->name ?? null,
             'current_department' => $medicalEquipmentMovement->currentDepartment->name ?? null,
             'user_movement' => $medicalEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $medicalEquipmentMovement->userResponsible->name ?? null,
-            'user_assigned' => $medicalEquipmentMovement->userAssigned->name ?? null,
+            'user_assigned' => $medicalEquipmentMovement->user_assigned ?? null,
             'equipment' => $medicalEquipmentMovement->equipment->only('id', 'description', 'code', 'serial') ?? null,
             'status' => $medicalEquipmentMovement->status->name ?? null,
             'transfer_date' => $medicalEquipmentMovement->transfer_date,
             'incidence' => $medicalEquipmentMovement->incidence,
+            'period' => $period,
         ];
 
         return Inertia::render('MedicalEquipmentMovements/Show', [
@@ -187,7 +211,6 @@ class MedicalEquipmentMovementController extends Controller
             'equipment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
         )->find($medicalEquipmentMovement_id);
 
         $this->authorize('update', $medicalEquipmentMovement);
@@ -211,16 +234,17 @@ class MedicalEquipmentMovementController extends Controller
                 'current_department_id',
                 'user_movement_id',
                 'user_responsible_id',
-                'user_assigned_id',
+                'user_assigned',
                 'equipment_id',
                 'status_id',
                 'transfer_date',
                 'incidence',
+                'period',
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $medicalEquipmentMovement->userMovement->only('id', 'name'),
             'user_responsible' => $medicalEquipmentMovement->userResponsible->only('id', 'name'),
-            'user_assigned' => $medicalEquipmentMovement->userAssigned->only('id', 'name'),
+            /* 'user_assigned' => $medicalEquipmentMovement->userAssigned->only('id', 'name'), */
             'equipments' => $equipments,
             'statuses' => $statuses,
             'users' => $users,
@@ -243,10 +267,15 @@ class MedicalEquipmentMovementController extends Controller
 
         $this->authorize('update', $medicalEquipmentMovement);
 
-        $medicalEquipmentMovement->update($request->all());
-
         $equipment = MedicalEquipment::find($request->input('equipment_id'));
-        $equipment->update(['status_id' => $request->input('status_id')]);
+
+        $data = $request->all();
+
+        $movement = $medicalEquipmentMovement->update($data);
+
+        $equipment->update([
+            'department_id' => $data['current_department_id'],
+        ]);
 
         $request->session()->flash('success', 'Trasladó de equipo actualizado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
@@ -284,7 +313,6 @@ class MedicalEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
-            'userAssigned',
             'equipment',
             'status'
         )
@@ -301,7 +329,7 @@ class MedicalEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->userAssigned->name ?? null,
+                    'user_assigned' => $item->user_assigned ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'transfer_date' => $item->transfer_date,
