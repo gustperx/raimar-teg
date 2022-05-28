@@ -21,7 +21,6 @@ class MedicalMaintenanceController extends Controller
      */
 
     private $department_logistica = 3;
-    private $department_medical = 2;
 
     public function index(Request $request)
     {
@@ -83,7 +82,6 @@ class MedicalMaintenanceController extends Controller
         $this->authorize('create', MedicalEquipmentMovement::class);
 
         $usersTech = User::getDepartmentList($this->department_logistica);
-
         $statuses = Status::select('id', 'name')->where('id', '!=', 1)->get();
         $equipments = MedicalEquipment::getEquipmentList();
         $departments = Department::select('id', 'name')->whereIn('id', [3, 19])->get();
@@ -141,11 +139,8 @@ class MedicalMaintenanceController extends Controller
         $this->authorize('update', $medicalEquipmentMovement);
 
         $usersTech = User::getDepartmentList($this->department_logistica);
-        $users = User::getDepartmentList(null, $this->department_medical);
-
         $statuses = Status::select('id', 'name')->where('id', '!=', 2)->get();
         $equipments = MedicalEquipment::getEquipmentMaintenanceList();
-        // $departments = Department::select('id', 'name')->where('parent_id', $this->department_medical)->get();
         $departments = Department::select('id', 'name')->whereIn('id', [3, 19])->get();
 
         $current_equipment = [
@@ -173,7 +168,7 @@ class MedicalMaintenanceController extends Controller
             /* 'user_assigned' => $medicalEquipmentMovement->userAssigned->only('id', 'name'), */
             'equipments' => $equipments,
             'statuses' => $statuses,
-            'users' => $users,
+            'users' => $usersTech,
             'usersTech' => $usersTech,
             'departments' => $departments,
             'return_url' => route('medical-maintenance.index')
