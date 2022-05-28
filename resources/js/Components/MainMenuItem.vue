@@ -18,7 +18,7 @@ const { url, name, icon } = props.item;
         class="flex justify-center items-center h-48 bg-gray-700 rounded-lg shadow-md cursor-pointer"
       >
         <div class="flex flex-col">
-          <div class="text-center py-4 text-6xl text-orange-400">
+          <div class="text-center py-4 text-6xl text-blue-500">
             <span :class="icon"></span>
           </div>
           <h3 class="text-lg font-semibold text-white text-center">

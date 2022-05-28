@@ -70,13 +70,13 @@ class DashboardController extends Controller
 
             [
                 'name' => 'Mantenimiento Equipos médicos',
-                'icon' => 'fa-solid fa-microscope',
+                'icon' => 'fa-solid fa-screwdriver-wrench',
                 'url' => route('medical-maintenance.index'),
                 'access' => auth()->user()->can('maintenance', MedicalEquipment::class)
             ],
             [
                 'name' => 'Mantenimiento Equipos informáticos',
-                'icon' => 'fa-solid fa-computer',
+                'icon' => 'fa-solid fa-bug',
                 'url' => route('computer-maintenance.index'),
                 'access' => auth()->user()->can('maintenance', ComputerEquipment::class)
             ],
