@@ -16,9 +16,9 @@ class StatusSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            ['name' => 'Operativo', 'color' => '#80df0c']
-            ['name' => 'Mantenimiento', 'color' => '#e4d211']
-            ['name' => 'Fuera de servicio', 'color' => '#e40c0c']
+            ['name' => 'Operativo', 'color' => '#80df0c'],
+            ['name' => 'Mantenimiento', 'color' => '#e4d211'],
+            ['name' => 'Fuera de servicio', 'color' => '#e40c0c'],
         ];
 
         foreach ($statuses as $status) {
