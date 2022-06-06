@@ -28,6 +28,8 @@ class ComputerEquipmentMovement extends Model
         'transfer_date',
         'incidence',
         'period',
+        'period_start',
+        'period_end',
     ];
 
     /**
@@ -36,6 +38,20 @@ class ComputerEquipmentMovement extends Model
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function transferDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('d/m/Y'),
+        );
+    }
+
+    protected function periodStart(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('d/m/Y'),
+        );
+    }
+
+    protected function periodEnd(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value)->format('d/m/Y'),

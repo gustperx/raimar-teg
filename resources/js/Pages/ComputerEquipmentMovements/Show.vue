@@ -107,7 +107,12 @@ defineProps({
             <CustomDetailsTableItem
               class="bg-gray-100"
               title="Periodo"
-              :value="computerEquipmentMovement.period"
+              :value="computerEquipmentMovement.period_start"
+            />
+            <CustomDetailsTableItem
+              class="bg-white"
+              title="Incidencia"
+              :value="computerEquipmentMovement.period_end"
             />
           </template>
         </CustomDetailsTable>

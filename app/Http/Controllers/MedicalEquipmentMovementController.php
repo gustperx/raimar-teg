@@ -124,7 +124,7 @@ class MedicalEquipmentMovementController extends Controller
     public function store(StoreMedicalEquipmentMovementRequest $request)
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
-        
+
         $equipment = MedicalEquipment::find($request->input('equipment_id'));
 
         $data = $request->all();
@@ -164,21 +164,6 @@ class MedicalEquipmentMovementController extends Controller
         )
             ->where('id', $medicalEquipmentMovement->id)->first();
 
-        switch ($medicalEquipmentMovement->period) {
-            case '1':
-                $period = "3 Dias";
-                break;
-            case '2':
-                $period = "1 Semana";
-                break;
-            case '3':
-                $period = "Indefinido";
-                break;
-            default:
-                $period = "3 Dias";
-                break;
-        }
-
         $medicalEquipmentMovement = [
             'id' => $medicalEquipmentMovement->id,
             'previous_department' => $medicalEquipmentMovement->previousDepartment->name ?? null,
@@ -190,7 +175,8 @@ class MedicalEquipmentMovementController extends Controller
             'status' => $medicalEquipmentMovement->status->name ?? null,
             'transfer_date' => $medicalEquipmentMovement->transfer_date,
             'incidence' => $medicalEquipmentMovement->incidence,
-            'period' => $period,
+            'period_start' => $medicalEquipmentMovement->period_start,
+            'period_end' => $medicalEquipmentMovement->period_end,
         ];
 
         return Inertia::render('MedicalEquipmentMovements/Show', [
@@ -239,7 +225,8 @@ class MedicalEquipmentMovementController extends Controller
                 'status_id',
                 'transfer_date',
                 'incidence',
-                'period',
+                'period_start',
+                'period_end',
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $medicalEquipmentMovement->userMovement->only('id', 'name'),

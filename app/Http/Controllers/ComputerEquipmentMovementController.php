@@ -115,7 +115,7 @@ class ComputerEquipmentMovementController extends Controller
     public function store(StoreComputerEquipmentMovementRequest $request)
     {
         $this->authorize('create', ComputerEquipmentMovement::class);
-        
+
         $equipment = ComputerEquipment::find($request->input('equipment_id'));
 
         $data = $request->all();
@@ -155,21 +155,6 @@ class ComputerEquipmentMovementController extends Controller
         )
             ->where('id', $computerEquipmentMovement->id)->first();
 
-        switch ($computerEquipmentMovement->period) {
-            case '1':
-                $period = "3 Dias";
-                break;
-            case '2':
-                $period = "1 Semana";
-                break;
-            case '3':
-                $period = "Indefinido";
-                break;
-            default:
-                $period = "3 Dias";
-                break;
-        }
-
         $computerEquipmentMovement = [
             'id' => $computerEquipmentMovement->id,
             'previous_department' => $computerEquipmentMovement->previousDepartment->name ?? null,
@@ -181,7 +166,8 @@ class ComputerEquipmentMovementController extends Controller
             'status' => $computerEquipmentMovement->status->name ?? null,
             'transfer_date' => $computerEquipmentMovement->transfer_date,
             'incidence' => $computerEquipmentMovement->incidence,
-            'period' => $period,
+            'period_start' => $computerEquipmentMovement->period_start,
+            'period_end' => $computerEquipmentMovement->period_end,
         ];
 
         return Inertia::render('ComputerEquipmentMovements/Show', [
@@ -223,7 +209,8 @@ class ComputerEquipmentMovementController extends Controller
                 'status_id',
                 'transfer_date',
                 'incidence',
-                'period'
+                'period_start',
+                'period_end',
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $computerEquipmentMovement->userMovement->only('id', 'name'),

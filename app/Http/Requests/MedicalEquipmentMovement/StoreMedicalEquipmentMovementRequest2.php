@@ -33,7 +33,8 @@ class StoreMedicalEquipmentMovementRequest2 extends FormRequest
             'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
             'transfer_date' => ['required', 'date', 'before:tomorrow'],
             'incidence' => ['required', 'string', 'max:191'],
-            'period' => ['required', 'string', 'max:191'],
+            'period_start' => ['required', 'date', 'after:yesterday'],
+            'period_end' => ['required', 'date', 'after:period_start'],
         ];
     }
 
@@ -53,6 +54,8 @@ class StoreMedicalEquipmentMovementRequest2 extends FormRequest
             'equipment_id' => 'Equipo medicó',
             'status_id' => 'Estatus del equipo',
             'transfer_date' => 'Fecha de transferencia',
+            'period_start' => 'Fecha de inicio',
+            'period_end' => 'Fecha final',
             'incidence' => 'Incidencia',
         ];
     }

@@ -105,7 +105,7 @@ class MedicalMaintenanceController extends Controller
     public function store(StoreMedicalEquipmentMovementRequest2 $request)
     {
         $this->authorize('create', MedicalEquipmentMovement::class);
-        
+
         $equipment = MedicalEquipment::find($request->input('equipment_id'));
 
         $data = $request->all();
@@ -160,7 +160,8 @@ class MedicalMaintenanceController extends Controller
                 'status_id',
                 'transfer_date',
                 'incidence',
-                'period',
+                'period_start',
+                'period_end',
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $medicalEquipmentMovement->userMovement->only('id', 'name'),

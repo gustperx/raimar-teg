@@ -3,6 +3,7 @@ import { Link, useForm } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
 import CustomForm from "./Form.vue";
+import { formatDate, transforDate } from "@/Utils/format-date";
 
 const props = defineProps({
   medicalEquipmentMovement: {
@@ -68,18 +69,20 @@ const form = useForm({
   user_assigned: props.medicalEquipmentMovement.user_assigned,
   equipment_id: props.current_equipment,
   transfer_date: null,
-  transfer_date_fake: new Date(dateArr[2], dateArr[1] - 1, dateArr[0]),
+  transfer_date_fake: transforDate(props.medicalEquipmentMovement.transfer_date),
+  period_start: null,
+  period_start_fake: transforDate(props.medicalEquipmentMovement.period_start),
+  period_end: null,
+  period_end_fake: transforDate(props.medicalEquipmentMovement.period_end),
   incidence: props.medicalEquipmentMovement.incidence,
   period: props.medicalEquipmentMovement.period,
 });
 
 const handleUpdate = () => {
-  const dateOriginal = form.transfer_date_fake;
-  const formatDate = `${dateOriginal.getFullYear()}-${
-    dateOriginal.getMonth() + 1
-  }-${dateOriginal.getDate()}`;
+  form.transfer_date = formatDate(form.transfer_date_fake);
+  form.period_start = formatDate(form.period_start_fake);
+  form.period_end = formatDate(form.period_end_fake);
 
-  form.transfer_date = formatDate;
   /* form.previous_department_id = form.previous_department_id?.id || null; */
   form.current_department_id = form.current_department_id?.id || null;
   form.user_movement_id = form.user_movement_id?.id || null;

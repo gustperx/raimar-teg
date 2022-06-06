@@ -105,7 +105,7 @@ class ComputerMaintenanceController extends Controller
     public function store(StoreComputerEquipmentMovementRequest2 $request)
     {
         $this->authorize('create', ComputerEquipmentMovement::class);
-        
+
         $equipment = ComputerEquipment::find($request->input('equipment_id'));
 
         $data = $request->all();
@@ -160,7 +160,8 @@ class ComputerMaintenanceController extends Controller
                 'status_id',
                 'transfer_date',
                 'incidence',
-                'period'
+                'period_start',
+                'period_end',
             ),
             'current_equipment' => $current_equipment,
             'user_movement' => $computerEquipmentMovement->userMovement->only('id', 'name'),

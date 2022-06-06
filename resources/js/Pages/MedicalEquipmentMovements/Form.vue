@@ -195,17 +195,23 @@ defineProps({
       </div>
 
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="period" value="Periodo" />
-        <select
-          id="period"
-          v-model="form.period"
-          class="mt-1 block w-full"
-        >
-          <option value="1">3 Dias</option>
-          <option value="2">1 Semana</option>
-          <option value="3">Indefinido</option>
-        </select>
-        <JetInputError :message="form.errors.period" class="mt-2" />
+        <JetLabel for="period_start" value="Fecha de inicio" />
+        <Datepicker
+          v-model="form.period_start_fake"
+          :locale="es"
+          class="input mt-1 block w-full"
+        />
+        <JetInputError :message="form.errors.period_start" class="mt-2" />
+      </div>
+
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="period_end" value="Fecha final" />
+        <Datepicker
+          v-model="form.period_end_fake"
+          :locale="es"
+          class="input mt-1 block w-full"
+        />
+        <JetInputError :message="form.errors.period_end" class="mt-2" />
       </div>
     </template>
 
