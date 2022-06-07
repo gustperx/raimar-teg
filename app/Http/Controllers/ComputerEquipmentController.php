@@ -32,6 +32,7 @@ class ComputerEquipmentController extends Controller
                     'model' => $item->model,
                     'code' => $item->code,
                     'serial' => $item->serial,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'category' => $item->category->name ?? null,
                     'status' => $item->status->name ?? null,
                     'status_color' => $item->status->color ?? null,

@@ -48,6 +48,7 @@ class ComputerMaintenanceController extends Controller
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'status_color' => $item->status->color ?? null,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
                     'edit_url' => route('computer-maintenance.edit', $item),

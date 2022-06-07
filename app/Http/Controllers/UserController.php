@@ -29,6 +29,7 @@ class UserController extends Controller
                     'name' => $item->name,
                     'email' => $item->email,
                     'dni' => $item->dni,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'allow_login' => $item->allow_login,
                     'department' => $item->department->name ?? null,
                     'edit_url' => route('users.edit', $item),

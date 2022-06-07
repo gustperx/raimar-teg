@@ -29,6 +29,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">Usuario</th>
         <th class="text-left text-white p-4 font-bold">Departamento</th>
         <th class="text-left text-white p-4 font-bold">Permitir acceso</th>
+        <th class="text-left text-white p-4 font-bold">Actualización</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -41,6 +42,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           email,
           dni,
           allow_login,
+          updated_at,
           department,
           show_url,
           edit_url,
@@ -60,6 +62,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         </td>
         <td class="p-4">{{ department }}</td>
         <td class="p-4">{{ allow_login ? "Si" : "No" }}</td>
+        <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

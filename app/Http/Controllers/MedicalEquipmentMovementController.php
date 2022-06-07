@@ -53,6 +53,7 @@ class MedicalEquipmentMovementController extends Controller
                     'status_color' => $item->status->color ?? null,
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'edit_url' => route('medical-equipments-movements.edit', $item),
                     'show_url' => route('medical-equipments-movements.show', $item),
                     'can' => [

@@ -26,6 +26,7 @@ class StatusController extends Controller
                     'id' => $item->id,
                     'name' => $item->name,
                     'color' => $item->color,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'edit_url' => route('statuses.edit', $item),
                     'show_url' => route('statuses.show', $item),
                     'can' => [

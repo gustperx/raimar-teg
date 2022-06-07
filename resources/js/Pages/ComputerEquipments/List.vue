@@ -34,6 +34,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">Departamento</th>
         <th class="text-left text-white p-4 font-bold">Estatus</th>
         <th class="text-left text-white p-4 font-bold">Código de barra</th>
+        <th class="text-left text-white p-4 font-bold">Actualización</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -49,6 +50,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           status,
           status_color,
           department,
+          updated_at,
           show_url,
           edit_url,
           can,
@@ -59,10 +61,10 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">{{ id }}</td>
         <td class="p-4">{{ category }}</td>
         <td class="p-4">
-          <DescriptionEquipment 
-            :text="description" 
-            :code="code" 
-            :serial="serial" 
+          <DescriptionEquipment
+            :text="description"
+            :code="code"
+            :serial="serial"
           />
         </td>
         <td class="p-4">{{ department }}</td>
@@ -72,6 +74,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">
           <BarCode :code="code" />
         </td>
+        <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

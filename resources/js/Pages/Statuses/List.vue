@@ -29,13 +29,14 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">ID</th>
         <th class="text-left text-white p-4 font-bold">Nombre</th>
         <th class="text-left text-white p-4 font-bold">Color</th>
+        <th class="text-left text-white p-4 font-bold">Actualización</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
 
     <template #body>
       <tr
-        v-for="{ id, name, color, show_url, edit_url, can } in items"
+        v-for="{ id, name, color, updated_at, show_url, edit_url, can } in items"
         :key="id"
         class="border-b hover:bg-gray-50"
       >
@@ -44,6 +45,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td class="p-4">
           <StatusColor :color="color" />
         </td>
+        <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">

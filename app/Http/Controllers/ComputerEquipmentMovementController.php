@@ -46,6 +46,7 @@ class ComputerEquipmentMovementController extends Controller
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
                     'user_assigned' => $item->user_assigned ?? null,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'status_color' => $item->status->color ?? null,

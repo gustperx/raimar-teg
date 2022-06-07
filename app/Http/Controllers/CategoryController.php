@@ -42,6 +42,7 @@ class CategoryController extends Controller
                     'id' => $item->id,
                     'name' => $item->name,
                     'amount' => $amount,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'principal' => $item->parent->name ?? null,
                     'edit_url' => route('categories.edit', $item),
                     'show_url' => route('categories.show', $item),

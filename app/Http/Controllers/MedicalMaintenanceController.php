@@ -50,6 +50,7 @@ class MedicalMaintenanceController extends Controller
                     'status_color' => $item->status->color ?? null,
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'edit_url' => route('medical-maintenance.edit', $item),
                     'can' => [
                         'edit' => auth()->user()->can('update', $item),

@@ -25,6 +25,7 @@ class DepartmentController extends Controller
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'principal' => $item->parent->name ?? null,
                     'edit_url' => route('departments.edit', $item),
                     'show_url' => route('departments.show', $item),

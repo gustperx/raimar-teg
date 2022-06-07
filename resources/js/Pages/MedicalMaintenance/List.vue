@@ -25,6 +25,7 @@ defineProps({
         <th class="text-left text-white p-4 font-bold">Equipo</th>
         <th class="text-left text-white p-4 font-bold">Personal</th>
         <th class="text-left text-white p-4 font-bold">Fecha</th>
+        <th class="text-left text-white p-4 font-bold">Actualización</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -42,6 +43,7 @@ defineProps({
           user_responsible,
           user_assigned,
           transfer_date,
+          updated_at,
           edit_url,
           can,
         } in items"
@@ -65,10 +67,10 @@ defineProps({
           </ul>
         </td>
         <td class="p-4">
-          <DescriptionEquipment 
-            :text="description" 
-            :code="code" 
-            :serial="serial" 
+          <DescriptionEquipment
+            :text="description"
+            :code="code"
+            :serial="serial"
           />
         </td>
         <td class="p-4">
@@ -84,13 +86,14 @@ defineProps({
           </ul>
         </td>
         <td class="p-4">{{ transfer_date }}</td>
+        <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
-            
+
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
             </JetPrimaryButton>
-            
+
           </div>
         </td>
       </tr>

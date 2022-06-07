@@ -36,6 +36,7 @@ class MedicalEquipmentController extends Controller
                     'status' => $item->status->name ?? null,
                     'status_color' => $item->status->color ?? null,
                     'department' => $item->department->name ?? null,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'edit_url' => route('medical-equipments.edit', $item),
                     'show_url' => route('medical-equipments.show', $item),
                     'can' => [

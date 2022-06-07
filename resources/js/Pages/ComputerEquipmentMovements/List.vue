@@ -32,6 +32,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <th class="text-left text-white p-4 font-bold">Equipo</th>
         <th class="text-left text-white p-4 font-bold">Personal</th>
         <th class="text-left text-white p-4 font-bold">Fecha</th>
+        <th class="text-left text-white p-4 font-bold">Actualización</th>
         <th class="text-left text-white p-4 font-bold"></th>
       </tr>
     </template>
@@ -50,6 +51,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           user_assigned,
           transfer_date,
           incidence,
+          updated_at,
           show_url,
           edit_url,
           can,
@@ -74,10 +76,10 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           </ul>
         </td>
         <td class="p-4">
-          <DescriptionEquipment 
-            :text="description" 
-            :code="code" 
-            :serial="serial" 
+          <DescriptionEquipment
+            :text="description"
+            :code="code"
+            :serial="serial"
           />
         </td>
         <td class="p-4">
@@ -93,6 +95,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
           </ul>
         </td>
         <td class="p-4">{{ transfer_date }}</td>
+        <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">
