@@ -71,11 +71,6 @@ class UserController extends Controller
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
 
-        $allowLogin = [
-            ['value' => 0, 'label' => 'No'],
-            ['value' => 1, 'label' => 'Si'],
-        ];
-
         $data = collect(config('permission_rules'));
 
         $permissions = [];
@@ -87,7 +82,8 @@ class UserController extends Controller
 
         return Inertia::render('Users/Add', [
             'departments' => $departments,
-            'allowLoginList' => $allowLogin,
+            'dniTypes' => User::getDniTypes(),
+            'allowLoginList' => User::getAllowLogin(),
             'permissions' => $permissions,
             'return_url' => route('users.index')
         ]);
@@ -103,7 +99,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login');
+        $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login', 'dni_type');
         $data['password'] = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
 
         $user = User::create($data);
@@ -134,6 +130,7 @@ class UserController extends Controller
             'dni' => $user->dni,
             'allow_login' => $user->allow_login,
             'department' => $user->department->name ?? null,
+            'dni_type' => $user->dni_type ?? null
         ];
 
         return Inertia::render('Users/Show', [
@@ -157,15 +154,11 @@ class UserController extends Controller
                 return ['value' => $item->id, 'label' => $item->name];
             })->toArray();
 
-        $allowLogin = [
-            ['value' => 0, 'label' => 'No'],
-            ['value' => 1, 'label' => 'Si'],
-        ];
-
         return Inertia::render('Users/Edit', [
             'return_url' => route('users.index'),
-            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id'),
-            'allowLoginList' => $allowLogin,
+            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id', 'dni_type'),
+            'dniTypes' => User::getDniTypes(),
+            'allowLoginList' => User::getAllowLogin(),
             'departments' => $departments,
         ]);
     }

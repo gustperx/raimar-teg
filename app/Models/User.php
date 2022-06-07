@@ -31,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'dni',
+        'dni_type',
         'allow_login',
         'password',
         'department_id'
@@ -119,5 +120,23 @@ class User extends Authenticatable
         }
 
         return $final;
+    }
+
+
+    public static function getDniTypes()
+    {
+        return [
+            ['value' => 'V', 'label' => 'V'],
+            ['value' => 'E', 'label' => 'E'],
+        ];
+    }
+
+
+    public static function getAllowLogin()
+    {
+        return [
+            ['value' => 0, 'label' => 'No'],
+            ['value' => 1, 'label' => 'Si'],
+        ];
     }
 }

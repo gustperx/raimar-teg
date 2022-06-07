@@ -13,6 +13,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  dniTypes: {
+    type: Array,
+    required: true,
+  },
   allowLoginList: {
     type: Array,
     required: true,
@@ -29,6 +33,7 @@ const form = useForm({
   dni: props.user.dni,
   allow_login: props.user.allow_login,
   department_id: props.user.department_id,
+  dni_type: props.user.dni_type,
 });
 
 const handleUpdate = () => {
@@ -65,6 +70,7 @@ const handleUpdate = () => {
           :form="form"
           :departments="departments"
           :allowLoginList="allowLoginList"
+          :dniTypes="dniTypes"
         />
       </div>
     </div>

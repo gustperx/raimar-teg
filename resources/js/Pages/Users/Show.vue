@@ -72,6 +72,11 @@ const allowText = props.user.allow_login ? "Si" : "No";
               title="Permitir iniciar sesión"
               :value="allowText"
             />
+            <CustomDetailsTableItem
+              class="bg-gray-100"
+              title="Tipo"
+              :value="user.dni_type"
+            />
           </template>
         </CustomDetailsTable>
       </div>

@@ -15,6 +15,9 @@ defineProps({
   departments: {
     required: true,
   },
+  dniTypes: {
+    required: true,
+  },
   permissions: {
     required: false,
   },
@@ -60,6 +63,11 @@ defineProps({
           autocomplete="off"
         />
         <JetInputError :message="form.errors.email" class="mt-2" />
+      </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="dni_type" value="Tipo" />
+        <Multiselect v-model="form.dni_type" :options="dniTypes" />
+        <JetInputError :message="form.errors.dni_type" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="dni" value="Documento de identidad" />

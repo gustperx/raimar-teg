@@ -30,6 +30,7 @@ class StoreUserRequest extends FormRequest
             'dni' => ['required', 'string', 'max:191', 'min:6', 'unique:users'],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
+            'dni_type' => ['required', 'string'],
         ];
     }
 
@@ -47,6 +48,7 @@ class StoreUserRequest extends FormRequest
             'department_id' => 'Departamento',
             'allow_login' => 'Permitir iniciar sesión',
             'password' => 'Contraseña',
+            'dni_type' => 'Tipo'
         ];
     }
 }
