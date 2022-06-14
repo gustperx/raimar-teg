@@ -89,6 +89,8 @@ class User extends Authenticatable
     {
         if (!empty($department_id && is_numeric($department_id))) {
             $departments = Department::whereNotNull('parent_id')->where('id', $department_id)->get();
+        } elseif (!empty($department_id && is_array($department_id))) {
+            $departments = Department::whereNotNull('parent_id')->whereIn('id', $department_id)->get();
         } elseif (!empty($parent_id && is_numeric($parent_id))) {
             $departments = Department::where('parent_id', $parent_id)->get();
         } else {

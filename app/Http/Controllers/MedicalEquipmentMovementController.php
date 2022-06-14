@@ -20,7 +20,7 @@ class MedicalEquipmentMovementController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private $department_logistica = 3;
+    private $department_logistica = [19, 33];
     private $department_medical = 2;
 
     public function index(Request $request)

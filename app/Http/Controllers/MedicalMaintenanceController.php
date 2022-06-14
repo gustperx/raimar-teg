@@ -20,7 +20,7 @@ class MedicalMaintenanceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private $department_logistica = 3;
+    private $department_logistica = [19, 33];
 
     public function index(Request $request)
     {
@@ -85,7 +85,7 @@ class MedicalMaintenanceController extends Controller
         $usersTech = User::getDepartmentList($this->department_logistica);
         $statuses = Status::select('id', 'name')->where('id', '!=', 1)->get();
         $equipments = MedicalEquipment::getEquipmentList();
-        $departments = Department::select('id', 'name')->whereIn('id', [3, 19])->get();
+        $departments = Department::select('id', 'name')->whereIn('id', $this->department_logistica)->get();
 
         return Inertia::render('MedicalMaintenance/Add', [
             'equipments' => $equipments,
@@ -142,7 +142,7 @@ class MedicalMaintenanceController extends Controller
         $usersTech = User::getDepartmentList($this->department_logistica);
         $statuses = Status::select('id', 'name')->where('id', '!=', 2)->get();
         $equipments = MedicalEquipment::getEquipmentMaintenanceList();
-        $departments = Department::select('id', 'name')->whereIn('id', [3, 19])->get();
+        $departments = Department::select('id', 'name')->whereIn('id', $this->department_logistica)->get();
 
         $current_equipment = [
             'id' => $medicalEquipmentMovement->equipment->id ?? null,

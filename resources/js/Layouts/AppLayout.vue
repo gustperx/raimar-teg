@@ -39,7 +39,7 @@ const logout = () => {
 
     <JetBanner />
 
-    <div class="min-h-screen bg-gray-100">
+    <div class=" min-h-screen " >
       <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -396,7 +396,7 @@ const logout = () => {
       </nav>
 
       <!-- Page Heading -->
-      <header v-if="$slots.header" class="bg-white shadow">
+      <header v-if="$slots.header" class="bg-sky-600 shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>
@@ -404,8 +404,12 @@ const logout = () => {
 
       <!-- Page Content -->
       <main>
+
         <FlashMessages />
-        <slot />
+        <div class="min-h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
+            style="background-image:linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 80, 156, 0.3)), url(/img/background_small.jpg)">
+          <slot />
+        </div>
       </main>
     </div>
   </div>
