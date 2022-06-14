@@ -405,9 +405,9 @@ const logout = () => {
       <!-- Page Content -->
       <main>
 
-        <FlashMessages />
         <div class="min-h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
             style="background-image:linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 80, 156, 0.3)), url(/img/background_small.jpg)">
+          <FlashMessages />
           <slot />
         </div>
       </main>

@@ -22,6 +22,7 @@ class ComputerEquipmentMovement extends Model
         'current_department_id',
         'user_movement_id',
         'user_responsible_id',
+        'user_assigned_id',
         'user_assigned',
         'equipment_id',
         'status_id',
@@ -76,6 +77,11 @@ class ComputerEquipmentMovement extends Model
     public function userResponsible()
     {
         return $this->belongsTo(User::class, $this->user_responsible_id);
+    }
+
+    public function userAssigned()
+    {
+        return $this->belongsTo(User::class, $this->user_assigned_id);
     }
 
     public function equipment()

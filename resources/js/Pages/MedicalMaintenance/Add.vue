@@ -37,7 +37,8 @@ const form = useForm({
   current_department_id: null,
   user_movement_id: null,
   user_responsible_id: null,
-  user_assigned: null,
+  /* user_assigned: null, */
+  user_assigned_id: null,
   equipment_id: null,
   status_id: null,
   transfer_date: null,
@@ -59,7 +60,7 @@ const handleCreate = () => {
   form.current_department_id = form.current_department_id?.id || null;
   form.user_movement_id = form.user_movement_id?.id || null;
   form.user_responsible_id = form.user_responsible_id?.id || null;
-  /* form.user_assigned_id = form.user_assigned_id?.id || null; */
+  form.user_assigned_id = form.user_assigned_id?.id || null;
   form.equipment_id = form.equipment_id?.id || null;
   form.status_id = form.status_id?.id || null;
 

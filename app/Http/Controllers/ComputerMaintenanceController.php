@@ -31,6 +31,7 @@ class ComputerMaintenanceController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
+            'userAssigned',
             'equipment',
             'status'
         )
@@ -44,7 +45,7 @@ class ComputerMaintenanceController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->user_assigned ?? null,
+                    'user_assigned' => $item->userAssigned->name ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'status_color' => $item->status->color ?? null,
@@ -135,6 +136,7 @@ class ComputerMaintenanceController extends Controller
             'equipment',
             'userMovement',
             'userResponsible',
+            'userAssigned',
         )->find($computerEquipmentMovement_id);
 
         $this->authorize('update', $computerEquipmentMovement);
@@ -156,7 +158,7 @@ class ComputerMaintenanceController extends Controller
                 'current_department_id',
                 'user_movement_id',
                 'user_responsible_id',
-                'user_assigned',
+                /* 'user_assigned', */
                 'equipment_id',
                 'status_id',
                 'transfer_date',
@@ -167,7 +169,7 @@ class ComputerMaintenanceController extends Controller
             'current_equipment' => $current_equipment,
             'user_movement' => $computerEquipmentMovement->userMovement->only('id', 'name'),
             'user_responsible' => $computerEquipmentMovement->userResponsible->only('id', 'name'),
-            /* 'user_assigned' => $computerEquipmentMovement->userAssigned->only('id', 'name'), */
+            'user_assigned' => $computerEquipmentMovement->userAssigned ? $computerEquipmentMovement->userAssigned->only('id', 'name') : ['id' => '', 'name' => ''],
             'equipments' => $equipments,
             'statuses' => $statuses,
             'users' => $usersTech,

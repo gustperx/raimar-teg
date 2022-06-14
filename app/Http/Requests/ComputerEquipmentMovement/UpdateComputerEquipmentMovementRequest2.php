@@ -28,7 +28,8 @@ class UpdateComputerEquipmentMovementRequest2 extends FormRequest
             'current_department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'user_movement_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
             'user_responsible_id' => ['required', 'numeric', 'max:191', 'exists:users,id'],
-            'user_assigned' => ['required', 'string', 'max:191'],
+            /* 'user_assigned' => ['required', 'string', 'max:191'], */
+            'user_assigned_id' => ['required', 'numeric', 'exists:users,id'],
             'equipment_id' => ['required', 'numeric', 'max:191', 'exists:computer_equipments,id'],
             'status_id' => ['required', 'numeric', 'max:191', 'exists:statuses,id'],
             'transfer_date' => ['required', 'date', 'before:tomorrow'],

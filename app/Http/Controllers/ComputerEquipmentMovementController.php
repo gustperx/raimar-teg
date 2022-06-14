@@ -30,6 +30,7 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
+            'userAssigned',
             'equipment',
             'status'
         )
@@ -45,7 +46,7 @@ class ComputerEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->user_assigned ?? null,
+                    'user_assigned' => $item->userAssigned->name ?? null,
                     'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
@@ -151,6 +152,7 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
+            'userAssigned',
             'equipment',
             'status'
         )
@@ -162,7 +164,7 @@ class ComputerEquipmentMovementController extends Controller
             'current_department' => $computerEquipmentMovement->currentDepartment->name ?? null,
             'user_movement' => $computerEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $computerEquipmentMovement->userResponsible->name ?? null,
-            'user_assigned' => $computerEquipmentMovement->user_assigned ?? null,
+            'user_assigned' => $computerEquipmentMovement->userAssigned->name ?? null,
             'equipment' => $computerEquipmentMovement->equipment->only('id', 'description', 'code', 'serial') ?? null,
             'status' => $computerEquipmentMovement->status->name ?? null,
             'transfer_date' => $computerEquipmentMovement->transfer_date,
@@ -189,6 +191,7 @@ class ComputerEquipmentMovementController extends Controller
             'equipment',
             'userMovement',
             'userResponsible',
+            'userAssigned'
         )->find($computerEquipmentMovement_id);
 
         $this->authorize('update', $computerEquipmentMovement);
@@ -205,7 +208,7 @@ class ComputerEquipmentMovementController extends Controller
                 'current_department_id',
                 'user_movement_id',
                 'user_responsible_id',
-                'user_assigned',
+                /* 'user_assigned', */
                 'equipment_id',
                 'status_id',
                 'transfer_date',
@@ -216,7 +219,7 @@ class ComputerEquipmentMovementController extends Controller
             'current_equipment' => $current_equipment,
             'user_movement' => $computerEquipmentMovement->userMovement->only('id', 'name'),
             'user_responsible' => $computerEquipmentMovement->userResponsible->only('id', 'name'),
-            /* 'user_assigned' => $computerEquipmentMovement->userAssigned->only('id', 'name'), */
+            'user_assigned' => $computerEquipmentMovement->userAssigned ? $computerEquipmentMovement->userAssigned->only('id', 'name') : ['id' => '', 'name' => ''],
             'equipments' => ComputerEquipment::getEquipmentList(),
             'statuses' => Status::select('id', 'name')->get(),
             'users' => User::getDepartmentList(),
@@ -285,6 +288,7 @@ class ComputerEquipmentMovementController extends Controller
             'currentDepartment',
             'userMovement',
             'userResponsible',
+            'userAssigned',
             'equipment',
             'status'
         )
@@ -301,7 +305,7 @@ class ComputerEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->user_assigned ?? null,
+                    'user_assigned' => $item->userAssigned->name ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'transfer_date' => $item->transfer_date,

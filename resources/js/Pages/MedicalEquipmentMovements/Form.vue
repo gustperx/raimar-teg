@@ -149,9 +149,9 @@ defineProps({
 
       <!-- Responsable del equipo -->
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="user_assigned" value="Responsable del equipo" />
-        <!-- <Multiselect
-          v-model="form.user_assigned"
+        <JetLabel for="user_assigned_id" value="Responsable del equipo" />
+        <Multiselect
+          v-model="form.user_assigned_id"
           :options="users"
           group-values="items"
           group-label="label"
@@ -159,15 +159,15 @@ defineProps({
           track-by="name"
           label="name"
           placeholder="Responsable del equipo"
-        /> -->
-        <JetInput
+        />
+        <!-- <JetInput
           id="user_assigned"
           v-model="form.user_assigned"
           type="text"
           class="mt-1 block w-full"
           autocomplete="off"
-        />
-        <JetInputError :message="form.errors.user_assigned" class="mt-2" />
+        /> -->
+        <JetInputError :message="form.errors.user_assigned_id" class="mt-2" />
       </div>
 
       <!-- Fecha de transferencia -->

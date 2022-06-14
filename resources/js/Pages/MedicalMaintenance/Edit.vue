@@ -26,10 +26,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  /* user_assigned: {
+  user_assigned: {
     type: Object,
     required: true,
-  }, */
+  },
   statuses: {
     type: Array,
     required: true,
@@ -66,7 +66,8 @@ const form = useForm({
   ),
   user_movement_id: props.user_movement,
   user_responsible_id: props.user_responsible,
-  user_assigned: props.medicalEquipmentMovement.user_assigned,
+  /* user_assigned: props.medicalEquipmentMovement.user_assigned, */
+  user_assigned_id: props.user_assigned,
   equipment_id: props.current_equipment,
   transfer_date: null,
   transfer_date_fake: transforDate(props.medicalEquipmentMovement.transfer_date),
@@ -87,7 +88,7 @@ const handleUpdate = () => {
   form.current_department_id = form.current_department_id?.id || null;
   form.user_movement_id = form.user_movement_id?.id || null;
   form.user_responsible_id = form.user_responsible_id?.id || null;
-  /* form.user_assigned_id = form.user_assigned_id?.id || null; */
+  form.user_assigned_id = form.user_assigned_id?.id || null;
   form.equipment_id = form.equipment_id?.id || null;
   form.status_id = form.status_id?.id || null;
 
