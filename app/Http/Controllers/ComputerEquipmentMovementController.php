@@ -165,15 +165,17 @@ class ComputerEquipmentMovementController extends Controller
             'user_movement' => $computerEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $computerEquipmentMovement->userResponsible->name ?? null,
             'user_assigned' => $computerEquipmentMovement->userAssigned->name ?? null,
-            'equipment' => $computerEquipmentMovement->equipment->only('id', 'description', 'code', 'serial') ?? null,
+            'equipment' => $computerEquipmentMovement->equipment->only('id', 'description', 'code', 'serial', 'brand', 'model') ?? null,
             'status' => $computerEquipmentMovement->status->name ?? null,
             'transfer_date' => $computerEquipmentMovement->transfer_date,
             'incidence' => $computerEquipmentMovement->incidence,
             'period_start' => $computerEquipmentMovement->period_start,
             'period_end' => $computerEquipmentMovement->period_end,
+            'created_at' => $computerEquipmentMovement->created_at->format('d/m/Y H:i'),
+            'updated_at' => $computerEquipmentMovement->updated_at->format('d/m/Y H:i'),
         ];
 
-        return Inertia::render('ComputerEquipmentMovements/Show', [
+        return Inertia::render('ComputerEquipmentMovements/Report', [
             'return_url' => route('computer-equipments-movements.index'),
             'computerEquipmentMovement' => $computerEquipmentMovement,
         ]);

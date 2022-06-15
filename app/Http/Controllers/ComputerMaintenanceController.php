@@ -53,8 +53,10 @@ class ComputerMaintenanceController extends Controller
                     'transfer_date' => $item->transfer_date,
                     'incidence' => $item->incidence,
                     'edit_url' => route('computer-maintenance.edit', $item),
+                    'show_url' => route('computer-equipments-movements.show', $item),
                     'can' => [
                         'edit' => auth()->user()->can('update', $item),
+                        'show' => auth()->user()->can('view', $item),
                     ]
                 ];
             });

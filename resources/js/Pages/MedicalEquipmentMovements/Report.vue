@@ -2,7 +2,6 @@
 import { onMounted } from "vue";
 import { Printd } from "printd";
 import BarCode from "@/Components/BarCode.vue";
-import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
 
 defineProps({
   medicalEquipmentMovement: {
