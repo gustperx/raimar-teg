@@ -53,7 +53,9 @@ class MedicalMaintenanceController extends Controller
                     'incidence' => $item->incidence,
                     'updated_at' => $item->updated_at->format('d/m/Y H:i'),
                     'edit_url' => route('medical-maintenance.edit', $item),
+                    'show_url' => route('medical-equipments-movements.show', $item),
                     'can' => [
+                        'show' => auth()->user()->can('view', $item),
                         'edit' => auth()->user()->can('update', $item),
                     ]
                 ];

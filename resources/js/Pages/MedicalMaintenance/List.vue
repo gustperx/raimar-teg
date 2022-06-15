@@ -45,6 +45,7 @@ defineProps({
           transfer_date,
           updated_at,
           edit_url,
+          show_url,
           can,
         } in items"
         :key="id"
@@ -89,11 +90,12 @@ defineProps({
         <td class="p-4">{{ updated_at }}</td>
         <td>
           <div class="flex flex-col md:flex-row">
-
+            <JetPrimaryButton v-if="can.show" class="mr-2">
+              <a :href="show_url" target="_blank">Reporte</a>
+            </JetPrimaryButton>
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
             </JetPrimaryButton>
-
           </div>
         </td>
       </tr>
