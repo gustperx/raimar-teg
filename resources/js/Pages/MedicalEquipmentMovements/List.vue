@@ -99,7 +99,7 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
         <td>
           <div class="flex flex-col md:flex-row">
             <JetPrimaryButton v-if="can.show" class="mr-2">
-              <Link :href="show_url">Detalle</Link>
+              <a :href="show_url" target="_blank">Reporte</a>
             </JetPrimaryButton>
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>

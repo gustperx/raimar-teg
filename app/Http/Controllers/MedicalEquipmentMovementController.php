@@ -174,15 +174,17 @@ class MedicalEquipmentMovementController extends Controller
             'user_movement' => $medicalEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $medicalEquipmentMovement->userResponsible->name ?? null,
             'user_assigned' => $medicalEquipmentMovement->userAssigned->name ?? null,
-            'equipment' => $medicalEquipmentMovement->equipment->only('id', 'description', 'code', 'serial') ?? null,
+            'equipment' => $medicalEquipmentMovement->equipment->only('id', 'description', 'code', 'serial', 'brand', 'model') ?? null,
             'status' => $medicalEquipmentMovement->status->name ?? null,
             'transfer_date' => $medicalEquipmentMovement->transfer_date,
             'incidence' => $medicalEquipmentMovement->incidence,
             'period_start' => $medicalEquipmentMovement->period_start,
             'period_end' => $medicalEquipmentMovement->period_end,
+            'created_at' => $medicalEquipmentMovement->created_at->format('d/m/Y H:i'),
+            'updated_at' => $medicalEquipmentMovement->updated_at->format('d/m/Y H:i'),
         ];
 
-        return Inertia::render('MedicalEquipmentMovements/Show', [
+        return Inertia::render('MedicalEquipmentMovements/Report', [
             'return_url' => route('medical-equipments-movements.index'),
             'medicalEquipmentMovement' => $medicalEquipmentMovement,
         ]);
