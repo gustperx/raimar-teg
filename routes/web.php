@@ -10,6 +10,7 @@ use App\Http\Controllers\ComputerEquipmentMovementController;
 use App\Http\Controllers\MedicalMaintenanceController;
 use App\Http\Controllers\ComputerMaintenanceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,4 +80,7 @@ Route::middleware([
 
     Route::resource('medical-maintenance', MedicalMaintenanceController::class);
     Route::resource('computer-maintenance', ComputerMaintenanceController::class);
+
+    // Stats
+    Route::get('stats/{date?}', [StatsController::class, 'index'])->name('stats');
 });

@@ -153,4 +153,37 @@ class ComputerEquipment extends Model
 
         return $final;
     }
+
+    public static function getCountEquipmentActive()
+    {
+        return ComputerEquipment::where('status_id', '1')->count();
+    }
+
+    public static function getCountEquipmentMaintenance()
+    {
+        return ComputerEquipment::where('status_id', '2')->count();
+    }
+
+    public static function getCountEquipmentOut()
+    {
+        return ComputerEquipment::where('status_id', '3')->count();
+    }
+
+    public static function getStatsEquipmentStatus ()
+    {
+        return [
+            'labels' => ["Activo", "Mantenimiento", "Fuera de servicio"],
+            'datasets' => [
+                [
+                    'data' => [
+                        ComputerEquipment::getCountEquipmentActive(),
+                        ComputerEquipment::getCountEquipmentMaintenance(),
+                        ComputerEquipment::getCountEquipmentOut(),
+                    ],
+                    'label' => "Estado de equipos", 
+                    'backgroundColor' => "#f87979"
+                ],
+            ],
+        ];
+    }
 }

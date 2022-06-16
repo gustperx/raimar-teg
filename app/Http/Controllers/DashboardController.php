@@ -80,6 +80,12 @@ class DashboardController extends Controller
                 'url' => route('computer-maintenance.index'),
                 'access' => auth()->user()->can('maintenance', ComputerEquipment::class)
             ],
+            [
+                'name' => 'Estadísticas',
+                'icon' => 'fa-solid fa-chart-line',
+                'url' => route('stats'),
+                'access' => true
+            ],
         ];
 
         return Inertia::render('Dashboard', [

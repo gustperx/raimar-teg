@@ -152,4 +152,38 @@ class MedicalEquipment extends Model
 
         return $final;
     }
+
+
+    public static function getCountEquipmentActive()
+    {
+        return MedicalEquipment::where('status_id', '1')->count();
+    }
+
+    public static function getCountEquipmentMaintenance()
+    {
+        return MedicalEquipment::where('status_id', '2')->count();
+    }
+
+    public static function getCountEquipmentOut()
+    {
+        return MedicalEquipment::where('status_id', '3')->count();
+    }
+
+    public static function getStatsEquipmentStatus ()
+    {
+        return [
+            'labels' => ["Activo", "Mantenimiento", "Fuera de servicio"],
+            'datasets' => [
+                [
+                    'data' => [
+                        MedicalEquipment::getCountEquipmentActive(),
+                        MedicalEquipment::getCountEquipmentMaintenance(),
+                        MedicalEquipment::getCountEquipmentOut(),
+                    ],
+                    'label' => "Estado de equipos", 
+                    'backgroundColor' => "#f87979"
+                ],
+            ],
+        ];
+    }
 }
