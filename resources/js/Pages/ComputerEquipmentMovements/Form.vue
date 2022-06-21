@@ -10,8 +10,9 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetButton from "@/Jetstream/Button.vue";
+import { useComboUser } from "@/Composables/useComboUser";
 
-defineProps({
+const props = defineProps({
   actionSubmit: {
     required: true,
   },
@@ -34,6 +35,8 @@ defineProps({
     required: true,
   },
 });
+
+const { final_users } = useComboUser(props);
 </script>
 
 <template>
@@ -45,7 +48,6 @@ defineProps({
     </template>
 
     <template #form>
-
       <!-- Departamento a destino -->
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="current_department_id" value="Departamento destino" />
@@ -117,7 +119,7 @@ defineProps({
         />
         <Multiselect
           v-model="form.user_responsible_id"
-          :options="users"
+          :options="final_users"
           group-values="items"
           group-label="label"
           :searchable="true"
@@ -136,7 +138,7 @@ defineProps({
         <JetLabel for="user_assigned_id" value="Responsable del equipo" />
         <Multiselect
           v-model="form.user_assigned_id"
-          :options="users"
+          :options="final_users"
           group-values="items"
           group-label="label"
           :searchable="true"

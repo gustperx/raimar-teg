@@ -1,6 +1,4 @@
 <script setup>
-import { computed, ref, watch } from "vue";
-import axios from "axios";
 import Multiselect from "vue-multiselect";
 
 import Datepicker from "vue3-datepicker";
@@ -12,6 +10,7 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetButton from "@/Jetstream/Button.vue";
+import { useComboUser } from "@/Composables/useComboUser";
 
 const props = defineProps({
   actionSubmit: {
@@ -37,29 +36,7 @@ const props = defineProps({
   },
 });
 
-const URL = "/ajax/get-users-by-deparment";
-
-const c_department_id = computed(() => props.form.current_department_id);
-const c_users = computed(() => props.users);
-
-const final_users = ref(c_users.value);
-
-const changeDepartmentHandle = (id) => {
-  axios
-    .post(URL, { department_id: id })
-    .then((response) => {
-      const { data } = response;
-      console.log(data);
-      final_users.value = data;
-    })
-    .catch((error) => console.log);
-};
-
-watch(c_department_id, (newValue, oldValue) => {
-  if (newValue) {
-    changeDepartmentHandle(newValue.id);
-  }
-});
+const { final_users } = useComboUser(props);
 </script>
 
 <template>
