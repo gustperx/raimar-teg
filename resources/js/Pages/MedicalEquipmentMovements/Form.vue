@@ -1,4 +1,6 @@
 <script setup>
+import { computed, ref, watch } from "vue";
+import axios from "axios";
 import Multiselect from "vue-multiselect";
 
 import Datepicker from "vue3-datepicker";
@@ -11,7 +13,7 @@ import JetInputError from "@/Jetstream/InputError.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetButton from "@/Jetstream/Button.vue";
 
-defineProps({
+const props = defineProps({
   actionSubmit: {
     required: true,
   },
@@ -33,6 +35,30 @@ defineProps({
   form: {
     required: true,
   },
+});
+
+const URL = "/ajax/get-users-by-deparment";
+
+const c_department_id = computed(() => props.form.current_department_id);
+const c_users = computed(() => props.users);
+
+const final_users = ref(c_users.value);
+
+const changeDepartmentHandle = (id) => {
+  axios
+    .post(URL, { department_id: id })
+    .then((response) => {
+      const { data } = response;
+      console.log(data);
+      final_users.value = data;
+    })
+    .catch((error) => console.log);
+};
+
+watch(c_department_id, (newValue, oldValue) => {
+  if (newValue) {
+    changeDepartmentHandle(newValue.id);
+  }
 });
 </script>
 
@@ -133,7 +159,7 @@ defineProps({
         />
         <Multiselect
           v-model="form.user_responsible_id"
-          :options="users"
+          :options="final_users"
           group-values="items"
           group-label="label"
           :searchable="true"
@@ -152,7 +178,7 @@ defineProps({
         <JetLabel for="user_assigned_id" value="Responsable del equipo" />
         <Multiselect
           v-model="form.user_assigned_id"
-          :options="users"
+          :options="final_users"
           group-values="items"
           group-label="label"
           :searchable="true"
