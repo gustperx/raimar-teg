@@ -18,6 +18,9 @@ defineProps({
   dniTypes: {
     required: true,
   },
+  genderTypes: {
+    required: true,
+  },
   permissions: {
     required: false,
   },
@@ -43,7 +46,7 @@ defineProps({
         <JetInputError :message="form.errors.department_id" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="name" value="Nombre" />
+        <JetLabel for="name" value="Nombre y Apellido" />
         <JetInput
           id="name"
           v-model="form.name"
@@ -65,20 +68,49 @@ defineProps({
         <JetInputError :message="form.errors.email" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="dni_type" value="Tipo" />
+        <JetLabel for="gender" value="Género" />
+        <Multiselect v-model="form.gender" :options="genderTypes" />
+        <JetInputError :message="form.errors.gender" class="mt-2" />
+      </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="dni_type" value="Nacionalidad" />
         <Multiselect v-model="form.dni_type" :options="dniTypes" />
         <JetInputError :message="form.errors.dni_type" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
-        <JetLabel for="dni" value="Documento de identidad" />
+        <JetLabel for="dni" value="Cedula de Identidad" />
         <JetInput
           id="dni"
           v-model="form.dni"
-          type="text"
+          type="number"
+          min="0"
           class="mt-1 block w-full"
           autocomplete="off"
         />
         <JetInputError :message="form.errors.dni" class="mt-2" />
+      </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="address" value="Dirección de residencia" />
+        <JetInput
+          id="address"
+          v-model="form.address"
+          type="text"
+          class="mt-1 block w-full"
+          autocomplete="off"
+        />
+        <JetInputError :message="form.errors.address" class="mt-2" />
+      </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="phone" value="Teléfono" />
+        <JetInput
+          id="phone"
+          v-model="form.phone"
+          type="number"
+          min="0"
+          class="mt-1 block w-full"
+          autocomplete="off"
+        />
+        <JetInputError :message="form.errors.phone" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="allow_login" value="Permitir iniciar sesión" />

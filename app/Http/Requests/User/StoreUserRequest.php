@@ -27,10 +27,13 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
-            'dni' => ['required', 'string', 'max:191', 'min:6', 'unique:users'],
+            'dni' => ['required', 'numeric', 'min:6', 'max:8', 'unique:users'],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
             'dni_type' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'address' => ['required', 'string', 'max:191'],
+            'phone' => ['required', 'numeric'],
         ];
     }
 
@@ -42,13 +45,16 @@ class StoreUserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Nombre',
-            'email' => 'Correo electrónico',
-            'dni' => 'Documento de identidad',
-            'department_id' => 'Departamento',
+            'name' => 'Nombre y apellido del personal',
+            'email' => 'Correo electrónico del personal',
+            'dni' => 'Numero de cedula de identidad',
+            'department_id' => 'Departamento o Unidad del Usuario',
             'allow_login' => 'Permitir iniciar sesión',
             'password' => 'Contraseña',
-            'dni_type' => 'Tipo'
+            'dni_type' => 'Venezolano o Extranjero',
+            'gender' => 'Género o Sexo del usuario',
+            'address' => 'Dirección de Residencia del personal',
+            'phone' => 'Teléfono del Usuario',
         ];
     }
 }

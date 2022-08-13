@@ -20,6 +20,168 @@ class DashboardController extends Controller
     {
         $menu = [
             [
+                'name' => 'Registro',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('d_register'),
+                'access' => true
+            ],
+            [
+                'name' => 'Informática',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('d_informatica'),
+                'access' => true
+            ],
+            [
+                'name' => 'Operaciones',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('d_operations'),
+                'access' => true
+            ],
+            [
+                'name' => 'Roles de Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('d_roles'),
+                'access' => true
+            ],
+            [
+                'name' => 'Estadísticas',
+                'icon' => 'fa-solid fa-chart-line',
+                'url' => route('stats'),
+                'access' => true
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    public function register()
+    {
+        $menu = [
+            [
+                'name' => 'Registro de Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('users.create'),
+                'access' => auth()->user()->can('create', User::class)
+            ],
+            [
+                'name' => 'Equipos informáticos',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('computer-equipments.create'),
+                'access' => auth()->user()->can('create', ComputerEquipment::class)
+            ],
+            [
+                'name' => 'Equipos médicos',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('medical-equipments.create'),
+                'access' => auth()->user()->can('create', MedicalEquipment::class)
+            ],
+            [
+                'name' => 'Estatus de equipos',
+                'icon' => 'fa-solid fa-stethoscope',
+                'url' => route('d_status'),
+                'access' => true
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    public function status()
+    {
+        $menu = [
+            [
+                'name' => 'Equipos informáticos',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('computer-equipments.index'),
+                'access' => auth()->user()->can('viewAny', ComputerEquipment::class)
+            ],
+            [
+                'name' => 'Equipos médicos',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('medical-equipments.index'),
+                'access' => auth()->user()->can('viewAny', MedicalEquipment::class)
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    public function informatica()
+    {
+        $menu = [
+            [
+                'name' => 'Movimientos de equipos informáticos',
+                'icon' => 'fa-solid fa-code-compare',
+                'url' => route('computer-equipments-movements.index'),
+                'access' => auth()->user()->can('viewAny', ComputerEquipmentMovement::class)
+            ],
+            [
+                'name' => 'Mantenimiento Equipos informáticos',
+                'icon' => 'fa-solid fa-bug',
+                'url' => route('computer-maintenance.index'),
+                'access' => auth()->user()->can('maintenance', ComputerEquipment::class)
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    public function operations()
+    {
+        $menu = [
+            [
+                'name' => 'Movimientos de equipos médicos',
+                'icon' => 'fa-solid fa-repeat',
+                'url' => route('medical-equipments-movements.index'),
+                'access' => auth()->user()->can('viewAny', MedicalEquipmentMovement::class)
+            ],
+            [
+                'name' => 'Mantenimiento Equipos médicos',
+                'icon' => 'fa-solid fa-screwdriver-wrench',
+                'url' => route('medical-maintenance.index'),
+                'access' => auth()->user()->can('maintenance', MedicalEquipment::class)
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    public function roles()
+    {
+        $menu = [
+            [
+                'name' => 'Registro de Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('users.index'),
+                'access' => auth()->user()->can('viewAny', User::class)
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu
+        ]);
+    }
+
+
+    private function old_menu()
+    {
+        $menu = [
+            [
                 'name' => 'Usuarios',
                 'icon' => 'fa-solid fa-users',
                 'url' => route('users.index'),
@@ -87,9 +249,5 @@ class DashboardController extends Controller
                 'access' => true
             ],
         ];
-
-        return Inertia::render('Dashboard', [
-            'menu' => $menu
-        ]);
     }
 }

@@ -34,7 +34,10 @@ class User extends Authenticatable
         'dni_type',
         'allow_login',
         'password',
-        'department_id'
+        'department_id',
+        'address',
+        'phone',
+        'gender'
     ];
 
     /**
@@ -139,6 +142,15 @@ class User extends Authenticatable
         return [
             ['value' => 0, 'label' => 'No'],
             ['value' => 1, 'label' => 'Si'],
+        ];
+    }
+
+    public static function getGenderTypes()
+    {
+        return [
+            ['value' => 'M', 'label' => 'Hombre'],
+            ['value' => 'F', 'label' => 'Mujer'],
+            ['value' => 'O', 'label' => 'Otro'],
         ];
     }
 }

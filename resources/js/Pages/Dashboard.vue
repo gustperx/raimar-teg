@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import MainMenu from "../Components/MainMenu.vue";
+import MainMenu from "@/Components/MainMenu.vue";
 
 defineProps({
   menu: {

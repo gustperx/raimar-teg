@@ -25,6 +25,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/register', [DashboardController::class, 'register'])->name('d_register');
+    Route::get('/dashboard/status', [DashboardController::class, 'status'])->name('d_status');
+    Route::get('/dashboard/informatica', [DashboardController::class, 'informatica'])->name('d_informatica');
+    Route::get('/dashboard/operations', [DashboardController::class, 'operations'])->name('d_operations');
+    Route::get('/dashboard/roles', [DashboardController::class, 'roles'])->name('d_roles');
 
     // Users
     // Trash

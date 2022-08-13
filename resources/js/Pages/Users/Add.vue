@@ -17,6 +17,10 @@ defineProps({
     type: Array,
     required: true,
   },
+  genderTypes: {
+    type: Array,
+    required: true,
+  },
   allowLoginList: {
     type: Array,
     required: true,
@@ -35,6 +39,9 @@ const form = useForm({
   department_id: 4,
   dni_type: 'V',
   permissions: [],
+  address: null,
+  phone: null,
+  gender: null
 });
 
 const handleCreate = () => {
@@ -73,6 +80,7 @@ const handleCreate = () => {
           :allowLoginList="allowLoginList"
           :permissions="permissions"
           :dniTypes="dniTypes"
+          :genderTypes="genderTypes"
         />
       </div>
     </div>
