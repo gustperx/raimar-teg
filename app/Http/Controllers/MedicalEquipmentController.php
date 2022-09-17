@@ -78,7 +78,7 @@ class MedicalEquipmentController extends Controller
             'categories' => $categories,
             'statuses' => $statuses,
             'departments' => $departments,
-            'return_url' => route('medical-equipments.index')
+            'return_url' => route('d_register') // route('medical-equipments.index')
         ]);
     }
 
@@ -98,7 +98,8 @@ class MedicalEquipmentController extends Controller
         MedicalEquipment::create($data);
 
         $request->session()->flash('success', 'Equipo medicó creado satisfactoriamente');
-        return redirect()->route('medical-equipments.index');
+        // return redirect()->route('medical-equipments.index');
+        return redirect()->route('d_register');
     }
 
     /**

@@ -7,6 +7,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import CustomSearch from "@/Components/Search.vue";
 import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./List.vue";
+import HistoryBack from "@/Components/HistoryBack.vue";
 
 const props = defineProps({
   items: {
@@ -46,7 +47,10 @@ const urlSearch = route("users.index");
         <div class="flex flex-row justify-between pb-2">
           <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
           <div>
-            <JetButton type="button" v-if="can.restore" class="mr-2">
+            <JetButton type="button">
+              <Link href="/dashboard/roles">Regresar</Link>
+            </JetButton>
+            <JetButton type="button" v-if="can.restore" class="mr-2 ml-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>
             </JetButton>
             <JetButton type="button" v-if="can.create">

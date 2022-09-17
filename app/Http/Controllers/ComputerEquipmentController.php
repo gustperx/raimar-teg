@@ -78,7 +78,7 @@ class ComputerEquipmentController extends Controller
             'categories' => $categories,
             'statuses' => $statuses,
             'departments' => $departments,
-            'return_url' => route('computer-equipments.index')
+            'return_url' => route('d_register') // route('computer-equipments.index')
         ]);
     }
 
@@ -98,7 +98,8 @@ class ComputerEquipmentController extends Controller
         ComputerEquipment::create($data);
 
         $request->session()->flash('success', 'Equipo de cómputo creado satisfactoriamente');
-        return redirect()->route('computer-equipments.index');
+        // return redirect()->route('computer-equipments.index');
+        return redirect()->route('d_register');
     }
 
     /**

@@ -7,6 +7,14 @@ defineProps({
     type: Array,
     required: true,
   },
+  activeBack: {
+    type: Boolean,
+    required: true,
+  },
+  return_url: {
+    type: String,
+    required: true,
+  }
 });
 </script>
 
@@ -18,7 +26,7 @@ defineProps({
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <MainMenu :menu="menu" />
+        <MainMenu :menu="menu" :activeBack="activeBack" :return_url="return_url" />
       </div>
     </div>
   </AppLayout>

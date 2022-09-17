@@ -52,7 +52,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => false,
+            'return_url' => '',
         ]);
     }
 
@@ -87,7 +89,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
         ]);
     }
 
@@ -110,7 +114,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('d_register'),
         ]);
     }
 
@@ -133,7 +139,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
         ]);
     }
 
@@ -156,7 +164,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
         ]);
     }
 
@@ -165,7 +175,7 @@ class DashboardController extends Controller
     {
         $menu = [
             [
-                'name' => 'Registro de Usuarios',
+                'name' => 'Usuarios',
                 'icon' => 'fa-solid fa-users',
                 'url' => route('users.index'),
                 'access' => auth()->user()->can('viewAny', User::class)
@@ -173,7 +183,9 @@ class DashboardController extends Controller
         ];
 
         return Inertia::render('Dashboard', [
-            'menu' => $menu
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
         ]);
     }
 

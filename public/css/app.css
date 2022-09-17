@@ -1275,6 +1275,9 @@ select {
 .flex-row {
   flex-direction: row;
 }
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
 .flex-col {
   flex-direction: column;
 }
@@ -1344,9 +1347,6 @@ select {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.break-all {
-  word-break: break-all;
 }
 .rounded-md {
   border-radius: 0.375rem;

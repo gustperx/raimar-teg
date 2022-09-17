@@ -106,7 +106,10 @@ const urlSearch = route("computer-equipments-movements.index");
             Restablecer
           </button>
           <div>
-            <JetButton type="button" v-if="can.restore" class="mr-2">
+            <JetButton type="button">
+              <Link href="/dashboard/informatica">Regresar</Link>
+            </JetButton>
+            <JetButton type="button" v-if="can.restore" class="mr-2 ml-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>
             </JetButton>
             <JetButton type="button" v-if="can.create">

@@ -27,13 +27,13 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')->ignore($this->user)],
-            'dni' => ['required', 'numeric', 'min:6', 'max:8', Rule::unique('users')->ignore($this->user)],
+            'dni' => ['required', 'digits_between:7,8', Rule::unique('users')->ignore($this->user)],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
             'dni_type' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'address' => ['required', 'string', 'max:191'],
-            'phone' => ['required', 'numeric'],
+            'phone' => ['required', 'digits:7'],
         ];
     }
 

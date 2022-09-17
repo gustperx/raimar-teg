@@ -87,7 +87,7 @@ class UserController extends Controller
             'genderTypes' => User::getGenderTypes(),
             'allowLoginList' => User::getAllowLogin(),
             'permissions' => $permissions,
-            'return_url' => route('users.index')
+            'return_url' => route('d_register') // route('users.index')
         ]);
     }
 
@@ -111,7 +111,8 @@ class UserController extends Controller
         }
 
         $request->session()->flash('success', 'Usuario creado satisfactoriamente');
-        return redirect()->route('users.index');
+        // return redirect()->route('users.index');
+        return redirect()->route('d_register');
     }
 
     /**

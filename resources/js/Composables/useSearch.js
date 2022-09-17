@@ -13,7 +13,7 @@ export const useSearch = (form, url) => {
         });
     };
 
-    const searchBouncer = debounce(handleSearch, "600ms");
+    const searchBouncer = debounce(handleSearch, "1200ms");
 
     watch(form, searchBouncer);
 

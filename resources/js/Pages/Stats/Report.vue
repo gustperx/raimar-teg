@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
 import BarChart from "@/Components/BarChart.vue";
@@ -37,6 +38,13 @@ const chartOptions = {
 
     <div class="py-12">
       <div class="mx-auto sm:px-6 lg:px-8">
+
+        <div class="flex flex-row-reverse mb-4">
+          <JetButton type="button">
+            <Link href="/dashboard">Regresar</Link>
+          </JetButton>
+        </div>
+
         <div
           class="mx-auto bg-white overflow-hidden shadow-xl sm:rounded-lg p-8"
         >

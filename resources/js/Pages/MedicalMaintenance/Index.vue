@@ -66,7 +66,10 @@ const urlSearch = route("medical-maintenance.index");
             Restablecer
           </button>
           <div>
-            <JetButton type="button" v-if="can.create">
+            <JetButton type="button">
+              <Link href="/dashboard/operations">Regresar</Link>
+            </JetButton>
+            <JetButton type="button" v-if="can.create" class="ml-2">
               <Link :href="urls.create_url">Nuevo elemento</Link>
             </JetButton>
           </div>

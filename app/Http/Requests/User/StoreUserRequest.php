@@ -27,13 +27,13 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
-            'dni' => ['required', 'numeric', 'min:6', 'max:8', 'unique:users'],
+            'dni' => ['required', 'digits_between:7,8', 'unique:users'],
             'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
             'allow_login' => ['required', 'boolean'],
             'dni_type' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'address' => ['required', 'string', 'max:191'],
-            'phone' => ['required', 'numeric'],
+            'phone' => ['required', 'digits:7'],
         ];
     }
 
