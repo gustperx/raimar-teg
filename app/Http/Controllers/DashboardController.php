@@ -18,36 +18,63 @@ class DashboardController extends Controller
 
     public function index()
     {
+        // TODO: Permisos en "Registro"
+        $isAccessRegistro = auth()->user()->hasAnyPermission([
+            'manager:user-create',
+            'technical:computerEquipments-create',
+            'technical:medicalEquipments-create',
+            'technical:computerEquipments-read',
+            'technical:medicalEquipments-read',
+        ]);
+
+        // TODO: Permisos en "Informática"
+        $isAccessInformatica = auth()->user()->hasAnyPermission([
+            'technical:computerEquipments-maintenance',
+            'technical:computerEquipmentMovements-read',
+        ]);
+
+        // TODO: Permisos en "Operaciones"
+        $isAccessOperaciones = auth()->user()->hasAnyPermission([
+            'technical:medicalEquipments-maintenance',
+            'technical:medicalEquipmentMovements-read',
+        ]);
+
+        // TODO: Permisos en "Estadísticas"
+        $hasStats = auth()->user()->hasAnyPermission([
+            'technical:computerEquipments-read',
+            'technical:medicalEquipments-read',
+        ]);
+
         $menu = [
             [
                 'name' => 'Registro',
                 'icon' => 'fa-solid fa-users',
                 'url' => route('d_register'),
-                'access' => true
+                'access' => $isAccessRegistro
             ],
             [
                 'name' => 'Informática',
                 'icon' => 'fa-solid fa-computer',
                 'url' => route('d_informatica'),
-                'access' => true
+                'access' => $isAccessInformatica
             ],
             [
                 'name' => 'Operaciones',
                 'icon' => 'fa-solid fa-microscope',
                 'url' => route('d_operations'),
-                'access' => true
+                'access' => $isAccessOperaciones
             ],
             [
                 'name' => 'Roles de Usuarios',
                 'icon' => 'fa-solid fa-users',
                 'url' => route('d_roles'),
-                'access' => true
+                'access' => auth()->user()->can('viewAny', User::class)
             ],
             [
                 'name' => 'Estadísticas',
                 'icon' => 'fa-solid fa-chart-line',
                 'url' => route('stats'),
-                'access' => true
+                'access' => $hasStats
             ],
         ];
 
@@ -61,6 +88,12 @@ class DashboardController extends Controller
 
     public function register()
     {
+        // TODO: Validar permisos para acceder a estados de equipos
+        $hasStatus = auth()->user()->hasAnyPermission([
+            'technical:computerEquipments-read',
+            'technical:medicalEquipments-read',
+        ]);
+
         $menu = [
             [
                 'name' => 'Registro de Usuarios',
@@ -84,7 +117,7 @@ class DashboardController extends Controller
                 'name' => 'Estatus de equipos',
                 'icon' => 'fa-solid fa-stethoscope',
                 'url' => route('d_status'),
-                'access' => true
+                'access' => $hasStatus
             ],
         ];
 
