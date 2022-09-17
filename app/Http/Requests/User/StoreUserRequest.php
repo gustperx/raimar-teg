@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -34,6 +35,7 @@ class StoreUserRequest extends FormRequest
             'gender' => ['required', 'string'],
             'address' => ['required', 'string', 'max:191'],
             'phone' => ['required', 'digits:7'],
+            'code_phone' => ['required', Rule::in(['0412', '0414', '0424', '0416', '0426'])],
         ];
     }
 
@@ -55,6 +57,7 @@ class StoreUserRequest extends FormRequest
             'gender' => 'Género o Sexo del usuario',
             'address' => 'Dirección de Residencia del personal',
             'phone' => 'Teléfono del Usuario',
+            'code_phone' => "Código de teléfono",
         ];
     }
 }

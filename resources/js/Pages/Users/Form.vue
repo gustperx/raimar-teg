@@ -27,6 +27,9 @@ defineProps({
   allowLoginList: {
     required: true,
   },
+  codeTypes: {
+    required: true,
+  },
   form: {
     required: true,
   },
@@ -99,6 +102,11 @@ defineProps({
           autocomplete="off"
         />
         <JetInputError :message="form.errors.address" class="mt-2" />
+      </div>
+      <div class="col-span-6 sm:col-span-4">
+        <JetLabel for="code_phone" value="Código" />
+        <Multiselect v-model="form.code_phone" :options="codeTypes" />
+        <JetInputError :message="form.errors.code_phone" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="phone" value="Teléfono" />

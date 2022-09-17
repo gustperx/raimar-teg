@@ -85,6 +85,7 @@ class UserController extends Controller
             'departments' => $departments,
             'dniTypes' => User::getDniTypes(),
             'genderTypes' => User::getGenderTypes(),
+            'codeTypes' => User::getCodePhone(),
             'allowLoginList' => User::getAllowLogin(),
             'permissions' => $permissions,
             'return_url' => route('d_register') // route('users.index')
@@ -101,7 +102,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login', 'dni_type', 'gender', 'address', 'phone');
+        $data = $request->only('name', 'email', 'dni', 'department_id', 'allow_login', 'dni_type', 'gender', 'address', 'phone', 'code_phone');
         $data['password'] = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
 
         $user = User::create($data);
@@ -136,7 +137,8 @@ class UserController extends Controller
             'dni_type' => $user->dni_type ?? null,
             'gender' => $user->gender ?? null,
             'address' => $user->address,
-            'phone' => $user->phone
+            'phone' => $user->phone,
+            'code_phone' => $user->code_phone
         ];
 
         return Inertia::render('Users/Show', [
@@ -162,9 +164,10 @@ class UserController extends Controller
 
         return Inertia::render('Users/Edit', [
             'return_url' => route('users.index'),
-            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id', 'dni_type', 'gender', 'address', 'phone'),
+            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id', 'dni_type', 'gender', 'address', 'phone', 'code_phone'),
             'dniTypes' => User::getDniTypes(),
             'genderTypes' => User::getGenderTypes(),
+            'codeTypes' => User::getCodePhone(),
             'allowLoginList' => User::getAllowLogin(),
             'departments' => $departments,
         ]);

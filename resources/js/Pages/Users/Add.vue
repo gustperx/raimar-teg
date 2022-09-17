@@ -29,6 +29,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  codeTypes: {
+    type: Array,
+    required: true,
+  },
 });
 
 const form = useForm({
@@ -41,7 +45,8 @@ const form = useForm({
   permissions: [],
   address: null,
   phone: null,
-  gender: null
+  gender: null,
+  code_phone: null,
 });
 
 const handleCreate = () => {
@@ -81,6 +86,7 @@ const handleCreate = () => {
           :permissions="permissions"
           :dniTypes="dniTypes"
           :genderTypes="genderTypes"
+          :codeTypes="codeTypes"
         />
       </div>
     </div>

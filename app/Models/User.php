@@ -37,7 +37,8 @@ class User extends Authenticatable
         'department_id',
         'address',
         'phone',
-        'gender'
+        'code_phone',
+        'gender',
     ];
 
     /**
@@ -151,6 +152,17 @@ class User extends Authenticatable
             ['value' => 'M', 'label' => 'Hombre'],
             ['value' => 'F', 'label' => 'Mujer'],
             ['value' => 'O', 'label' => 'Otro'],
+        ];
+    }
+
+    public static function getCodePhone()
+    {
+        return [
+            ['value' => '0412', 'label' => '0412'],
+            ['value' => '0414', 'label' => '0414'],
+            ['value' => '0424', 'label' => '0424'],
+            ['value' => '0416', 'label' => '0416'],
+            ['value' => '0426', 'label' => '0426'],
         ];
     }
 }

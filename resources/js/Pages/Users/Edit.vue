@@ -29,6 +29,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  codeTypes: {
+    type: Array,
+    required: true,
+  },
 });
 
 const form = useForm({
@@ -40,7 +44,8 @@ const form = useForm({
   dni_type: props.user.dni_type,
   address: props.user.address,
   phone: props.user.phone,
-  gender: props.user.gender
+  gender: props.user.gender,
+  code_phone: props.user.code_phone,
 });
 
 const handleUpdate = () => {
@@ -79,6 +84,7 @@ const handleUpdate = () => {
           :allowLoginList="allowLoginList"
           :dniTypes="dniTypes"
           :genderTypes="genderTypes"
+          :codeTypes="codeTypes"
         />
       </div>
     </div>
