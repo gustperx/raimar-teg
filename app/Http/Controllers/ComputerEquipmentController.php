@@ -72,7 +72,7 @@ class ComputerEquipmentController extends Controller
 
         $categories = Category::select('id', 'name')->where('parent_id', 1)->get();
         $statuses = Status::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('id', '>', 2)->get();
+        $departments = Department::select('id', 'name')->where('id', 4)->get();
 
         return Inertia::render('ComputerEquipments/Add', [
             'categories' => $categories,
@@ -143,7 +143,7 @@ class ComputerEquipmentController extends Controller
 
         $categories = Category::select('id', 'name')->where('parent_id', 1)->get();
         $statuses = Status::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('id', '>', 2)->get();
+        $departments = Department::select('id', 'name')->where('id', 4)->get();
 
         return Inertia::render('ComputerEquipments/Edit', [
             'computerEquipment' => $computerEquipment->only(

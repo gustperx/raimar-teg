@@ -72,7 +72,7 @@ class MedicalEquipmentController extends Controller
 
         $categories = Category::select('id', 'name')->where('parent_id', '2')->get();
         $statuses = Status::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('parent_id', 2)->get();
+        $departments = Department::select('id', 'name')->whereIn('id', [19, 33])->get();
 
         return Inertia::render('MedicalEquipments/Add', [
             'categories' => $categories,
@@ -143,7 +143,7 @@ class MedicalEquipmentController extends Controller
 
         $categories = Category::select('id', 'name')->where('parent_id', '2')->get();
         $statuses = Status::select('id', 'name')->get();
-        $departments = Department::select('id', 'name')->where('parent_id', 2)->get();
+        $departments = Department::select('id', 'name')->whereIn('id', [19, 33])->get();
 
         return Inertia::render('MedicalEquipments/Edit', [
             'medicalEquipment' => $medicalEquipment->only(
