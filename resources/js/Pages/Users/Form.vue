@@ -38,9 +38,36 @@ defineProps({
 
 <template>
   <JetFormSection @submitted="actionSubmit">
-    <template #title> Usuarios </template>
+    <template #title> Permisos </template>
 
-    <template #description> Usuarios del sistema </template>
+    <template #description>
+      <div v-if="permissions" class="col-span-6 sm:col-span-4">
+        <div v-for="(list, name) in permissions" :key="name">
+          <div>
+            <h3 class="font-bold mt-4 mb-2"> - {{ name }}</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div v-for="(permission, tag) in list" :key="permission" class="">
+              <input
+                type="checkbox"
+                :id="permission"
+                :value="permission"
+                v-model="form.permissions"
+              />
+              <label
+                :for="permission"
+                class="font-medium text-sm text-gray-700 pl-2"
+              >
+                {{ tag }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+          <JetInputError :message="form.errors.permissions" class="mt-2" />
+        </div>
+      </div>
+    </template>
 
     <template #form>
       <div class="col-span-6 sm:col-span-4">
@@ -124,35 +151,6 @@ defineProps({
         <JetLabel for="allow_login" value="Permitir iniciar sesión" />
         <Multiselect v-model="form.allow_login" :options="allowLoginList" />
         <JetInputError :message="form.errors.allow_login" class="mt-2" />
-      </div>
-
-      <div v-if="permissions" class="col-span-6 sm:col-span-4">
-        <span class="text-lg text-semibold my-4">Permisos</span>
-        <div v-for="(list, name) in permissions" :key="name">
-          <div>
-            <h3 class="font-semibold">{{ name }}</h3>
-            <hr class="py-2" />
-          </div>
-          <div class="grid grid-cols-2 gap-2 my-1">
-            <div v-for="(permission, tag) in list" :key="permission" class="">
-              <input
-                type="checkbox"
-                :id="permission"
-                :value="permission"
-                v-model="form.permissions"
-              />
-              <label
-                :for="permission"
-                class="font-medium text-sm text-gray-700 pl-2"
-              >
-                {{ tag }}
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="col-span-6 sm:col-span-4">
-          <JetInputError :message="form.errors.permissions" class="mt-2" />
-        </div>
       </div>
 
     </template>

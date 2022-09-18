@@ -998,10 +998,6 @@ select {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.my-1 {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -1085,6 +1081,9 @@ select {
 }
 .-mb-8 {
   margin-bottom: -2rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 .block {
   display: block;

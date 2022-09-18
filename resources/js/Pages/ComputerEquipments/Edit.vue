@@ -44,6 +44,9 @@ const handleUpdate = () => {
   form.category_id = form.category_id?.id || null;
   form.status_id = form.status_id?.id || null;
 
+  form.brand = form.brand?.id || null;
+  form.model = form.model?.id || null;
+
   form.put(route("computer-equipments.update", [props.computerEquipment.id]), {
     errorBag: "handleUpdate",
     preserveScroll: true,

@@ -18,7 +18,8 @@ class CategoryPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('technical:categories-read');
+        return true;
+        // return $user->can('technical:categories-read');
     }
 
     /**
@@ -30,7 +31,8 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category)
     {
-        return $user->can('technical:categories-read');
+        return true;
+        // return $user->can('technical:categories-read');
     }
 
     /**
@@ -41,7 +43,8 @@ class CategoryPolicy
      */
     public function create(User $user)
     {
-        return $user->can('technical:categories-create');
+        return true;
+        // return $user->can('technical:categories-create');
     }
 
     /**
@@ -53,7 +56,8 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        return $user->can('technical:categories-update');
+        return true;
+        // return $user->can('technical:categories-update');
     }
 
     /**

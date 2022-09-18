@@ -92,6 +92,8 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('create', ComputerEquipment::class);
 
+        dd($request->all());
+
         $data = $request->all();
         $data['status_id'] = 1; // active
 

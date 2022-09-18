@@ -17,7 +17,7 @@ return [
         ['display_name' => 'Eliminación fuerte', 'permission' => 'manager:user-force-delete'],
     ],
 
-    'Departamentos' => [
+    /* 'Departamentos' => [
         ['display_name' => 'Leer', 'permission' => 'manager:department-read'],
         ['display_name' => 'Crear', 'permission' => 'manager:department-create'],
         ['display_name' => 'Modificar', 'permission' => 'manager:department-update'],
@@ -25,7 +25,7 @@ return [
         ['display_name' => 'Restaurar', 'permission' => 'manager:department-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'manager:department-force-delete'],
         ['display_name' => 'Lider departamento', 'permission' => 'manager:department-leader'],
-    ],
+    ], */
 
     /* 'Personal' => [
         ['display_name' => 'Leer', 'permission' => 'manager:staff-read'],
@@ -36,23 +36,23 @@ return [
         ['display_name' => 'Eliminación fuerte', 'permission' => 'manager:staff-force-delete'],
     ], */
 
-    'Estados' => [
+    /* 'Estados' => [
         ['display_name' => 'Leer', 'permission' => 'technical:status-read'],
         ['display_name' => 'Crear', 'permission' => 'technical:status-create'],
         ['display_name' => 'Modificar', 'permission' => 'technical:status-update'],
         ['display_name' => 'Eliminación suave', 'permission' => 'technical:status-delete'],
         ['display_name' => 'Restaurar', 'permission' => 'technical:status-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:status-force-delete'],
-    ],
+    ], */
 
-    'Categorías' => [
+    /* 'Categorías' => [
         ['display_name' => 'Leer', 'permission' => 'technical:categories-read'],
         ['display_name' => 'Crear', 'permission' => 'technical:categories-create'],
         ['display_name' => 'Modificar', 'permission' => 'technical:categories-update'],
         ['display_name' => 'Eliminación suave', 'permission' => 'technical:categories-delete'],
         ['display_name' => 'Restaurar', 'permission' => 'technical:categories-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:categories-force-delete'],
-    ],
+    ], */
 
     'Equipos de computo' => [
         ['display_name' => 'Leer', 'permission' => 'technical:computerEquipments-read'],
@@ -64,6 +64,15 @@ return [
         ['display_name' => 'Mantenimiento', 'permission' => 'technical:computerEquipments-maintenance'],
     ],
 
+    'Movimientos de equipos de cómputo' => [
+        ['display_name' => 'Leer', 'permission' => 'technical:computerEquipmentMovements-read'],
+        ['display_name' => 'Crear', 'permission' => 'technical:computerEquipmentMovements-create'],
+        ['display_name' => 'Modificar', 'permission' => 'technical:computerEquipmentMovements-update'],
+        ['display_name' => 'Eliminación suave', 'permission' => 'technical:computerEquipmentMovements-delete'],
+        ['display_name' => 'Restaurar', 'permission' => 'technical:computerEquipmentMovements-restore'],
+        ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:computerEquipmentMovements-force-delete'],
+    ],
+
     'Equipos medicos' => [
         ['display_name' => 'Leer', 'permission' => 'technical:medicalEquipments-read'],
         ['display_name' => 'Crear', 'permission' => 'technical:medicalEquipments-create'],
@@ -72,15 +81,6 @@ return [
         ['display_name' => 'Restaurar', 'permission' => 'technical:medicalEquipments-restore'],
         ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:medicalEquipments-force-delete'],
         ['display_name' => 'Mantenimiento', 'permission' => 'technical:medicalEquipments-maintenance'],
-    ],
-
-    'Movimientos de equipos de cómputo' => [
-        ['display_name' => 'Leer', 'permission' => 'technical:computerEquipmentMovements-read'],
-        ['display_name' => 'Crear', 'permission' => 'technical:computerEquipmentMovements-create'],
-        ['display_name' => 'Modificar', 'permission' => 'technical:computerEquipmentMovements-update'],
-        ['display_name' => 'Eliminación suave', 'permission' => 'technical:computerEquipmentMovements-delete'],
-        ['display_name' => 'Restaurar', 'permission' => 'technical:computerEquipmentMovements-restore'],
-        ['display_name' => 'Eliminación fuerte', 'permission' => 'technical:computerEquipmentMovements-force-delete'],
     ],
 
     'Movimientos de equipos médicos' => [

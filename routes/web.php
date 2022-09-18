@@ -13,6 +13,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ModelEController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -92,4 +94,14 @@ Route::middleware([
 
     // Ajax
     Route::post('ajax/get-users-by-deparment', [AjaxController::class, 'getUsersByDeparment'])->name('ajax.getUsersByDeparment');
+
+    // Ajax Categories
+    Route::get('ajax/categories', [AjaxController::class, 'getCategories'])->name('ajax.getCategories');
+    Route::post('ajax/categories', [AjaxController::class, 'storeCategory'])->name('ajax.storeCategory');
+
+    // Ajax Brands
+    Route::resource('brands', BrandController::class);
+
+    // Ajax Models
+    Route::resource('models', ModelEController::class);
 });
