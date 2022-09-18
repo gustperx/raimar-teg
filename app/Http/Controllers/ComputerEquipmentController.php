@@ -28,8 +28,8 @@ class ComputerEquipmentController extends Controller
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
-                    'brand' => $item->brand,
-                    'model' => $item->model,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
                     'code' => $item->code,
                     'serial' => $item->serial,
                     'updated_at' => $item->updated_at->format('d/m/Y H:i'),
@@ -92,9 +92,9 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('create', ComputerEquipment::class);
 
-        dd($request->all());
-
         $data = $request->all();
+        $data['brand_id'] = $data['brand'];
+        $data['model_id'] = $data['model'];
         $data['status_id'] = 1; // active
 
         ComputerEquipment::create($data);
@@ -118,8 +118,8 @@ class ComputerEquipmentController extends Controller
         $computerEquipment = [
             'id' => $computerEquipment->id,
             'description' => $computerEquipment->description,
-            'brand' => $computerEquipment->brand,
-            'model' => $computerEquipment->model,
+            'brand' => $computerEquipment->brand->name ?? null,
+            'model' => $computerEquipment->model->name ?? null,
             'code' => $computerEquipment->code,
             'serial' => $computerEquipment->serial,
             'category' => $computerEquipment->category->name ?? null,
@@ -177,7 +177,11 @@ class ComputerEquipmentController extends Controller
     {
         $this->authorize('update', $computerEquipment);
 
-        $computerEquipment->update($request->all());
+        $data = $request->all();
+        $data['brand_id'] = $data['brand'];
+        $data['model_id'] = $data['model'];
+
+        $computerEquipment->update($data);
 
         $request->session()->flash('success', 'Equipo de cómputo actualizado satisfactoriamente');
         return redirect()->route('computer-equipments.index');
@@ -214,8 +218,8 @@ class ComputerEquipmentController extends Controller
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
-                    'brand' => $item->brand,
-                    'model' => $item->model,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
                     'code' => $item->code,
                     'serial' => $item->serial,
                     'category' => $item->category->name ?? null,

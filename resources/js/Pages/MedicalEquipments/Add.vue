@@ -40,6 +40,9 @@ const handleCreate = () => {
   form.category_id = form.category_id?.id || null;
   form.status_id = form.status_id?.id || null;
 
+  form.brand = form.brand?.id || null;
+  form.model = form.model?.id || null;
+
   form.post(route("medical-equipments.store"), {
     errorBag: "handleCreate",
     preserveScroll: true,

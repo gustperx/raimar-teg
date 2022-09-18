@@ -28,8 +28,8 @@ class MedicalEquipmentController extends Controller
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
-                    'brand' => $item->brand,
-                    'model' => $item->model,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
                     'code' => $item->code,
                     'serial' => $item->serial,
                     'category' => $item->category->name ?? null,
@@ -93,6 +93,8 @@ class MedicalEquipmentController extends Controller
         $this->authorize('create', MedicalEquipment::class);
 
         $data = $request->all();
+        $data['brand_id'] = $data['brand'];
+        $data['model_id'] = $data['model'];
         $data['status_id'] = 1; // active
 
         MedicalEquipment::create($data);
@@ -116,8 +118,8 @@ class MedicalEquipmentController extends Controller
         $medicalEquipment = [
             'id' => $medicalEquipment->id,
             'description' => $medicalEquipment->description,
-            'brand' => $medicalEquipment->brand,
-            'model' => $medicalEquipment->model,
+            'brand' => $medicalEquipment->brand->name ?? null,
+            'model' => $medicalEquipment->model->name ?? null,
             'code' => $medicalEquipment->code,
             'serial' => $medicalEquipment->serial,
             'category' => $medicalEquipment->category->name ?? null,
@@ -175,7 +177,11 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('update', $medicalEquipment);
 
-        $medicalEquipment->update($request->all());
+        $data = $request->all();
+        $data['brand_id'] = $data['brand'];
+        $data['model_id'] = $data['model'];
+
+        $medicalEquipment->update($data);
 
         $request->session()->flash('success', 'Equipo medicó actualizado satisfactoriamente');
         return redirect()->route('medical-equipments.index');
@@ -212,8 +218,8 @@ class MedicalEquipmentController extends Controller
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
-                    'brand' => $item->brand,
-                    'model' => $item->model,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
                     'code' => $item->code,
                     'serial' => $item->serial,
                     'category' => $item->category->name ?? null,

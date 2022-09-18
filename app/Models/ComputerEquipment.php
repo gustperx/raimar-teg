@@ -30,8 +30,8 @@ class ComputerEquipment extends Model
         'department_id',
         'code',
         'description',
-        'brand',
-        'model',
+        'brand_id',
+        'model_id',
         'serial',
     ];
 
@@ -78,6 +78,16 @@ class ComputerEquipment extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(ModelE::class);
     }
 
     public function scopeFilter($query, array $filters)
@@ -180,7 +190,7 @@ class ComputerEquipment extends Model
                         ComputerEquipment::getCountEquipmentMaintenance(),
                         ComputerEquipment::getCountEquipmentOut(),
                     ],
-                    'label' => "Estado de equipos", 
+                    'label' => "Estado de equipos",
                     'backgroundColor' => "#f87979"
                 ],
             ],

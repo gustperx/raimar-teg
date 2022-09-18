@@ -24,14 +24,14 @@ class StoreMedicalEquipmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'department_id' => ['required', 'numeric', 'max:191', 'exists:departments,id'],
-            'category_id' => ['required', 'numeric', 'max:191', 'exists:categories,id'],
-            'status_id' => ['nullable', 'numeric', 'max:191', 'exists:statuses,id'],
+            'department_id' => ['required', 'numeric', 'exists:departments,id'],
+            'category_id' => ['required', 'numeric', 'exists:categories,id'],
+            'status_id' => ['nullable', 'numeric', 'exists:statuses,id'],
             'code' => ['nullable', 'string', 'max:191', 'unique:medical_equipments'],
             'serial' => ['required', 'string', 'max:191', 'unique:medical_equipments'],
             'description' => ['required', 'string', 'max:191'],
-            'brand' => ['required', 'string', 'max:191'],
-            'model' => ['required', 'string', 'max:191'],
+            'brand' => ['required', 'numeric', 'exists:brands,id'],
+            'model' => ['required', 'numeric', 'exists:models,id'],
         ];
     }
 

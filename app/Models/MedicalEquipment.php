@@ -30,8 +30,8 @@ class MedicalEquipment extends Model
         'department_id',
         'code',
         'description',
-        'brand',
-        'model',
+        'brand_id',
+        'model_id',
         'serial',
     ];
 
@@ -77,6 +77,16 @@ class MedicalEquipment extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(ModelE::class);
     }
 
     public function scopeFilter($query, array $filters)
@@ -180,7 +190,7 @@ class MedicalEquipment extends Model
                         MedicalEquipment::getCountEquipmentMaintenance(),
                         MedicalEquipment::getCountEquipmentOut(),
                     ],
-                    'label' => "Estado de equipos", 
+                    'label' => "Estado de equipos",
                     'backgroundColor' => "#f87979"
                 ],
             ],
