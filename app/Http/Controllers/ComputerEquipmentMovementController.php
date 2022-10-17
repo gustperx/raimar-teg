@@ -158,6 +158,15 @@ class ComputerEquipmentMovementController extends Controller
         )
             ->where('id', $computerEquipmentMovement->id)->first();
 
+        $equipment = [
+            'id' => $computerEquipmentMovement->equipment->id,
+            'description' => $computerEquipmentMovement->equipment->description,
+            'code' => $computerEquipmentMovement->equipment->code,
+            'serial' => $computerEquipmentMovement->equipment->serial,
+            'brand' => $computerEquipmentMovement->equipment->brand->name,
+            'model' => $computerEquipmentMovement->equipment->model->name
+        ];
+
         $computerEquipmentMovement = [
             'id' => $computerEquipmentMovement->id,
             'previous_department' => $computerEquipmentMovement->previousDepartment->name ?? null,
@@ -165,7 +174,7 @@ class ComputerEquipmentMovementController extends Controller
             'user_movement' => $computerEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $computerEquipmentMovement->userResponsible->name ?? null,
             'user_assigned' => $computerEquipmentMovement->userAssigned->name ?? null,
-            'equipment' => $computerEquipmentMovement->equipment->only('id', 'description', 'code', 'serial', 'brand', 'model') ?? null,
+            'equipment' => $equipment ?? null,
             'status' => $computerEquipmentMovement->status->name ?? null,
             'transfer_date' => $computerEquipmentMovement->transfer_date,
             'incidence' => $computerEquipmentMovement->incidence,

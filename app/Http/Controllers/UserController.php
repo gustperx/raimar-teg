@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\PermissionUserRequest;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Traits\Auditable;
+use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\Department;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\User\PermissionUserRequest;
 
 class UserController extends Controller
 {
+    use Auditable;
+    private $module = 'Usuarios';
+
     /**
      * Display a listing of the resource.
      *
@@ -111,6 +115,11 @@ class UserController extends Controller
             $user->syncPermissions($request->input('permissions'));
         }
 
+        $this->audit(
+            $this->module,
+            'Creación nuevo usuario: ' . $user->id
+        );
+
         $request->session()->flash('success', 'Usuario creado satisfactoriamente');
         // return redirect()->route('users.index');
         return redirect()->route('d_register');
@@ -186,6 +195,11 @@ class UserController extends Controller
 
         $user->update($request->all());
 
+        $this->audit(
+            $this->module,
+            'Actualización de datos al usuario: ' . $user->id
+        );
+
         $request->session()->flash('success', 'Usuario actualizado satisfactoriamente');
         return redirect()->route('users.index');
     }
@@ -218,6 +232,11 @@ class UserController extends Controller
 
         $user->syncPermissions($request->input('permissions'));
 
+        $this->audit(
+            $this->module,
+            'Cambiar permisos al usuario: ' . $user->id
+        );
+
         $request->session()->flash('success', 'Permisos de usuario actualizado satisfactoriamente');
         return redirect()->route('users.index');
     }
@@ -233,6 +252,11 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         $user->delete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación suave del usuario: ' . $user->id
+        );
 
         $request->session()->flash('info', 'Usuario eliminado satisfactoriamente');
         return redirect()->route('users.index');
@@ -287,6 +311,11 @@ class UserController extends Controller
 
         $user->restore();
 
+        $this->audit(
+            $this->module,
+            'Recuperación del usuario: ' . $user->id
+        );
+
         $request->session()->flash('success', 'Usuario restaurado satisfactoriamente');
         return redirect()->route('users.trash');
     }
@@ -304,6 +333,11 @@ class UserController extends Controller
         $this->authorize('forceDelete', $user);
 
         $user->forceDelete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación fuerte del usuario: ' . $user->id
+        );
 
         $request->session()->flash('warn', 'Usuario eliminado definitivamente');
         return redirect()->route('users.trash');

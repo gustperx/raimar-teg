@@ -167,6 +167,15 @@ class MedicalEquipmentMovementController extends Controller
         )
             ->where('id', $medicalEquipmentMovement->id)->first();
 
+        $equipment = [
+            'id' => $medicalEquipmentMovement->equipment->id,
+            'description' => $medicalEquipmentMovement->equipment->description,
+            'code' => $medicalEquipmentMovement->equipment->code,
+            'serial' => $medicalEquipmentMovement->equipment->serial,
+            'brand' => $medicalEquipmentMovement->equipment->brand->name,
+            'model' => $medicalEquipmentMovement->equipment->model->name
+        ];
+
         $medicalEquipmentMovement = [
             'id' => $medicalEquipmentMovement->id,
             'previous_department' => $medicalEquipmentMovement->previousDepartment->name ?? null,
@@ -174,7 +183,7 @@ class MedicalEquipmentMovementController extends Controller
             'user_movement' => $medicalEquipmentMovement->userMovement->name ?? null,
             'user_responsible' => $medicalEquipmentMovement->userResponsible->name ?? null,
             'user_assigned' => $medicalEquipmentMovement->userAssigned->name ?? null,
-            'equipment' => $medicalEquipmentMovement->equipment->only('id', 'description', 'code', 'serial', 'brand', 'model') ?? null,
+            'equipment' => $equipment ?? null,
             'status' => $medicalEquipmentMovement->status->name ?? null,
             'transfer_date' => $medicalEquipmentMovement->transfer_date,
             'incidence' => $medicalEquipmentMovement->incidence,
