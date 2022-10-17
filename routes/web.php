@@ -32,6 +32,7 @@ Route::middleware([
     Route::get('/dashboard/informatica', [DashboardController::class, 'informatica'])->name('d_informatica');
     Route::get('/dashboard/operations', [DashboardController::class, 'operations'])->name('d_operations');
     Route::get('/dashboard/roles', [DashboardController::class, 'roles'])->name('d_roles');
+    Route::get('/dashboard/available', [DashboardController::class, 'available'])->name('d_available');
 
     // Users
     // Trash
@@ -63,15 +64,31 @@ Route::middleware([
     Route::resource('departments', DepartmentController::class);
 
     // MedicalEquipaments
+    // Available - Request
+    Route::get('medical-equipments/available', [MedicalEquipmentController::class, 'available'])->name('medical-equipments.available');
+    Route::get('medical-equipments/apply/{medical_equipment}', [MedicalEquipmentController::class, 'apply'])->name('medical-equipments.apply');
+    Route::get('medical-equipments/approve-show/{medical_equipment}', [MedicalEquipmentController::class, 'approveShow'])->name('medical-equipments.approve_show');
+    Route::get('medical-equipments/approve/{medical_equipment}', [MedicalEquipmentController::class, 'approve'])->name('medical-equipments.approve');
+    Route::get('medical-equipments/decline/{medical_equipment}', [MedicalEquipmentController::class, 'decline'])->name('medical-equipments.decline');
+    // Trash - Restore
     Route::get('medical-equipments/trash', [MedicalEquipmentController::class, 'trash'])->name('medical-equipments.trash');
     Route::post('medical-equipments/trash/restore/{medical_equipment}', [MedicalEquipmentController::class, 'restore'])->name('medical-equipments.trash_restore');
     Route::delete('medical-equipments/trash/delete/{medical_equipment}', [MedicalEquipmentController::class, 'trashDestroy'])->name('medical-equipments.trash_destroy');
+    // Restore
     Route::resource('medical-equipments',  MedicalEquipmentController::class);
 
     // ComputerEquipments
+    // Available - Request
+    Route::get('computer-equipments/available', [ComputerEquipmentController::class, 'available'])->name('computer-equipments.available');
+    Route::get('computer-equipments/apply/{computer_equipment}', [ComputerEquipmentController::class, 'apply'])->name('computer-equipments.apply');
+    Route::get('computer-equipments/approve-show/{computer_equipment}', [ComputerEquipmentController::class, 'approveShow'])->name('computer-equipments.approve_show');
+    Route::get('computer-equipments/approve/{computer_equipment}', [ComputerEquipmentController::class, 'approve'])->name('computer-equipments.approve');
+    Route::get('computer-equipments/decline/{computer_equipment}', [ComputerEquipmentController::class, 'decline'])->name('computer-equipments.decline');
+    // Trash - Restore
     Route::get('computer-equipments/trash', [ComputerEquipmentController::class, 'trash'])->name('computer-equipments.trash');
     Route::post('computer-equipments/trash/restore/{computer_equipment}', [ComputerEquipmentController::class, 'restore'])->name('computer-equipments.trash_restore');
     Route::delete('computer-equipments/trash/delete/{computer_equipment}', [ComputerEquipmentController::class, 'trashDestroy'])->name('computer-equipments.trash_destroy');
+    // Resource
     Route::resource('computer-equipments', ComputerEquipmentController::class);
 
     // MedicalEquipamentMovements

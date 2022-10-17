@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ComputerEquipment\StoreComputerEquipmentRequest;
-use App\Http\Requests\ComputerEquipment\UpdateComputerEquipmentRequest;
+use Carbon\Carbon;
+use Inertia\Inertia;
+use App\Models\Order;
+use App\Models\Status;
 use App\Models\Category;
 use App\Models\Department;
-use App\Models\ComputerEquipment;
-use App\Models\Status;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Models\ComputerEquipment;
+use Illuminate\Support\Facades\DB;
+use App\Models\ComputerEquipmentMovement;
+use App\Http\Requests\ComputerEquipment\StoreComputerEquipmentRequest;
+use App\Http\Requests\ComputerEquipment\UpdateComputerEquipmentRequest;
 
 class ComputerEquipmentController extends Controller
 {
@@ -202,6 +206,148 @@ class ComputerEquipmentController extends Controller
         $request->session()->flash('info', 'Equipo de cómputo eliminado satisfactoriamente');
         return redirect()->route('computer-equipments.index');
     }
+
+
+    public function available(Request $request)
+    {
+        $items = ComputerEquipment::with('category', 'status', 'department', 'movements')
+            ->where('status_id', 1) // Operativo
+            ->doesntHave('movements')
+            ->orderBy('id', 'desc')
+            ->paginate()->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'description' => $item->description,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
+                    'code' => $item->code,
+                    'serial' => $item->serial,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
+                    'category' => $item->category->name ?? null,
+                    'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
+                    'department' => $item->department->name ?? null,
+                    'apply_name' => Order::where('type', 'informatica')->where('equipment_id', $item->id)->first()->user->name ?? null,
+                    'apply_url' => route('computer-equipments.apply', $item),
+                    'approve_url' => route('computer-equipments.approve_show', $item),
+                    'can' => [
+                        'apply' => Order::where('type', 'informatica')->where('equipment_id', $item->id)->count() == 0,
+                        'approve' => auth()->user()->can('create', ComputerEquipmentMovement::class) && Order::where('type', 'informatica')->where('equipment_id', $item->id)->count() > 0,
+                    ]
+                ];
+            });
+
+        return Inertia::render('ComputerEquipments/Orders', [
+            'items' => $items,
+        ]);
+    }
+
+
+    public function apply(Request $request, ComputerEquipment $computerEquipment)
+    {
+        Order::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'informatica',
+            'equipment_id' => $computerEquipment->id,
+        ]);
+
+        $request->session()->flash('success', 'Pedido de equipo realizado');
+
+        return back();
+    }
+
+
+    public function approveShow(Request $request, ComputerEquipment $computerEquipment)
+    {
+        $order = Order::with('equipment', 'user.department')
+            ->where('type', 'informatica')
+            ->where('equipment_id', $computerEquipment->id)->first();
+
+        $equipment = [
+            'id' => $order->equipment->id,
+            'description' => $order->equipment->description,
+            'brand' => $order->equipment->brand->name ?? null,
+            'model' => $order->equipment->model->name ?? null,
+            'code' => $order->equipment->code,
+            'serial' => $order->equipment->serial,
+            'category' => $order->equipment->category->name ?? null,
+            'status' => $order->equipment->status->name ?? null,
+            'department' => $order->equipment->department->name ?? null,
+        ];
+
+        $user = [
+            'id' => $order->user->id,
+            'name' => $order->user->name,
+            'email' => $order->user->email,
+            'dni' => $order->user->dni,
+            'dni_type' => $order->user->dni_type ?? null,
+            'department' => $order->user->department->name ?? null,
+        ];
+
+        return Inertia::render('ComputerEquipments/OrderShow', [
+            'equipment' => $equipment,
+            'user' => $user,
+            'return_url' => route('computer-equipments.available'),
+            'approve_url' => route('computer-equipments.approve', $computerEquipment->id),
+            'decline_url' => route('computer-equipments.decline', $computerEquipment->id)
+        ]);
+    }
+
+
+    public function approve(Request $request, ComputerEquipment $computerEquipment)
+    {
+        DB::beginTransaction();
+        try {
+            $order = Order::with('equipment', 'user.department')
+                ->where('type', 'informatica')
+                ->where('equipment_id', $computerEquipment->id)->first();
+
+            $data = [
+                'current_department_id' => $order->user->department_id,
+                'previous_department_id' => $computerEquipment->department_id,
+                'user_movement_id' => auth()->user()->id,
+                'user_responsible_id' => $order->user->id,
+                'user_assigned_id' => $order->user->id,
+                'equipment_id' => $order->equipment->id,
+                'transfer_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                'status_id' => 1,
+                'incidence' => 'aprobacion de solicitud de equipo'
+            ];
+
+            $movement = ComputerEquipmentMovement::create($data);
+
+            $computerEquipment->update([
+                'status_id' => 1,
+                'department_id' => $order->user->department_id,
+            ]);
+
+            DB::commit();
+
+            $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
+            return redirect()->route('computer-equipments-movements.index');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $request->session()->flash('error', $e->getMessage());
+            return back();
+        }
+    }
+
+
+    public function decline(Request $request, ComputerEquipment $computerEquipment)
+    {
+        $order = Order::where('type', 'informatica')->where('equipment_id', $computerEquipment->id)->first();
+
+        if (!empty($order)) {
+            $order->delete();
+        }
+
+        $request->session()->flash('info', 'Solicitud de pedido de equipo rechazada');
+        return redirect()->route('computer-equipments.available');
+    }
+
 
     /**
      * Display a listing of the resource.

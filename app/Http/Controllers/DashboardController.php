@@ -76,6 +76,18 @@ class DashboardController extends Controller
                 'url' => route('stats'),
                 'access' => $hasStats
             ],
+            [
+                'name' => 'Disponibilidad de equipos',
+                'icon' => 'fab fa-searchengin',
+                'url' => route('d_available'),
+                'access' => true
+            ],
+            [
+                'name' => 'Auditoria',
+                'icon' => 'fas fa-tasks',
+                'url' => route('d_available'),
+                'access' => true
+            ],
         ];
 
         return Inertia::render('Dashboard', [
@@ -212,6 +224,31 @@ class DashboardController extends Controller
                 'icon' => 'fa-solid fa-users',
                 'url' => route('users.index'),
                 'access' => auth()->user()->can('viewAny', User::class)
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
+        ]);
+    }
+
+
+    public function available()
+    {
+        $menu = [
+            [
+                'name' => 'Equipos informáticos',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('computer-equipments.available'),
+                'access' => true
+            ],
+            [
+                'name' => 'Equipos médicos',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('medical-equipments.available'),
+                'access' => true
             ],
         ];
 

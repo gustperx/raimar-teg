@@ -90,6 +90,11 @@ class ComputerEquipment extends Model
         return $this->belongsTo(ModelE::class);
     }
 
+    public function movements()
+    {
+        return $this->hasMany(ComputerEquipmentMovement::class, 'equipment_id');
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
@@ -120,7 +125,7 @@ class ComputerEquipment extends Model
 
                 $itemsF = [];
                 foreach ($items as $a) {
-                    $itemsF[] = ['id' => $a->id, 'name' => "{$a->code} - {$a->brand} - {$a->model}"];
+                    $itemsF[] = ['id' => $a->id, 'name' => "{$a->code} - {$a->brand->name} - {$a->model->name}"];
                 }
 
                 $final[] = [
@@ -151,7 +156,7 @@ class ComputerEquipment extends Model
 
                 $itemsF = [];
                 foreach ($items as $a) {
-                    $itemsF[] = ['id' => $a->id, 'name' => "{$a->code} - {$a->brand} - {$a->model}"];
+                    $itemsF[] = ['id' => $a->id, 'name' => "{$a->code} - {$a->brand->name} - {$a->model->name}"];
                 }
 
                 $final[] = [

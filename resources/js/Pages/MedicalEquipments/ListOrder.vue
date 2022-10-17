@@ -1,0 +1,100 @@
+<script setup>
+import { Link } from "@inertiajs/inertia-vue3";
+
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
+
+import CustomTableList from "@/Components/TableList.vue";
+import CustomModalDelete from "@/Components/ModalDelete.vue";
+import StatusColor from "@/Components/StatusColor.vue";
+import DescriptionEquipment from "@/Components/DescriptionEquipment.vue";
+import BarCode from "@/Components/BarCode.vue";
+import { useDeleteModal } from "@/Composables/useDeleteModal.js";
+
+defineProps({
+  items: {
+    type: Array,
+    required: true,
+  },
+});
+
+const routeText = "computer-equipments.destroy";
+
+const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
+  useDeleteModal(routeText);
+</script>
+
+<template>
+  <CustomTableList>
+    <template #header>
+      <tr class="bg-gray-600">
+        <th class="text-left text-white p-4 font-bold">ID</th>
+        <th class="text-left text-white p-4 font-bold">Categoría</th>
+        <th class="text-left text-white p-4 font-bold">Descripción</th>
+        <th class="text-left text-white p-4 font-bold">Departamento</th>
+        <th class="text-left text-white p-4 font-bold">Estatus</th>
+        <th class="text-left text-white p-4 font-bold">Código de barra</th>
+        <th class="text-left text-white p-4 font-bold">Pedido</th>
+        <th class="text-left text-white p-4 font-bold"></th>
+      </tr>
+    </template>
+
+    <template #body>
+      <tr
+        v-for="{
+          id,
+          description,
+          code,
+          serial,
+          category,
+          status,
+          status_color,
+          department,
+          apply_name,
+          apply_url,
+          approve_url,
+          can,
+        } in items"
+        :key="id"
+        class="border-b hover:bg-gray-50"
+      >
+        <td class="p-4">{{ id }}</td>
+        <td class="p-4">{{ category }}</td>
+        <td class="p-4">
+          <DescriptionEquipment
+            :text="description"
+            :code="code"
+            :serial="serial"
+          />
+        </td>
+        <td class="p-4">{{ department }}</td>
+        <td class="p-4">
+          <StatusColor :color="status_color" :text="status" />
+        </td>
+        <td class="p-4">
+          <BarCode :code="code" />
+        </td>
+        <td class="p-4">
+          {{ apply_name }}
+        </td>
+        <td>
+          <div class="flex flex-col md:flex-row">
+            <JetPrimaryButton v-if="can.apply" class="mr-2">
+              <Link :href="apply_url">Pedir</Link>
+            </JetPrimaryButton>
+            <JetPrimaryButton v-if="can.approve" class="mr-2">
+              <Link :href="approve_url">Aprobar</Link>
+            </JetPrimaryButton>
+          </div>
+        </td>
+      </tr>
+    </template>
+  </CustomTableList>
+
+  <!-- Delete Confirmation Modal -->
+  <CustomModalDelete
+    :isOpenModal="isOpenModal"
+    @onConfirm="deleteItem"
+    @onCancel="closeModal"
+  />
+</template>
