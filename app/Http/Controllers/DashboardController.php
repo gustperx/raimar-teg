@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Audit;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Models\MedicalEquipment;
 use App\Models\ComputerEquipment;
 use App\Models\MedicalEquipmentMovement;
 use App\Models\ComputerEquipmentMovement;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -85,8 +86,8 @@ class DashboardController extends Controller
             [
                 'name' => 'Auditoria',
                 'icon' => 'fas fa-tasks',
-                'url' => route('d_available'),
-                'access' => true
+                'url' => route('audis.index'),
+                'access' => auth()->user()->can('viewAny', Audit::class)
             ],
         ];
 

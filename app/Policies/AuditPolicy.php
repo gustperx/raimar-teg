@@ -18,7 +18,7 @@ class AuditPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->id == 1;
     }
 
     /**

@@ -1,21 +1,22 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\StatsController;
+use App\Http\Controllers\ModelEController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\MedicalEquipmentController;
 use App\Http\Controllers\ComputerEquipmentController;
-use App\Http\Controllers\MedicalEquipmentMovementController;
-use App\Http\Controllers\ComputerEquipmentMovementController;
 use App\Http\Controllers\MedicalMaintenanceController;
 use App\Http\Controllers\ComputerMaintenanceController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StatsController;
-use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\ModelEController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MedicalEquipmentMovementController;
+use App\Http\Controllers\ComputerEquipmentMovementController;
 
 Route::get('/', function () {
     return redirect('login');
@@ -121,4 +122,7 @@ Route::middleware([
 
     // Ajax Models
     Route::resource('models', ModelEController::class);
+
+    // Audit
+    Route::resource('audis', AuditController::class)->only('index');
 });

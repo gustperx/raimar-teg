@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Audit;
 use App\Http\Requests\StoreAuditRequest;
 use App\Http\Requests\UpdateAuditRequest;
-use App\Models\Audit;
 
 class AuditController extends Controller
 {
@@ -15,7 +16,23 @@ class AuditController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Audit::class);
+
+        $items = Audit::with('user.department')->orderBy('id', 'desc')
+            ->paginate()->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'module' => $item->module,
+                    'event' => $item->event,
+                    'user' => $item->user->name ?? null,
+                    'department' => $item->user->department->name ?? null,
+                    'created_at' => $item->created_at->format('d/m/Y H:i'),
+                ];
+            });
+
+        return Inertia::render('Audits/Index', [
+            'items' => $items,
+        ]);
     }
 
     /**
