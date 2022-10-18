@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest2;
-use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest2;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Status;
+use App\Traits\Auditable;
 use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Models\MedicalEquipment;
 use App\Models\MedicalEquipmentMovement;
-use App\Models\Status;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest2;
+use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest2;
 
 class MedicalMaintenanceController extends Controller
 {
+    use Auditable;
+    private $module = 'Mantenimiento Equipos médicos';
+
     /**
      * Display a listing of the resource.
      *
@@ -122,6 +126,11 @@ class MedicalMaintenanceController extends Controller
             'department_id' => $data['current_department_id'],
         ]);
 
+        $this->audit(
+            $this->module,
+            'Creación de mantenimiento: ' . $movement->id
+        );
+
         $request->session()->flash('success', 'Mantenimiento de equipo creado satisfactoriamente');
         return redirect()->route('medical-maintenance.index');
     }
@@ -204,6 +213,11 @@ class MedicalMaintenanceController extends Controller
             'status_id' => $data['status_id'],
             'department_id' => $data['current_department_id'],
         ]);
+
+        $this->audit(
+            $this->module,
+            'Actualización de mantenimiento: ' . $medicalEquipmentMovement->id
+        );
 
         $request->session()->flash('success', 'Mantenimiento de equipo actualizado satisfactoriamente');
         return redirect()->route('medical-maintenance.index');

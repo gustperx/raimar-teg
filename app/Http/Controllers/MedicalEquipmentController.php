@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Order;
 use App\Models\Status;
 use App\Models\Category;
+use App\Traits\Auditable;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\MedicalEquipment;
@@ -17,6 +18,9 @@ use App\Http\Requests\MedicalEquipment\UpdateMedicalEquipmentRequest;
 
 class MedicalEquipmentController extends Controller
 {
+    use Auditable;
+    private $module = 'Equipos médicos';
+
     /**
      * Display a listing of the resource.
      *
@@ -101,7 +105,12 @@ class MedicalEquipmentController extends Controller
         $data['model_id'] = $data['model'];
         $data['status_id'] = 1; // active
 
-        MedicalEquipment::create($data);
+        $equipment = MedicalEquipment::create($data);
+
+        $this->audit(
+            $this->module,
+            'Creación nuevo equipo: ' . $equipment->id
+        );
 
         $request->session()->flash('success', 'Equipo medicó creado satisfactoriamente');
         // return redirect()->route('medical-equipments.index');
@@ -187,6 +196,11 @@ class MedicalEquipmentController extends Controller
 
         $medicalEquipment->update($data);
 
+        $this->audit(
+            $this->module,
+            'Actualización de equipo: ' . $medicalEquipment->id
+        );
+
         $request->session()->flash('success', 'Equipo medicó actualizado satisfactoriamente');
         return redirect()->route('medical-equipments.index');
     }
@@ -202,6 +216,11 @@ class MedicalEquipmentController extends Controller
         $this->authorize('delete', $medicalEquipment);
 
         $medicalEquipment->delete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación suave de equipo: ' . $medicalEquipment->id
+        );
 
         $request->session()->flash('info', 'Equipo medicó eliminado satisfactoriamente');
         return redirect()->route('medical-equipments.index');
@@ -250,6 +269,11 @@ class MedicalEquipmentController extends Controller
             'type' => 'medical',
             'equipment_id' => $medicalEquipment->id,
         ]);
+
+        $this->audit(
+            $this->module,
+            'Aplicar solicitud de equipo: ' . $medicalEquipment->id
+        );
 
         $request->session()->flash('success', 'Pedido de equipo realizado');
 
@@ -321,6 +345,11 @@ class MedicalEquipmentController extends Controller
                 'department_id' => $order->user->department_id,
             ]);
 
+            $this->audit(
+                $this->module,
+                'Aprobar solicitud de equipo: ' . $medicalEquipment->id
+            );
+
             DB::commit();
 
             $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
@@ -336,6 +365,24 @@ class MedicalEquipmentController extends Controller
     }
 
 
+    public function decline(Request $request, MedicalEquipment $medicalEquipment)
+    {
+        $order = Order::where('type', 'medical')->where('equipment_id', $medicalEquipment->id)->first();
+
+        if (!empty($order)) {
+            $order->delete();
+        }
+
+        $this->audit(
+            $this->module,
+            'Rechazar solicitud de equipo: ' . $medicalEquipment->id
+        );
+
+        $request->session()->flash('info', 'Solicitud de pedido de equipo rechazada');
+        return redirect()->route('computer-equipments.available');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -345,7 +392,7 @@ class MedicalEquipmentController extends Controller
     {
         $this->authorize('restoreAny', MedicalEquipment::class);
 
-        $items = MedicalEquipment::with('category', 'status')->onlyTrashed()->orderBy('id', 'desc')
+        $items = MedicalEquipment::with('category', 'status', 'department')->onlyTrashed()->orderBy('id', 'desc')
             ->filter($request->only('search'))
             ->paginate()->through(function ($item) {
                 return [
@@ -387,6 +434,11 @@ class MedicalEquipmentController extends Controller
 
         $medicalEquipment->restore();
 
+        $this->audit(
+            $this->module,
+            'Recuperación de equipo: ' . $medicalEquipment->id
+        );
+
         $request->session()->flash('success', 'Equipo medicó restaurado satisfactoriamente');
         return redirect()->route('medical-equipments.trash');
     }
@@ -404,6 +456,11 @@ class MedicalEquipmentController extends Controller
         $this->authorize('forceDelete', $medicalEquipment);
 
         $medicalEquipment->forceDelete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación fuerte de equipo: ' . $medicalEquipment->id
+        );
 
         $request->session()->flash('warn', 'Equipo medicó eliminado definitivamente');
         return redirect()->route('medical-equipments.trash');

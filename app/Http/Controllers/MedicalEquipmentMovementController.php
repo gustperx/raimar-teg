@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest;
-use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Status;
+use App\Traits\Auditable;
 use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Models\MedicalEquipment;
 use App\Models\MedicalEquipmentMovement;
-use App\Models\Status;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\MedicalEquipmentMovement\StoreMedicalEquipmentMovementRequest;
+use App\Http\Requests\MedicalEquipmentMovement\UpdateMedicalEquipmentMovementRequest;
 
 class MedicalEquipmentMovementController extends Controller
 {
+    use Auditable;
+    private $module = 'Movimientos Equipos médicos';
+
     /**
      * Display a listing of the resource.
      *
@@ -139,6 +143,11 @@ class MedicalEquipmentMovementController extends Controller
             'status_id' => 1,
             'department_id' => $data['current_department_id'],
         ]);
+
+        $this->audit(
+            $this->module,
+            'Creación de movimiento: ' . $movement->id
+        );
 
         $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
@@ -279,6 +288,11 @@ class MedicalEquipmentMovementController extends Controller
             'department_id' => $data['current_department_id'],
         ]);
 
+        $this->audit(
+            $this->module,
+            'Actualización de movimiento: ' . $movement->id
+        );
+
         $request->session()->flash('success', 'Trasladó de equipo actualizado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
     }
@@ -296,6 +310,11 @@ class MedicalEquipmentMovementController extends Controller
         $this->authorize('delete', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement->delete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación suave de movimiento: ' . $medicalEquipmentMovement->id
+        );
 
         $request->session()->flash('info', 'Trasladó de equipo eliminado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.index');
@@ -332,7 +351,7 @@ class MedicalEquipmentMovementController extends Controller
                     'current_department' => $item->currentDepartment->name ?? null,
                     'user_movement' => $item->userMovement->name ?? null,
                     'user_responsible' => $item->userResponsible->name ?? null,
-                    'user_assigned' => $item->userAssigned ?? null,
+                    'user_assigned' => $item->userAssigned->name ?? null,
                     'equipment' => $item->equipment->only('id', 'description', 'code', 'serial') ?? null,
                     'status' => $item->status->name ?? null,
                     'transfer_date' => $item->transfer_date,
@@ -379,6 +398,11 @@ class MedicalEquipmentMovementController extends Controller
 
         $medicalEquipmentMovement->restore();
 
+        $this->audit(
+            $this->module,
+            'Recuperación de movimiento: ' . $medicalEquipmentMovement->id
+        );
+
         $request->session()->flash('success', 'Trasladó de equipo restaurado satisfactoriamente');
         return redirect()->route('medical-equipments-movements.trash');
     }
@@ -396,6 +420,11 @@ class MedicalEquipmentMovementController extends Controller
         $this->authorize('forceDelete', $medicalEquipmentMovement);
 
         $medicalEquipmentMovement->forceDelete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación fuerte de movimiento: ' . $medicalEquipmentMovement->id
+        );
 
         $request->session()->flash('warn', 'Trasladó de equipo eliminado definitivamente');
         return redirect()->route('medical-equipments-movements.trash');

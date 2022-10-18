@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Order;
 use App\Models\Status;
 use App\Models\Category;
+use App\Traits\Auditable;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\ComputerEquipment;
@@ -17,6 +18,9 @@ use App\Http\Requests\ComputerEquipment\UpdateComputerEquipmentRequest;
 
 class ComputerEquipmentController extends Controller
 {
+    use Auditable;
+    private $module = 'Equipos de cómputo';
+
     /**
      * Display a listing of the resource.
      *
@@ -101,7 +105,12 @@ class ComputerEquipmentController extends Controller
         $data['model_id'] = $data['model'];
         $data['status_id'] = 1; // active
 
-        ComputerEquipment::create($data);
+        $equipment = ComputerEquipment::create($data);
+
+        $this->audit(
+            $this->module,
+            'Creación nuevo equipo: ' . $equipment->id
+        );
 
         $request->session()->flash('success', 'Equipo de cómputo creado satisfactoriamente');
         // return redirect()->route('computer-equipments.index');
@@ -187,6 +196,11 @@ class ComputerEquipmentController extends Controller
 
         $computerEquipment->update($data);
 
+        $this->audit(
+            $this->module,
+            'Actualización de equipo: ' . $computerEquipment->id
+        );
+
         $request->session()->flash('success', 'Equipo de cómputo actualizado satisfactoriamente');
         return redirect()->route('computer-equipments.index');
     }
@@ -202,6 +216,11 @@ class ComputerEquipmentController extends Controller
         $this->authorize('delete', $computerEquipment);
 
         $computerEquipment->delete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación suave de equipo: ' . $computerEquipment->id
+        );
 
         $request->session()->flash('info', 'Equipo de cómputo eliminado satisfactoriamente');
         return redirect()->route('computer-equipments.index');
@@ -250,6 +269,11 @@ class ComputerEquipmentController extends Controller
             'type' => 'informatica',
             'equipment_id' => $computerEquipment->id,
         ]);
+
+        $this->audit(
+            $this->module,
+            'Aplicar solicitud de equipo: ' . $computerEquipment->id
+        );
 
         $request->session()->flash('success', 'Pedido de equipo realizado');
 
@@ -321,6 +345,11 @@ class ComputerEquipmentController extends Controller
                 'department_id' => $order->user->department_id,
             ]);
 
+            $this->audit(
+                $this->module,
+                'Aprobar solicitud de equipo: ' . $computerEquipment->id
+            );
+
             DB::commit();
 
             $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
@@ -343,6 +372,11 @@ class ComputerEquipmentController extends Controller
         if (!empty($order)) {
             $order->delete();
         }
+
+        $this->audit(
+            $this->module,
+            'Rechazar solicitud de equipo: ' . $computerEquipment->id
+        );
 
         $request->session()->flash('info', 'Solicitud de pedido de equipo rechazada');
         return redirect()->route('computer-equipments.available');
@@ -400,6 +434,11 @@ class ComputerEquipmentController extends Controller
 
         $computerEquipment->restore();
 
+        $this->audit(
+            $this->module,
+            'Recuperación de equipo: ' . $computerEquipment->id
+        );
+
         $request->session()->flash('success', 'Equipo de cómputo restaurado satisfactoriamente');
         return redirect()->route('computer-equipments.trash');
     }
@@ -417,6 +456,11 @@ class ComputerEquipmentController extends Controller
         $this->authorize('forceDelete', $computerEquipment);
 
         $computerEquipment->forceDelete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación fuerte de equipo: ' . $computerEquipment->id
+        );
 
         $request->session()->flash('warn', 'Equipo de cómputo eliminado definitivamente');
         return redirect()->route('computer-equipments.trash');

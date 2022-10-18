@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ComputerEquipmentMovement\StoreComputerEquipmentMovementRequest;
-use App\Http\Requests\ComputerEquipmentMovement\UpdateComputerEquipmentMovementRequest;
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Status;
+use App\Traits\Auditable;
+use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Models\ComputerEquipment;
 use App\Models\ComputerEquipmentMovement;
-use App\Models\Department;
-use App\Models\Status;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\ComputerEquipmentMovement\StoreComputerEquipmentMovementRequest;
+use App\Http\Requests\ComputerEquipmentMovement\UpdateComputerEquipmentMovementRequest;
 
 class ComputerEquipmentMovementController extends Controller
 {
+    use Auditable;
+    private $module = 'Movimientos Equipos de cómputo';
+
     private $department_informatica = 4;
 
     /**
@@ -130,6 +134,11 @@ class ComputerEquipmentMovementController extends Controller
             'status_id' => 1,
             'department_id' => $data['current_department_id'],
         ]);
+
+        $this->audit(
+            $this->module,
+            'Creación de movimiento: ' . $movement->id
+        );
 
         $request->session()->flash('success', 'Trasladó de equipo creado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.index');
@@ -263,6 +272,11 @@ class ComputerEquipmentMovementController extends Controller
             'department_id' => $data['current_department_id'],
         ]);
 
+        $this->audit(
+            $this->module,
+            'Actualización de movimiento: ' . $computerEquipmentMovement->id
+        );
+
         $request->session()->flash('success', 'Trasladó de equipo actualizado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.index');
     }
@@ -280,6 +294,11 @@ class ComputerEquipmentMovementController extends Controller
         $this->authorize('delete', $computerEquipmentMovement);
 
         $computerEquipmentMovement->delete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación suave de movimiento: ' . $computerEquipmentMovement->id
+        );
 
         $request->session()->flash('info', 'Trasladó de equipo eliminado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.index');
@@ -363,6 +382,11 @@ class ComputerEquipmentMovementController extends Controller
 
         $computerEquipmentMovement->restore();
 
+        $this->audit(
+            $this->module,
+            'Recuperación de movimiento: ' . $computerEquipmentMovement->id
+        );
+
         $request->session()->flash('success', 'Trasladó de equipo restaurado satisfactoriamente');
         return redirect()->route('computer-equipments-movements.trash');
     }
@@ -380,6 +404,11 @@ class ComputerEquipmentMovementController extends Controller
         $this->authorize('forceDelete', $computerEquipmentMovement);
 
         $computerEquipmentMovement->forceDelete();
+
+        $this->audit(
+            $this->module,
+            'Eliminación fuerte de movimiento: ' . $computerEquipmentMovement->id
+        );
 
         $request->session()->flash('warn', 'Trasladó de equipo eliminado definitivamente');
         return redirect()->route('computer-equipments-movements.trash');
