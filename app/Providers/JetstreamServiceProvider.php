@@ -2,16 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Traits\Auditable;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
+use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Hash;
 use App\Actions\Jetstream\DeleteUser;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Fortify\Fortify;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
+    use Auditable;
+    private $module = 'Login';
+
     /**
      * Register any application services.
      *
@@ -40,6 +44,13 @@ class JetstreamServiceProvider extends ServiceProvider
                 $user &&
                 Hash::check($request->password, $user->password)
             ) {
+
+                $this->audit(
+                    $this->module,
+                    'Usuario accedio al sistema: ' . $user->name,
+                    $user
+                );
+
                 return $user;
             }
         });

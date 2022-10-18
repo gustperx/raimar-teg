@@ -109,7 +109,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Creación nuevo equipo: ' . $equipment->id
+            'Creación nuevo equipo: ' . $equipment->code
         );
 
         $request->session()->flash('success', 'Equipo de cómputo creado satisfactoriamente');
@@ -198,7 +198,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Actualización de equipo: ' . $computerEquipment->id
+            'Actualización de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('success', 'Equipo de cómputo actualizado satisfactoriamente');
@@ -219,7 +219,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación suave de equipo: ' . $computerEquipment->id
+            'Eliminación suave de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('info', 'Equipo de cómputo eliminado satisfactoriamente');
@@ -272,7 +272,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Aplicar solicitud de equipo: ' . $computerEquipment->id
+            'Aplicar solicitud de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('success', 'Pedido de equipo realizado');
@@ -347,7 +347,7 @@ class ComputerEquipmentController extends Controller
 
             $this->audit(
                 $this->module,
-                'Aprobar solicitud de equipo: ' . $computerEquipment->id
+                'Aprobar solicitud de equipo: ' . $computerEquipment->code
             );
 
             DB::commit();
@@ -375,7 +375,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Rechazar solicitud de equipo: ' . $computerEquipment->id
+            'Rechazar solicitud de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('info', 'Solicitud de pedido de equipo rechazada');
@@ -436,7 +436,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Recuperación de equipo: ' . $computerEquipment->id
+            'Recuperación de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('success', 'Equipo de cómputo restaurado satisfactoriamente');
@@ -459,7 +459,7 @@ class ComputerEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación fuerte de equipo: ' . $computerEquipment->id
+            'Eliminación fuerte de equipo: ' . $computerEquipment->code
         );
 
         $request->session()->flash('warn', 'Equipo de cómputo eliminado definitivamente');

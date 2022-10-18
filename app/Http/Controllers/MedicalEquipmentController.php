@@ -109,7 +109,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Creación nuevo equipo: ' . $equipment->id
+            'Creación nuevo equipo: ' . $equipment->code
         );
 
         $request->session()->flash('success', 'Equipo medicó creado satisfactoriamente');
@@ -198,7 +198,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Actualización de equipo: ' . $medicalEquipment->id
+            'Actualización de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('success', 'Equipo medicó actualizado satisfactoriamente');
@@ -219,7 +219,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación suave de equipo: ' . $medicalEquipment->id
+            'Eliminación suave de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('info', 'Equipo medicó eliminado satisfactoriamente');
@@ -272,7 +272,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Aplicar solicitud de equipo: ' . $medicalEquipment->id
+            'Aplicar solicitud de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('success', 'Pedido de equipo realizado');
@@ -347,7 +347,7 @@ class MedicalEquipmentController extends Controller
 
             $this->audit(
                 $this->module,
-                'Aprobar solicitud de equipo: ' . $medicalEquipment->id
+                'Aprobar solicitud de equipo: ' . $medicalEquipment->code
             );
 
             DB::commit();
@@ -375,11 +375,11 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Rechazar solicitud de equipo: ' . $medicalEquipment->id
+            'Rechazar solicitud de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('info', 'Solicitud de pedido de equipo rechazada');
-        return redirect()->route('computer-equipments.available');
+        return redirect()->route('medical-equipments.available');
     }
 
 
@@ -436,7 +436,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Recuperación de equipo: ' . $medicalEquipment->id
+            'Recuperación de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('success', 'Equipo medicó restaurado satisfactoriamente');
@@ -459,7 +459,7 @@ class MedicalEquipmentController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación fuerte de equipo: ' . $medicalEquipment->id
+            'Eliminación fuerte de equipo: ' . $medicalEquipment->code
         );
 
         $request->session()->flash('warn', 'Equipo medicó eliminado definitivamente');
