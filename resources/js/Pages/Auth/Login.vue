@@ -39,7 +39,7 @@ const submit = () => {
     <template #logo>
       <JetAuthenticationCardLogo />
 
-      <AuthName />
+      <!-- <AuthName /> -->
     </template>
 
     <JetValidationErrors class="mb-4" />

@@ -405,15 +405,15 @@ const logout = () => {
       <!-- Page Content -->
       <main>
 
-        <!-- <div class="min-h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
-            style="background-image:linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 80, 156, 0.3)), url(/img/background_small.jpg)">
-          <FlashMessages />
-          <slot />
-        </div> -->
-        <div class="min-h-screen relative bg-blue-100">
+        <div class="min-h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
+            style="background-image:linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 80, 156, 0.3)), url(/img/background_small.png)">
           <FlashMessages />
           <slot />
         </div>
+        <!-- <div class="min-h-screen relative bg-blue-100">
+          <FlashMessages />
+          <slot />
+        </div> -->
       </main>
     </div>
   </div>
