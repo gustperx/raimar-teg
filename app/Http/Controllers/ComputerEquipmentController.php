@@ -283,20 +283,20 @@ class ComputerEquipmentController extends Controller
 
     public function approveShow(Request $request, ComputerEquipment $computerEquipment)
     {
-        $order = Order::with('equipment', 'user.department')
+        $order = Order::with('user.department')
             ->where('type', 'informatica')
             ->where('equipment_id', $computerEquipment->id)->first();
 
         $equipment = [
-            'id' => $order->equipment->id,
-            'description' => $order->equipment->description,
-            'brand' => $order->equipment->brand->name ?? null,
-            'model' => $order->equipment->model->name ?? null,
-            'code' => $order->equipment->code,
-            'serial' => $order->equipment->serial,
-            'category' => $order->equipment->category->name ?? null,
-            'status' => $order->equipment->status->name ?? null,
-            'department' => $order->equipment->department->name ?? null,
+            'id' => $computerEquipment->id,
+            'description' => $computerEquipment->description,
+            'brand' => $computerEquipment->brand->name ?? null,
+            'model' => $computerEquipment->model->name ?? null,
+            'code' => $computerEquipment->code,
+            'serial' => $computerEquipment->serial,
+            'category' => $computerEquipment->category->name ?? null,
+            'status' => $computerEquipment->status->name ?? null,
+            'department' => $computerEquipment->department->name ?? null,
         ];
 
         $user = [
@@ -322,7 +322,7 @@ class ComputerEquipmentController extends Controller
     {
         DB::beginTransaction();
         try {
-            $order = Order::with('equipment', 'user.department')
+            $order = Order::with('user.department')
                 ->where('type', 'informatica')
                 ->where('equipment_id', $computerEquipment->id)->first();
 
@@ -332,7 +332,7 @@ class ComputerEquipmentController extends Controller
                 'user_movement_id' => auth()->user()->id,
                 'user_responsible_id' => $order->user->id,
                 'user_assigned_id' => $order->user->id,
-                'equipment_id' => $order->equipment->id,
+                'equipment_id' => $computerEquipment->id,
                 'transfer_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 'status_id' => 1,
                 'incidence' => 'aprobacion de solicitud de equipo'

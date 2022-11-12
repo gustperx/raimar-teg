@@ -15,15 +15,6 @@ class Order extends Model
         'type',
     ];
 
-    public function equipment()
-    {
-        if ($this->type == 'medical') {
-            return $this->belongsTo(MedicalEquipment::class, $this->equipment_id);
-        } else {
-            return $this->belongsTo(ComputerEquipment::class, $this->equipment_id);
-        }
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

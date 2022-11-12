@@ -283,20 +283,20 @@ class MedicalEquipmentController extends Controller
 
     public function approveShow(Request $request, MedicalEquipment $medicalEquipment)
     {
-        $order = Order::with('equipment', 'user.department')
+        $order = Order::with('user.department')
             ->where('type', 'medical')
             ->where('equipment_id', $medicalEquipment->id)->first();
 
         $equipment = [
-            'id' => $order->equipment->id,
-            'description' => $order->equipment->description,
-            'brand' => $order->equipment->brand->name ?? null,
-            'model' => $order->equipment->model->name ?? null,
-            'code' => $order->equipment->code,
-            'serial' => $order->equipment->serial,
-            'category' => $order->equipment->category->name ?? null,
-            'status' => $order->equipment->status->name ?? null,
-            'department' => $order->equipment->department->name ?? null,
+            'id' => $medicalEquipment->id,
+            'description' => $medicalEquipment->description,
+            'brand' => $medicalEquipment->brand->name ?? null,
+            'model' => $medicalEquipment->model->name ?? null,
+            'code' => $medicalEquipment->code,
+            'serial' => $medicalEquipment->serial,
+            'category' => $medicalEquipment->category->name ?? null,
+            'status' => $medicalEquipment->status->name ?? null,
+            'department' => $medicalEquipment->department->name ?? null,
         ];
 
         $user = [
@@ -322,7 +322,7 @@ class MedicalEquipmentController extends Controller
     {
         DB::beginTransaction();
         try {
-            $order = Order::with('equipment', 'user.department')
+            $order = Order::with('user.department')
                 ->where('type', 'medical')
                 ->where('equipment_id', $medicalEquipment->id)->first();
 
@@ -332,7 +332,7 @@ class MedicalEquipmentController extends Controller
                 'user_movement_id' => auth()->user()->id,
                 'user_responsible_id' => $order->user->id,
                 'user_assigned_id' => $order->user->id,
-                'equipment_id' => $order->equipment->id,
+                'equipment_id' => $medicalEquipment->id,
                 'transfer_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 'status_id' => 1,
                 'incidence' => 'aprobacion de solicitud de equipo'
@@ -358,6 +358,8 @@ class MedicalEquipmentController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
+
+            \Log::debug($e);
 
             $request->session()->flash('error', $e->getMessage());
             return back();
