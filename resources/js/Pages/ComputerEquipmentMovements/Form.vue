@@ -173,6 +173,8 @@ const { final_users } = useComboUser(props);
           v-model="form.transfer_date_fake"
           :locale="es"
           class="input mt-1 block w-full"
+          inputFormat="dd-MM-yyyy"
+          :lowerLimit="form.transfer_date_fake"
         />
         <JetInputError :message="form.errors.transfer_date" class="mt-2" />
       </div>
@@ -196,6 +198,8 @@ const { final_users } = useComboUser(props);
           v-model="form.period_start_fake"
           :locale="es"
           class="input mt-1 block w-full"
+          inputFormat="dd-MM-yyyy"
+          :lowerLimit="form.period_start_fake"
         />
         <JetInputError :message="form.errors.period_start" class="mt-2" />
       </div>
@@ -206,6 +210,8 @@ const { final_users } = useComboUser(props);
           v-model="form.period_end_fake"
           :locale="es"
           class="input mt-1 block w-full"
+          inputFormat="dd-MM-yyyy"
+          :lowerLimit="form.period_start_fake"
         />
         <JetInputError :message="form.errors.period_end" class="mt-2" />
       </div>
