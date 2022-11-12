@@ -36,6 +36,8 @@ Route::middleware([
     Route::get('/dashboard/available', [DashboardController::class, 'available'])->name('d_available');
 
     // Users
+    // Reset Password
+    Route::post('users/generate-password/{user}', [UserController::class, 'generatePassword'])->name('users.generatePassword');
     // Trash
     Route::get('users/trash', [UserController::class, 'trash'])->name('users.trash');
     Route::post('users/trash/restore/{user}', [UserController::class, 'restore'])->name('users.trash_restore');

@@ -6,7 +6,9 @@ import JetPrimaryButton from "@/Jetstream/PrimaryButton.vue";
 
 import CustomTableList from "@/Components/TableList.vue";
 import CustomModalDelete from "@/Components/ModalDelete.vue";
+import ModalGeneratePassword from "@/Components/ModalGeneratePassword.vue";
 import { useDeleteModal } from "@/Composables/useDeleteModal.js";
+import { usePassword } from "@/Composables/usePassword.js";
 
 defineProps({
   items: {
@@ -19,6 +21,13 @@ const routeText = "users.destroy";
 
 const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
   useDeleteModal(routeText);
+
+const {
+  isOpenModalPassword,
+  closeModalPassword,
+  confirmGeratePassword,
+  generatePassword,
+} = usePassword();
 </script>
 
 <template>
@@ -71,6 +80,13 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
             <JetPrimaryButton v-if="can.edit" class="mr-2">
               <Link :href="edit_url">Editar</Link>
             </JetPrimaryButton>
+            <JetPrimaryButton
+              v-if="can.edit"
+              @click="confirmGeratePassword(id)"
+              class="mr-2"
+            >
+              Contraseña
+            </JetPrimaryButton>
             <JetPrimaryButton v-if="can.permission" class="mr-2">
               <Link :href="permission_url">Permisos</Link>
             </JetPrimaryButton>
@@ -88,5 +104,11 @@ const { isOpenModal, deleteItem, closeModal, confirmDeletion } =
     :isOpenModal="isOpenModal"
     @onConfirm="deleteItem"
     @onCancel="closeModal"
+  />
+
+  <ModalGeneratePassword
+    :isOpenModal="isOpenModalPassword"
+    @onConfirm="generatePassword"
+    @onCancel="closeModalPassword"
   />
 </template>

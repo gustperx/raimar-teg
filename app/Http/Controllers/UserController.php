@@ -6,7 +6,9 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Traits\Auditable;
 use App\Models\Department;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\PermissionUserRequest;
@@ -240,6 +242,23 @@ class UserController extends Controller
         $request->session()->flash('success', 'Permisos de usuario actualizado satisfactoriamente');
         return redirect()->route('users.index');
     }
+
+
+    public function generatePassword(Request $request, User $user)
+    {
+        $this->authorize('update', $user);
+
+        $password = Str::random(10);
+
+        $user->forceFill([
+            'password' => Hash::make($password),
+        ])->save();
+
+        $request->session()->flash('success', 'La nueva contraseña para el usuario ' .$user->name. ' es: ' .$password);
+
+        return response()->json('Contraseña generada', 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
