@@ -72,7 +72,7 @@ defineProps({
     <template #form>
       <div class="col-span-6 sm:col-span-4">
         <JetLabel for="department_id" value="Departamento" />
-        <Multiselect v-model="form.department_id" :options="departments" />
+        <Multiselect v-model="form.department_id" :options="departments" noOptionsText />
         <JetInputError :message="form.errors.department_id" class="mt-2" />
       </div>
       <div class="col-span-6 sm:col-span-4">

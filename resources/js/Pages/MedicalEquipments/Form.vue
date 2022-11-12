@@ -85,6 +85,8 @@ const {
               track-by="name"
               label="name"
               placeholder="Categorías"
+              :show-labels="false"
+              :showNoOptions="false"
             />
             <JetInputError :message="form.errors.category_id" class="mt-2" />
           </div>
@@ -118,6 +120,8 @@ const {
               track-by="name"
               label="name"
               placeholder="Marcas"
+              :show-labels="false"
+              :showNoOptions="false"
             />
             <JetInputError :message="form.errors.brand" class="mt-2" />
           </div>
@@ -140,6 +144,8 @@ const {
               track-by="name"
               label="name"
               placeholder="Modelos"
+              :show-labels="false"
+              :showNoOptions="false"
             />
             <JetInputError :message="form.errors.model" class="mt-2" />
           </div>
@@ -192,6 +198,8 @@ const {
           track-by="name"
           label="name"
           placeholder="Departamento"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <JetInputError :message="form.errors.department_id" class="mt-2" />
       </div>

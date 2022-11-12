@@ -75,6 +75,8 @@ const { final_users } = useComboUser(props);
           track-by="name"
           label="name"
           placeholder="Departamento destino"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <JetInputError
           :message="form.errors.current_department_id"
@@ -94,6 +96,8 @@ const { final_users } = useComboUser(props);
           track-by="name"
           label="name"
           placeholder="Equipo medicó"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <JetInputError :message="form.errors.equipment_id" class="mt-2" />
       </div>
@@ -124,6 +128,8 @@ const { final_users } = useComboUser(props);
           track-by="name"
           label="name"
           placeholder="Técnico"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <JetInputError :message="form.errors.user_movement_id" class="mt-2" />
       </div>
@@ -143,6 +149,8 @@ const { final_users } = useComboUser(props);
           track-by="name"
           label="name"
           placeholder="Responsable de departamento"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <JetInputError
           :message="form.errors.user_responsible_id"
@@ -162,6 +170,8 @@ const { final_users } = useComboUser(props);
           track-by="name"
           label="name"
           placeholder="Responsable del equipo"
+          :show-labels="false"
+          :showNoOptions="false"
         />
         <!-- <JetInput
           id="user_assigned"
