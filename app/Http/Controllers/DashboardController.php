@@ -89,6 +89,12 @@ class DashboardController extends Controller
                 'url' => route('audis.index'),
                 'access' => auth()->user()->can('viewAny', Audit::class)
             ],
+            [
+                'name' => 'Ayuda',
+                'icon' => 'fa-solid fa-circle-question',
+                'url' => "#",
+                'access' => true
+            ],
         ];
 
         return Inertia::render('Dashboard', [
