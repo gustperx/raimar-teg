@@ -244,6 +244,20 @@ class DashboardController extends Controller
 
     public function available()
     {
+        $visibleMedical = false;
+
+        if (auth()->user()->department_id) {
+            $department = Department::where('id', auth()->user()->department_id)->first();
+
+            if (!empty($department) && $department->parent_id == 2) { // Dpts medicos
+                $visibleMedical = true;
+            }
+        }
+
+        if (auth()->user()->id == 1) { // Admin user
+            $visibleMedical = true;
+        }
+
         $menu = [
             [
                 'name' => 'Equipos informáticos',
@@ -255,7 +269,7 @@ class DashboardController extends Controller
                 'name' => 'Equipos médicos',
                 'icon' => 'fa-solid fa-microscope',
                 'url' => route('medical-equipments.available'),
-                'access' => true
+                'access' => $visibleMedical
             ],
         ];
 
