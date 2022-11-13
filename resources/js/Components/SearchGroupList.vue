@@ -44,6 +44,8 @@ const { resetSearch } = useSearch(props.formSearch, props.urlSearch);
       track-by="name"
       label="name"
       :placeholder="placeholderText"
+      :show-labels="false"
+      :showNoOptions="false"
     />
   </div>
 </template>

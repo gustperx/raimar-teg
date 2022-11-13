@@ -52,19 +52,22 @@ const urlSearch = route("medical-maintenance.index");
     <div class="py-12">
       <div class="mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-row justify-between pb-2">
-          <CustomSearchSimpleList
+          <!-- <CustomSearchSimpleList
             :formSearch="formSearch"
             :urlSearch="urlSearch"
             :simpleList="statusesList"
             formSearchText="status_search"
             placeholderText="Buscar por estatus"
+            :show-labels="false"
+            :showNoOptions="false"
           />
           <button
             class="ml-4 font-semibold text-sm text-gray-600"
             @click="formReset"
           >
             Restablecer
-          </button>
+          </button> -->
+          <div></div>
           <div>
             <JetButton type="button">
               <Link href="/dashboard/operations">Regresar</Link>

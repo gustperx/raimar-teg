@@ -40,11 +40,12 @@ class MedicalEquipmentMovementController extends Controller
             'equipment',
             'status'
         )
+            ->where('status_id', 1)
             ->orderBy('id', 'desc')
             ->equipmentSearch($request->only('equipment_search'))
             ->personalSearch($request->only('personal_search'))
             ->departmentSearch($request->only('department_search'))
-            ->statusSearch($request->only('status_search'))
+            //->statusSearch($request->only('status_search'))
             ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -343,7 +344,7 @@ class MedicalEquipmentMovementController extends Controller
             ->equipmentSearch($request->only('equipment_search'))
             ->personalSearch($request->only('personal_search'))
             ->departmentSearch($request->only('department_search'))
-            ->statusSearch($request->only('status_search'))
+            //->statusSearch($request->only('status_search'))
             ->paginate()->through(function ($item) {
                 return [
                     'id' => $item->id,

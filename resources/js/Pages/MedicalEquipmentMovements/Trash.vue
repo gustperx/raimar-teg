@@ -73,6 +73,8 @@ const urlSearch = route("medical-equipments-movements.trash");
             :groupList="equipmentsList"
             formSearchText="equipment_search"
             placeholderText="Buscar por equipo"
+            :show-labels="false"
+            :showNoOptions="false"
           />
           <CustomSearchGroupList
             :formSearch="formSearch"
@@ -80,6 +82,8 @@ const urlSearch = route("medical-equipments-movements.trash");
             :groupList="personalList"
             formSearchText="personal_search"
             placeholderText="Buscar por personal"
+            :show-labels="false"
+            :showNoOptions="false"
           />
           <CustomSearchSimpleList
             :formSearch="formSearch"
@@ -87,16 +91,20 @@ const urlSearch = route("medical-equipments-movements.trash");
             :simpleList="departmentsList"
             formSearchText="department_search"
             placeholderText="Buscar por departamento"
+            :show-labels="false"
+            :showNoOptions="false"
           />
-          <CustomSearchSimpleList
+          <!-- <CustomSearchSimpleList
             :formSearch="formSearch"
             :urlSearch="urlSearch"
             :simpleList="statusesList"
             formSearchText="status_search"
             placeholderText="Buscar por estatus"
-          />
+            :show-labels="false"
+            :showNoOptions="false"
+          /> -->
           <button
-            class="ml-4 font-semibold text-sm text-gray-600"
+            class="ml-4 font-semibold text-sm text-gray-700 bg-white py-2 px-2 rounded-md"
             @click="formReset"
           >
             Restablecer
