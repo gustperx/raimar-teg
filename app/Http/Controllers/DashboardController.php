@@ -86,7 +86,7 @@ class DashboardController extends Controller
             [
                 'name' => 'Auditoria',
                 'icon' => 'fas fa-tasks',
-                'url' => route('audis.index'),
+                'url' => route('audits.index'),
                 'access' => auth()->user()->can('viewAny', Audit::class)
             ],
             [

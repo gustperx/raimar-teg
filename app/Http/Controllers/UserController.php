@@ -119,7 +119,7 @@ class UserController extends Controller
 
         $this->audit(
             $this->module,
-            'Creación nuevo usuario: ' . $user->id
+            'Creación nuevo usuario: ' . $user->name
         );
 
         $request->session()->flash('success', 'Usuario creado satisfactoriamente');
@@ -199,7 +199,7 @@ class UserController extends Controller
 
         $this->audit(
             $this->module,
-            'Actualización de datos al usuario: ' . $user->id
+            'Actualización de datos al usuario: ' . $user->name
         );
 
         $request->session()->flash('success', 'Usuario actualizado satisfactoriamente');
@@ -236,7 +236,7 @@ class UserController extends Controller
 
         $this->audit(
             $this->module,
-            'Cambiar permisos al usuario: ' . $user->id
+            'Cambiar permisos al usuario: ' . $user->name
         );
 
         $request->session()->flash('success', 'Permisos de usuario actualizado satisfactoriamente');
@@ -274,7 +274,7 @@ class UserController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación suave del usuario: ' . $user->id
+            'Eliminación suave del usuario: ' . $user->name
         );
 
         $request->session()->flash('info', 'Usuario eliminado satisfactoriamente');
@@ -355,7 +355,7 @@ class UserController extends Controller
 
         $this->audit(
             $this->module,
-            'Eliminación fuerte del usuario: ' . $user->id
+            'Eliminación fuerte del usuario: ' . $user->name
         );
 
         $request->session()->flash('warn', 'Usuario eliminado definitivamente');

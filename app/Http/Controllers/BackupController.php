@@ -30,10 +30,7 @@ class BackupController extends Controller
     {
         try {
 
-            if (! auth()->user()->can('viewAny', Audit::class)) {
-                $request->session()->flash('error', 'No estás autorizado');
-                return redirect()->route('d_help');
-            }
+            $this->authorize('viewAny', Audit::class);
 
             // Conection
             $host         = env('DB_HOST');
@@ -65,10 +62,7 @@ class BackupController extends Controller
 
     public function form_upload(Request $request)
     {
-        if (! auth()->user()->can('viewAny', Audit::class)) {
-            $request->session()->flash('error', 'No estás autorizado');
-            return redirect()->route('d_help');
-        }
+        $this->authorize('viewAny', Audit::class);
 
         return Inertia::render('Backup/Index', [
             'return_url' => route('d_help')
@@ -78,10 +72,7 @@ class BackupController extends Controller
 
     public function store_backup(Request $request)
     {
-        if (! auth()->user()->can('viewAny', Audit::class)) {
-            $request->session()->flash('error', 'No estás autorizado');
-            return redirect()->route('d_help');
-        }
+        $this->authorize('viewAny', Audit::class);
 
         $validated = $request->validate([
             'database_file' => 'required|file',

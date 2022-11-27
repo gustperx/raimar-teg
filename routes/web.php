@@ -128,7 +128,7 @@ Route::middleware([
     Route::resource('models', ModelEController::class);
 
     // Audit
-    Route::resource('audis', AuditController::class)->only('index');
+    Route::get('audits', [AuditController::class, 'index'])->name('audits.index');
 
     // Backup
     Route::get('backup/create', [BackupController::class, 'create'])->name('backup.create');
