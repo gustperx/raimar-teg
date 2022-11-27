@@ -21,6 +21,7 @@ class AuditController extends Controller
         $items = Audit::with('user.department')
             ->byUser($request->only('by_user'))
             ->byModule($request->only('by_module'))
+            ->byMonthYear($request->only('by_month'))
             ->orderBy('id', 'desc')
             ->paginate()->through(function ($item) {
                 return [
@@ -40,6 +41,7 @@ class AuditController extends Controller
             'filters' => [
                 'by_user'   => $request->only('by_user'),
                 'by_module' => $request->only('by_module'),
+                'by_month'  => $request->only('by_month'),
             ],
             'users'   => $users,
             'modules' => Audit::getModules(),

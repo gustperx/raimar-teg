@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Audit extends Model
 {
@@ -39,9 +41,16 @@ class Audit extends Model
         $query->where('module', $module);
     }
 
-    public function scopeByDates($query, array $dates)
+    public function scopeByMonthYear($query, $monthYear)
     {
-        //
+        if (empty($monthYear) || empty($monthYear['by_month'])) {
+            return $query;
+        }
+
+        $collection = Str::of($monthYear['by_month'])->explode('-');
+        $date = Carbon::createFromDate($collection[0], $collection[1]);
+
+        $query->whereYear('created_at', $date->format('Y'))->whereMonth('created_at', $date->format('m'));
     }
 
 

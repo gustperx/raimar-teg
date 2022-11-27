@@ -30,14 +30,22 @@ const props = defineProps({
 const formSearch = useForm({
   by_user: props.filters.by_user.by_user,
   by_module: props.filters.by_module.by_module,
+  by_month: props.filters.by_month.by_month
 });
 
 const formReset = () => {
   formSearch.by_user = null;
   formSearch.by_module = null;
+  formSearch.by_month = null;
 };
 
 const urlSearch = route("audits.index");
+
+const handleSearchDate = () => {
+  formSearch.get(urlSearch, formSearch, {
+    preserveState: true,
+  });
+};
 
 </script>
 
@@ -70,6 +78,14 @@ const urlSearch = route("audits.index");
             :show-labels="false"
             :showNoOptions="false"
           />
+          <div>
+            <input
+              type="month"
+              v-model="formSearch.by_month"
+              class="input mt-1 block"
+              @input="handleSearchDate"
+            />
+          </div>
           <button
             class="ml-4 font-semibold text-sm text-gray-700 bg-white py-2 px-2 rounded-md"
             @click="formReset"
