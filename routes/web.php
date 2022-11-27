@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\ModelEController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CategoryController;
@@ -34,6 +35,7 @@ Route::middleware([
     Route::get('/dashboard/operations', [DashboardController::class, 'operations'])->name('d_operations');
     Route::get('/dashboard/roles', [DashboardController::class, 'roles'])->name('d_roles');
     Route::get('/dashboard/available', [DashboardController::class, 'available'])->name('d_available');
+    Route::get('/dashboard/help', [DashboardController::class, 'help'])->name('d_help');
 
     // Users
     // Reset Password
@@ -127,4 +129,12 @@ Route::middleware([
 
     // Audit
     Route::resource('audis', AuditController::class)->only('index');
+
+    // Backup
+    Route::get('backup/create', [BackupController::class, 'create'])->name('backup.create');
+    Route::get('backup/upload', [BackupController::class, 'form_upload'])->name('backup.upload');
+    Route::post('backup/upload-post', [BackupController::class, 'store_backup'])->name('backup.uploadPost');
+
+    // Manual
+    Route::get('backup/manual', [BackupController::class, 'manual'])->name('backup.manual');
 });

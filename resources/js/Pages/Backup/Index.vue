@@ -1,0 +1,61 @@
+<script setup>
+import { Link, useForm } from "@inertiajs/inertia-vue3";
+
+import AppLayout from "@/Layouts/AppLayout.vue";
+import JetButton from "@/Jetstream/Button.vue";
+
+import CustomForm from "./Form.vue";
+
+defineProps({
+  return_url: {
+    type: String,
+    required: true,
+  }
+});
+
+const form = useForm({
+  database_file: null
+});
+
+const handleCreate = () => {
+  form.post(route("backup.uploadPost"), {
+    errorBag: "handleCreate",
+    preserveScroll: true,
+    onSuccess: () => form.reset(),
+    onError: () => {
+      form.reset();
+    },
+  });
+};
+
+</script>
+
+<template>
+
+  <AppLayout title="Restaurar base de datos">
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Restaurar base de datos
+      </h2>
+    </template>
+
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="flex flex-row justify-between pb-2">
+          <div></div>
+          <div>
+            <JetButton type="button">
+              <Link :href="return_url">Regresar</Link>
+            </JetButton>
+          </div>
+        </div>
+
+        <CustomForm
+          :actionSubmit="handleCreate"
+          :form="form"
+        />
+      </div>
+    </div>
+  </AppLayout>
+
+</template>

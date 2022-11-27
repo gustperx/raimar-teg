@@ -92,7 +92,7 @@ class DashboardController extends Controller
             [
                 'name' => 'Ayuda',
                 'icon' => 'fa-solid fa-circle-question',
-                'url' => "#",
+                'url' => route('d_help'),
                 'access' => true
             ],
         ];
@@ -270,6 +270,40 @@ class DashboardController extends Controller
                 'icon' => 'fa-solid fa-microscope',
                 'url' => route('medical-equipments.available'),
                 'access' => $visibleMedical
+            ],
+        ];
+
+        return Inertia::render('Dashboard', [
+            'menu' => $menu,
+            'activeBack' => true,
+            'return_url' => route('dashboard'),
+        ]);
+    }
+
+    public function help()
+    {
+        $visibleMedical = false;
+
+        $menu = [
+            [
+                'name' => 'Manual del sistema',
+                'icon' => 'fa-solid fa-book-open-reader',
+                'url' => route('backup.manual'),
+                'access' => true,
+                'native' => true,
+            ],
+            [
+                'name' => 'Exportar base de datos',
+                'icon' => 'fa-solid fa-cloud-arrow-down',
+                'url' => route('backup.create'),
+                'access' => auth()->user()->can('viewAny', Audit::class),
+                'native' => true,
+            ],
+            [
+                'name' => 'Importar base de datos',
+                'icon' => 'fa-solid fa-cloud-arrow-up',
+                'url' => route('backup.upload'),
+                'access' => auth()->user()->can('viewAny', Audit::class)
             ],
         ];
 
