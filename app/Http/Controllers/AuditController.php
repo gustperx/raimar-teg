@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Audit;
@@ -18,10 +19,19 @@ class AuditController extends Controller
     {
         $this->authorize('viewAny', Audit::class);
 
+        $startDate = Carbon::now();
+        $endDate = Carbon::now()->addDays(7);
+        if (!empty($request->only('by_range')) && !empty($request->only('by_range')['by_range'])) {
+            $range = $request->only('by_range')['by_range'];
+            $startDate = Carbon::parse($range['startDate']);
+            $endDate = Carbon::parse($range['endDate']);
+        }
+
         $items = Audit::with('user.department')
             ->byUser($request->only('by_user'))
             ->byModule($request->only('by_module'))
             ->byMonthYear($request->only('by_month'))
+            ->byRange($request->only('by_range'))
             ->orderBy('id', 'desc')
             ->paginate()->through(function ($item) {
                 return [
@@ -42,6 +52,10 @@ class AuditController extends Controller
                 'by_user'   => $request->only('by_user'),
                 'by_module' => $request->only('by_module'),
                 'by_month'  => $request->only('by_month'),
+                'by_range'  => json_encode([
+                    'startDate' => $startDate->format('d/m/Y'), 
+                    'endDate'   => $endDate->format('d/m/Y'),
+                ])
             ],
             'users'   => $users,
             'modules' => Audit::getModules(),

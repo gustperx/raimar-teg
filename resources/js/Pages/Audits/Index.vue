@@ -1,5 +1,10 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import { Link, useForm } from "@inertiajs/inertia-vue3";
+
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { es } from "date-fns/locale";
 
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetButton from "@/Jetstream/Button.vue";
@@ -8,6 +13,8 @@ import CustomSearchSimpleList from "@/Components/SearchSimpleList.vue";
 import CustomSearchGroupList from "@/Components/SearchGroupList.vue";
 import CustomPagination from "@/Components/Pagination.vue";
 import CustomList from "./List.vue";
+
+import { formatDate, transforDate } from "@/Utils/format-date";
 
 const props = defineProps({
   items: {
@@ -27,21 +34,40 @@ const props = defineProps({
   },
 });
 
+const { startDate: dateA, endDate: dateB } = JSON.parse(props.filters.by_range);
 const formSearch = useForm({
   by_user: props.filters.by_user.by_user,
   by_module: props.filters.by_module.by_module,
-  by_month: props.filters.by_month.by_month
+  by_month: props.filters.by_month.by_month,
+  by_range: { startDate: transforDate(dateA), endDate: transforDate(dateB) }
 });
 
 const formReset = () => {
   formSearch.by_user = null;
   formSearch.by_module = null;
   formSearch.by_month = null;
+  formSearch.by_range = null;
 };
 
 const urlSearch = route("audits.index");
 
+const date = ref();
+
+// For demo purposes assign range from the current date
+onMounted(() => {
+    const startDate = transforDate(dateA);
+    const endDate = transforDate(dateB);
+    date.value = [startDate, endDate];
+})
+
 const handleSearchDate = () => {
+
+  const [seletedStartDate, seletedEndDate] = date.value
+  const startDate = formatDate(seletedStartDate)
+  const endDate = formatDate(seletedEndDate)
+  
+  formSearch.by_range = { startDate, endDate }
+
   formSearch.get(urlSearch, formSearch, {
     preserveState: true,
   });
@@ -78,12 +104,24 @@ const handleSearchDate = () => {
             :show-labels="false"
             :showNoOptions="false"
           />
-          <div>
+          <!-- <div>
             <input
               type="month"
               v-model="formSearch.by_month"
               class="input mt-1 block"
               @input="handleSearchDate"
+            />
+          </div> -->
+          <div>
+            <Datepicker 
+              v-model="date" 
+              :format-locale="es"
+              :enable-time-picker="false" 
+              format="dd/MM/yyyy" 
+              range 
+              locale="es" cancelText="Cancelar" selectText="Seleccionar"
+              class="input mt-1 block"
+              @update:model-value="handleSearchDate"
             />
           </div>
           <button

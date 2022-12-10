@@ -46,7 +46,7 @@ class BackupController extends Controller
                 ->setUserName($userName)
                 ->setPassword($password)
                 ->setHost($host)
-                ->doNotUseColumnStatistics()
+                //->doNotUseColumnStatistics() // FIX SO Windows
                 ->dumpToFile('../storage/backup/'.$dumpName);
     
             

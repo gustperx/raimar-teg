@@ -54,6 +54,19 @@ class Audit extends Model
     }
 
 
+    public function scopeByRange($query, $range)
+    {
+        if (empty($range) || empty($range['by_range'])) {
+            return $query;
+        }
+
+        $startDate = $range['by_range']['startDate'];
+        $endDate = $range['by_range']['endDate'];
+
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+
     public static function getModules()
     {
         return [
