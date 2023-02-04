@@ -21,7 +21,7 @@ class ModelEController extends Controller
         if (empty($type)) {
             $data = ModelE::get();
         } else {
-            $data = ModelE::where('type', $type)->get();
+            $data = ModelE::where('type', $type)->orderBy('name', 'asc')->get();
         }
 
         $resp = [];

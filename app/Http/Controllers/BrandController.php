@@ -21,7 +21,7 @@ class BrandController extends Controller
         if (empty($type)) {
             $data = Brand::get();
         } else {
-            $data = Brand::where('type', $type)->get();
+            $data = Brand::where('type', $type)->orderBy('name', 'asc')->get();
         }
 
         $resp = [];

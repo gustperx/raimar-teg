@@ -61,9 +61,10 @@ class Audit extends Model
         }
 
         $startDate = $range['by_range']['startDate'];
-        $endDate = $range['by_range']['endDate'];
+        // $endDate = $range['by_range']['endDate'];
+        $endDate = Carbon::parse($range['by_range']['endDate']);
 
-        $query->whereBetween('created_at', [$startDate, $endDate]);
+        $query->whereBetween('created_at', [$startDate, $endDate->addDays(1)->format('Y-m-d')]);
     }
 
 

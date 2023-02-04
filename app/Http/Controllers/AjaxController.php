@@ -20,7 +20,7 @@ class AjaxController extends Controller
     public function getCategories (Request $request)
     {
         $type = $request->query('type');
-        $categories = Category::select('id', 'name')->where('parent_id', $type)->get();
+        $categories = Category::select('id', 'name')->where('parent_id', $type)->orderBy('name', 'asc')->get();
         return $categories;
     }
 
