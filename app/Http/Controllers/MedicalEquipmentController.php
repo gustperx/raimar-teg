@@ -114,7 +114,7 @@ class MedicalEquipmentController extends Controller
 
         $request->session()->flash('success', 'Equipo medicó creado satisfactoriamente');
         // return redirect()->route('medical-equipments.index');
-        return redirect()->route('d_register');
+        return redirect()->route('d_operations');
     }
 
     /**
@@ -466,5 +466,30 @@ class MedicalEquipmentController extends Controller
 
         $request->session()->flash('warn', 'Equipo medicó eliminado definitivamente');
         return redirect()->route('medical-equipments.trash');
+    }
+
+
+    public function report(Request $request)
+    {
+        $items = MedicalEquipment::with('category', 'status', 'department')->orderBy('id', 'desc')
+            ->paginate()->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'description' => $item->description,
+                    'brand' => $item->brand->name ?? null,
+                    'model' => $item->model->name ?? null,
+                    'code' => $item->code,
+                    'serial' => $item->serial,
+                    'category' => $item->category->name ?? null,
+                    'status' => $item->status->name ?? null,
+                    'status_color' => $item->status->color ?? null,
+                    'department' => $item->department->name ?? null,
+                    'updated_at' => $item->updated_at->format('d/m/Y H:i'),
+                ];
+            });
+
+        return Inertia::render('MedicalEquipments/Report', [
+            'items' => $items,
+        ]);
     }
 }

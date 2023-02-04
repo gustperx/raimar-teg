@@ -79,6 +79,8 @@ Route::middleware([
     Route::get('medical-equipments/trash', [MedicalEquipmentController::class, 'trash'])->name('medical-equipments.trash');
     Route::post('medical-equipments/trash/restore/{medical_equipment}', [MedicalEquipmentController::class, 'restore'])->name('medical-equipments.trash_restore');
     Route::delete('medical-equipments/trash/delete/{medical_equipment}', [MedicalEquipmentController::class, 'trashDestroy'])->name('medical-equipments.trash_destroy');
+    // Report
+    Route::get('medical-equipments/report', [MedicalEquipmentController::class, 'report'])->name('medical-equipments.report');
     // Restore
     Route::resource('medical-equipments',  MedicalEquipmentController::class);
 
@@ -93,6 +95,8 @@ Route::middleware([
     Route::get('computer-equipments/trash', [ComputerEquipmentController::class, 'trash'])->name('computer-equipments.trash');
     Route::post('computer-equipments/trash/restore/{computer_equipment}', [ComputerEquipmentController::class, 'restore'])->name('computer-equipments.trash_restore');
     Route::delete('computer-equipments/trash/delete/{computer_equipment}', [ComputerEquipmentController::class, 'trashDestroy'])->name('computer-equipments.trash_destroy');
+    // Report
+    Route::get('computer-equipments/report', [ComputerEquipmentController::class, 'report'])->name('computer-equipments.report');
     // Resource
     Route::resource('computer-equipments', ComputerEquipmentController::class);
 

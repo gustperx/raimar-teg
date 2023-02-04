@@ -49,7 +49,10 @@ const urlSearch = route("medical-equipments.index");
             <JetButton type="button">
               <Link href="/dashboard/operations">Regresar</Link>
             </JetButton>
-            <JetButton type="button" v-if="can.restore" class="mr-2 ml-2">
+            <JetButton type="button" class="mr-2 ml-2">
+              <a href="/medical-equipments/report" target="_blank">Reporte</a>
+            </JetButton>
+            <JetButton type="button" v-if="can.restore" class="mr-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>
             </JetButton>
             <JetButton type="button" v-if="can.create">
