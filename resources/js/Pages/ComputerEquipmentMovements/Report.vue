@@ -32,6 +32,12 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
         </div>
       </div>
 
+      <div class="flex justify-between">
+        <div class="text-lg font-bold">
+          <span class="text-blue-800">Generado por: </span> {{ $page.props.user.name }}
+        </div>
+      </div>
+
       <div class="my-4">
         <h3 class="text-2xl font-semibold text-blue-800">Movimiento de equipo informático</h3>
         <h3 class="text-lg">Fecha de creación: {{ computerEquipmentMovement.created_at }}</h3>
@@ -49,27 +55,27 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Código:</span> 
+          <span class="font-semibold">Código:</span>
           {{ computerEquipmentMovement.equipment.code }}
         </div>
         <div>
-          <span class="font-semibold">Serial:</span> 
+          <span class="font-semibold">Serial:</span>
           {{ computerEquipmentMovement.equipment.serial }}
         </div>
         <div>
-          <span class="font-semibold">Marca:</span> 
+          <span class="font-semibold">Marca:</span>
           {{ computerEquipmentMovement.equipment.brand }}
         </div>
         <div>
-          <span class="font-semibold">Modelo:</span> 
+          <span class="font-semibold">Modelo:</span>
           {{ computerEquipmentMovement.equipment.model }}
         </div>
         <div>
-          <span class="font-semibold">Descripción:</span> 
+          <span class="font-semibold">Descripción:</span>
           {{ computerEquipmentMovement.equipment.description }}
         </div>
         <div>
-          <span class="font-semibold">Estado:</span> 
+          <span class="font-semibold">Estado:</span>
           {{ computerEquipmentMovement.status }}
         </div>
         <div>
@@ -83,11 +89,11 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Anterior:</span> 
+          <span class="font-semibold">Anterior:</span>
           {{ computerEquipmentMovement.previous_department }}
         </div>
         <div>
-          <span class="font-semibold">Actual:</span> 
+          <span class="font-semibold">Actual:</span>
           {{ computerEquipmentMovement.current_department }}
         </div>
       </div>
@@ -98,15 +104,15 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Técnico:</span> 
+          <span class="font-semibold">Técnico:</span>
           {{ computerEquipmentMovement.user_movement }}
         </div>
         <div>
-          <span class="font-semibold">Departamento:</span> 
+          <span class="font-semibold">Departamento:</span>
           {{ computerEquipmentMovement.user_responsible }}
         </div>
         <div>
-          <span class="font-semibold">Responsable:</span> 
+          <span class="font-semibold">Responsable:</span>
           {{ computerEquipmentMovement.user_assigned }}
         </div>
       </div>
@@ -115,17 +121,17 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
         <h3 class="text-2xl font-semibold text-blue-800">Fechas:</h3>
       </div>
 
-      <div class="grid grid-cols-2 gap-2">       
+      <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Periodo Inicio:</span> 
+          <span class="font-semibold">Periodo Inicio:</span>
           {{ computerEquipmentMovement.period_start }}
         </div>
         <div>
-          <span class="font-semibold">Periodo Fin:</span> 
+          <span class="font-semibold">Periodo Fin:</span>
           {{ computerEquipmentMovement.period_end }}
         </div>
         <div>
-          <span class="font-semibold">Fecha de transferencia:</span> 
+          <span class="font-semibold">Fecha de transferencia:</span>
           {{ computerEquipmentMovement.transfer_date }}
         </div>
       </div>

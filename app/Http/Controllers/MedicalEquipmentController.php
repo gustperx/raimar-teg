@@ -86,7 +86,7 @@ class MedicalEquipmentController extends Controller
             'categories' => $categories,
             'statuses' => $statuses,
             'departments' => $departments,
-            'return_url' => route('d_register') // route('medical-equipments.index')
+            'return_url' => route('d_operations') // route('medical-equipments.index')
         ]);
     }
 

@@ -32,6 +32,12 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
         </div>
       </div>
 
+      <div class="flex justify-between">
+        <div class="text-lg font-bold">
+          <span class="text-blue-800">Generado por: </span> {{ $page.props.user.name }}
+        </div>
+      </div>
+
       <div class="my-4">
         <h3 class="text-2xl font-semibold text-blue-800">Movimiento de equipo médico</h3>
         <h3 class="text-lg">Fecha de creación: {{ medicalEquipmentMovement.created_at }}</h3>
@@ -49,27 +55,27 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Código:</span> 
+          <span class="font-semibold">Código:</span>
           {{ medicalEquipmentMovement.equipment.code }}
         </div>
         <div>
-          <span class="font-semibold">Serial:</span> 
+          <span class="font-semibold">Serial:</span>
           {{ medicalEquipmentMovement.equipment.serial }}
         </div>
         <div>
-          <span class="font-semibold">Marca:</span> 
+          <span class="font-semibold">Marca:</span>
           {{ medicalEquipmentMovement.equipment.brand }}
         </div>
         <div>
-          <span class="font-semibold">Modelo:</span> 
+          <span class="font-semibold">Modelo:</span>
           {{ medicalEquipmentMovement.equipment.model }}
         </div>
         <div>
-          <span class="font-semibold">Descripción:</span> 
+          <span class="font-semibold">Descripción:</span>
           {{ medicalEquipmentMovement.equipment.description }}
         </div>
         <div>
-          <span class="font-semibold">Estado:</span> 
+          <span class="font-semibold">Estado:</span>
           {{ medicalEquipmentMovement.status }}
         </div>
         <div>
@@ -83,11 +89,11 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Anterior:</span> 
+          <span class="font-semibold">Anterior:</span>
           {{ medicalEquipmentMovement.previous_department }}
         </div>
         <div>
-          <span class="font-semibold">Actual:</span> 
+          <span class="font-semibold">Actual:</span>
           {{ medicalEquipmentMovement.current_department }}
         </div>
       </div>
@@ -98,15 +104,15 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
 
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Técnico:</span> 
+          <span class="font-semibold">Técnico:</span>
           {{ medicalEquipmentMovement.user_movement }}
         </div>
         <div>
-          <span class="font-semibold">Departamento:</span> 
+          <span class="font-semibold">Departamento:</span>
           {{ medicalEquipmentMovement.user_responsible }}
         </div>
         <div>
-          <span class="font-semibold">Responsable:</span> 
+          <span class="font-semibold">Responsable:</span>
           {{ medicalEquipmentMovement.user_assigned }}
         </div>
       </div>
@@ -115,17 +121,17 @@ onMounted(() => d.print( document.getElementById('print-div'), styles ));
         <h3 class="text-2xl font-semibold text-blue-800">Fechas:</h3>
       </div>
 
-      <div class="grid grid-cols-2 gap-2">       
+      <div class="grid grid-cols-2 gap-2">
         <div>
-          <span class="font-semibold">Periodo Inicio:</span> 
+          <span class="font-semibold">Periodo Inicio:</span>
           {{ medicalEquipmentMovement.period_start }}
         </div>
         <div>
-          <span class="font-semibold">Periodo Fin:</span> 
+          <span class="font-semibold">Periodo Fin:</span>
           {{ medicalEquipmentMovement.period_end }}
         </div>
         <div>
-          <span class="font-semibold">Fecha de transferencia:</span> 
+          <span class="font-semibold">Fecha de transferencia:</span>
           {{ medicalEquipmentMovement.transfer_date }}
         </div>
       </div>

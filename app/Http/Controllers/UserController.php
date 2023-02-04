@@ -154,7 +154,7 @@ class UserController extends Controller
 
         return Inertia::render('Users/Show', [
             'return_url' => route('users.index'),
-            'user' => $user,
+            'userd' => $user,
         ]);
     }
 
@@ -175,7 +175,7 @@ class UserController extends Controller
 
         return Inertia::render('Users/Edit', [
             'return_url' => route('users.index'),
-            'user' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id', 'dni_type', 'gender', 'address', 'phone', 'code_phone'),
+            'userd' => $user->only('id', 'name', 'email', 'dni', 'allow_login', 'department_id', 'dni_type', 'gender', 'address', 'phone', 'code_phone'),
             'dniTypes' => User::getDniTypes(),
             'genderTypes' => User::getGenderTypes(),
             'codeTypes' => User::getCodePhone(),
@@ -222,7 +222,7 @@ class UserController extends Controller
 
         return Inertia::render('Users/Permission', [
             'return_url' => route('users.index'),
-            'user' => $user->only('id', 'name', 'dni'),
+            'userd' => $user->only('id', 'name', 'dni'),
             'permissions' => $permissions,
             'current_permissions' => $user->getPermissionNames()->toArray()
         ]);

@@ -65,12 +65,12 @@ class DashboardController extends Controller
                 'url' => route('d_operations'),
                 'access' => $isAccessOperaciones
             ],
-            [
+            /* [
                 'name' => 'Roles de Usuarios',
                 'icon' => 'fa-solid fa-users',
                 'url' => route('d_roles'),
                 'access' => auth()->user()->can('viewAny', User::class)
-            ],
+            ], */
             [
                 'name' => 'Estadísticas',
                 'icon' => 'fa-solid fa-chart-line',
@@ -116,11 +116,17 @@ class DashboardController extends Controller
         $menu = [
             [
                 'name' => 'Registro de Usuarios',
-                'icon' => 'fa-solid fa-users',
+                'icon' => 'fa-solid fa-circle-plus',
                 'url' => route('users.create'),
                 'access' => auth()->user()->can('create', User::class)
             ],
             [
+                'name' => 'Roles de Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'url' => route('users.index'),
+                'access' => auth()->user()->can('viewAny', User::class)
+            ],
+            /* [
                 'name' => 'Equipos informáticos',
                 'icon' => 'fa-solid fa-computer',
                 'url' => route('computer-equipments.create'),
@@ -137,7 +143,7 @@ class DashboardController extends Controller
                 'icon' => 'fa-solid fa-stethoscope',
                 'url' => route('d_status'),
                 'access' => $hasStatus
-            ],
+            ], */
         ];
 
         return Inertia::render('Dashboard', [
@@ -151,7 +157,7 @@ class DashboardController extends Controller
     public function status()
     {
         $menu = [
-            [
+            /* [
                 'name' => 'Equipos informáticos',
                 'icon' => 'fa-solid fa-computer',
                 'url' => route('computer-equipments.index'),
@@ -162,7 +168,7 @@ class DashboardController extends Controller
                 'icon' => 'fa-solid fa-microscope',
                 'url' => route('medical-equipments.index'),
                 'access' => auth()->user()->can('viewAny', MedicalEquipment::class)
-            ],
+            ], */
         ];
 
         return Inertia::render('Dashboard', [
@@ -176,6 +182,18 @@ class DashboardController extends Controller
     public function informatica()
     {
         $menu = [
+            [
+                'name' => 'Registro de equipos informáticos',
+                'icon' => 'fa-solid fa-circle-plus',
+                'url' => route('computer-equipments.create'),
+                'access' => auth()->user()->can('create', ComputerEquipment::class)
+            ],
+            [
+                'name' => 'Estatus de equipos informáticos',
+                'icon' => 'fa-solid fa-computer',
+                'url' => route('computer-equipments.index'),
+                'access' => auth()->user()->can('viewAny', ComputerEquipment::class)
+            ],
             [
                 'name' => 'Movimientos de equipos informáticos',
                 'icon' => 'fa-solid fa-code-compare',
@@ -201,6 +219,18 @@ class DashboardController extends Controller
     public function operations()
     {
         $menu = [
+            [
+                'name' => 'Registro de equipos médicos',
+                'icon' => 'fa-solid fa-circle-plus',
+                'url' => route('medical-equipments.create'),
+                'access' => auth()->user()->can('create', MedicalEquipment::class)
+            ],
+            [
+                'name' => 'Estatus de equipos médicos',
+                'icon' => 'fa-solid fa-microscope',
+                'url' => route('medical-equipments.index'),
+                'access' => auth()->user()->can('viewAny', MedicalEquipment::class)
+            ],
             [
                 'name' => 'Movimientos de equipos médicos',
                 'icon' => 'fa-solid fa-repeat',

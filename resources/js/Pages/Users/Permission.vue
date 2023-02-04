@@ -5,7 +5,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import CustomForm from "./FormPermission.vue";
 
 const props = defineProps({
-  user: {
+  userd: {
     type: Object,
     required: true,
   },
@@ -28,7 +28,7 @@ const form = useForm({
 });
 
 const handleUpdate = () => {
-  form.post(route("users.permission_store", [props.user.id]), {
+  form.post(route("users.permission_store", [props.userd.id]), {
     errorBag: "handleUpdate",
     preserveScroll: true,
     onSuccess: () => form.reset(),

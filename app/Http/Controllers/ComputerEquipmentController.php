@@ -86,7 +86,7 @@ class ComputerEquipmentController extends Controller
             'categories' => $categories,
             'statuses' => $statuses,
             'departments' => $departments,
-            'return_url' => route('d_register') // route('computer-equipments.index')
+            'return_url' => route('d_informatica') // route('computer-equipments.index')
         ]);
     }
 

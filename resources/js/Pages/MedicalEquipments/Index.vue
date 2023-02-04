@@ -47,7 +47,7 @@ const urlSearch = route("medical-equipments.index");
           <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
           <div>
             <JetButton type="button">
-              <Link href="/dashboard/status">Regresar</Link>
+              <Link href="/dashboard/operations">Regresar</Link>
             </JetButton>
             <JetButton type="button" v-if="can.restore" class="mr-2 ml-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>

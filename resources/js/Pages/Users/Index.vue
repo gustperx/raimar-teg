@@ -48,14 +48,14 @@ const urlSearch = route("users.index");
           <CustomSearch :formSearch="formSearch" :urlSearch="urlSearch" />
           <div>
             <JetButton type="button">
-              <Link href="/dashboard/roles">Regresar</Link>
+              <Link href="/dashboard/register">Regresar</Link>
             </JetButton>
             <JetButton type="button" v-if="can.restore" class="mr-2 ml-2">
               <Link :href="urls.restore_url">Elementos eliminados</Link>
             </JetButton>
-            <JetButton type="button" v-if="can.create">
+            <!-- <JetButton type="button" v-if="can.create">
               <Link :href="urls.create_url">Nuevo elemento</Link>
-            </JetButton>
+            </JetButton> -->
           </div>
         </div>
 

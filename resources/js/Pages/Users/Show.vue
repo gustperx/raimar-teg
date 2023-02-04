@@ -6,7 +6,7 @@ import CustomDetailsTable from "@/Components/DetailsTable.vue";
 import CustomDetailsTableItem from "@/Components/DetailsTableItem.vue";
 
 const props = defineProps({
-  user: {
+  userd: {
     type: Object,
     required: true,
   },
@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 
-const allowText = props.user.allow_login ? "Si" : "No";
+const allowText = props.userd.allow_login ? "Si" : "No";
 </script>
 
 <template>
@@ -39,33 +39,33 @@ const allowText = props.user.allow_login ? "Si" : "No";
         </div>
 
         <CustomDetailsTable>
-          <template #title>{{ user.name }}</template>
+          <template #title>{{ userd.name }}</template>
           <template #subtitle>Información sobre el usuario.</template>
           <template #content>
             <CustomDetailsTableItem
               class="bg-gray-100"
               title="ID"
-              :value="user.id"
+              :value="userd.id"
             />
             <CustomDetailsTableItem
               class="bg-white"
               title="Nombre"
-              :value="user.name"
+              :value="userd.name"
             />
             <CustomDetailsTableItem
               class="bg-gray-100"
               title="Correo electrónico"
-              :value="user.email"
+              :value="userd.email"
             />
             <CustomDetailsTableItem
               class="bg-white"
               title="Documento de identidad"
-              :value="user.dni"
+              :value="userd.dni"
             />
             <CustomDetailsTableItem
               class="bg-gray-100"
               title="Departamento"
-              :value="user.department"
+              :value="userd.department"
             />
             <CustomDetailsTableItem
               class="bg-white"
@@ -75,7 +75,7 @@ const allowText = props.user.allow_login ? "Si" : "No";
             <CustomDetailsTableItem
               class="bg-gray-100"
               title="Tipo"
-              :value="user.dni_type"
+              :value="userd.dni_type"
             />
           </template>
         </CustomDetailsTable>

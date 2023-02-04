@@ -5,7 +5,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import CustomForm from "./Form.vue";
 
 const props = defineProps({
-  user: {
+  userd: {
     type: Object,
     required: true,
   },
@@ -36,20 +36,20 @@ const props = defineProps({
 });
 
 const form = useForm({
-  name: props.user.name,
-  email: props.user.email,
-  dni: props.user.dni,
-  allow_login: props.user.allow_login,
-  department_id: props.user.department_id,
-  dni_type: props.user.dni_type,
-  address: props.user.address,
-  phone: props.user.phone,
-  gender: props.user.gender,
-  code_phone: props.user.code_phone,
+  name: props.userd.name,
+  email: props.userd.email,
+  dni: props.userd.dni,
+  allow_login: props.userd.allow_login,
+  department_id: props.userd.department_id,
+  dni_type: props.userd.dni_type,
+  address: props.userd.address,
+  phone: props.userd.phone,
+  gender: props.userd.gender,
+  code_phone: props.userd.code_phone,
 });
 
 const handleUpdate = () => {
-  form.put(route("users.update", [props.user.id]), {
+  form.put(route("users.update", [props.userd.id]), {
     errorBag: "handleUpdate",
     preserveScroll: true,
     onSuccess: () => form.reset(),
