@@ -472,7 +472,7 @@ class MedicalEquipmentController extends Controller
     public function report(Request $request)
     {
         $items = MedicalEquipment::with('category', 'status', 'department')->orderBy('id', 'desc')
-            ->paginate()->through(function ($item) {
+            ->get()->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
@@ -489,7 +489,7 @@ class MedicalEquipmentController extends Controller
             });
 
         return Inertia::render('MedicalEquipments/Report', [
-            'items' => $items,
+            'items' => ['data' => $items],
         ]);
     }
 }

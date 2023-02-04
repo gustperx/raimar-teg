@@ -470,7 +470,7 @@ class ComputerEquipmentController extends Controller
     public function report(Request $request)
     {
         $items = ComputerEquipment::with('category', 'status', 'department')->orderBy('id', 'desc')
-            ->paginate()->through(function ($item) {
+            ->get()->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'description' => $item->description,
@@ -487,7 +487,7 @@ class ComputerEquipmentController extends Controller
             });
 
         return Inertia::render('ComputerEquipments/Report', [
-            'items' => $items,
+            'items' => ['data' => $items],
         ]);
     }
 }
